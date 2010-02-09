@@ -1,7 +1,8 @@
 As part of the Open Government Directive, each of the major federal
 agencies is required to seek input from the public for an Open
 Government Plan. This consultation process is taking place February 6
-- March 19, 2010.
+- March 19, 2010, using a platform called IdeaScale. Each agency has
+it's own, isolated IdeaScale site.
 
 Basic stats are available for each agency separately, but there is
 nowhere to easily compare participation across the agencies, nor for
@@ -9,6 +10,5 @@ those interested in participating to get a broad overview of the
 activities. 
 
 This is a stateless (for now) dashboard showing stats and comparisons
-regarding activity on each agency's brainstorming site. The
-brainstorming tool used by all these agencies is a piece of software
-called IdeaScale, which makes a basic API available (thanks!).
+regarding activity on each agency's brainstorming site, using the
+basic API made available by IdeaScale (thanks!).
