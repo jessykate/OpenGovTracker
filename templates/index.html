@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>Federal Agency Ideascale Dashboard</title>
+<link rel="stylesheet" href="/static/style.css" type="text/css"
+      media="screen" />
+<head>
+<body>
+<!-- -->
+
+{% for agency, stats in stats_by_agency.iteritems() %}
+<h2>{{ agency }}</h2>
+<p>{{ stats }} </p>
+<br />
+{% end %}
+
+{% for category, idea in top_ideas %}
+<h2>{{ category }}</h2>
+<p>{{ idea['text'] }}</p>
+
+{% end %}
+
+
+</body>
+</html>
