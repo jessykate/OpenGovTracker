@@ -4,11 +4,12 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import urllib, urllib2
-import json
+try:
+    import json
+except:
+    import simplejson
 
-agencies = {
-    "nasa":"519f0a2f-4ac7-4ae2-ac11-8a11d0d9657e",   
-}
+from agencies import agencies, cat_id
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
@@ -19,13 +20,51 @@ class MainHandler(tornado.web.RequestHandler):
         # get the top ideas in each category across all agencies
         top_ideas = self.top_ideas_by_category(best_ideas_by_agency)
 
+        # get the agency names out into a list so we can be sure the
+        # list ordering for votes, comments and ideas will be
+        # consistent.
+        agency_names = stats_by_agency.keys()
+        votes_by_agency = []
+        comments_by_agency = []
+        ideas_by_agency = []        
+        for agency in agency_names:
+            # numbers are saved as strings so we can easily expand the
+            # list as a comma separated set of query arguments
+            ideas_by_agency.append(str(stats_by_agency[agency]['ideas']))
+            votes_by_agency.append(str(stats_by_agency[agency]['votes']))
+            comments_by_agency.append(str(stats_by_agency[agency]['comments']))
+
+        # determine max height needed. this is a little extreme but, meh. 
+        x = []
+        y = []
+        z = []
+        for agency in agency_names:
+            x.append(stats_by_agency[agency]['votes'])
+            y.append(stats_by_agency[agency]['comments'])
+            z.append(stats_by_agency[agency]['ideas'])
+        max_value =  max([sum(tup) for tup in zip(x,y,z)])
+            
+        # create text markers to annotate each bar with the numeric
+        # counts (each marker must be prefixed with a 't'-- *shrug*)
+        prefix = ['t'+x for x in ideas_by_agency]
+        # remember prefix is already a combination of t and the
+        # ideas_by_agency array.
+        markers = zip(prefix, votes_by_agency, comments_by_agency)
+        markers = ['/'.join(tup) for tup in markers] 
+
+        # construct the participation stacked bar chart url. note that
+        # we scale the height as appropriate for the largest values. 
+        participation_chart = "http://chart.apis.google.com/chart?cht=bvs&chs=800x300&chds=0,"+str(max_value)+"&chbh=a&chco=4D89D9,C6D9FD,DD99FD&chd=t:"+','.join(ideas_by_agency)+"|"+','.join(votes_by_agency)+"|"+','.join(comments_by_agency)+"&chxt=x&chxl=0:|"+'|'.join(agency_names)+"&chtt=Participation+Meter&chts=40&chdl=Ideas|Votes|Comments"
+        
+        print participation_chart
+    
         # determine the top agency by number of ideas
         #top_agency = self.top_agency(stats_by_agency)
 
         # determine the top agency by participation = ideas+votes+comments
         #best_participation = self.top_participation(stats_by_agency)
 
-        self.render('templates/index.html', top_ideas=top_ideas, 
+        self.render('templates/index.html', top_ideas=top_ideas, participation_chart=participation_chart,
                     stats_by_agency=stats_by_agency)
                    # top_agency, best_participation, stats_by_agency)
 
@@ -35,17 +74,17 @@ class MainHandler(tornado.web.RequestHandler):
 
     def top_ideas_by_category(self, best_ideas_by_agency):
         top_ideas = {            
-            11571: {'agency': None, 'votes':-1, 'idea': None},
-            11572: {'agency': None, 'votes':-1, 'idea': None},
-            11573: {'agency': None, 'votes':-1, 'idea': None},
-            11928: {'agency': None, 'votes':-1, 'idea': None},
-            11929: {'agency': None, 'votes':-1, 'idea': None}
+            'transparency': {'agency': None, 'votes':-1, 'idea': None},
+            'participation': {'agency': None, 'votes':-1, 'idea': None},
+            'collaboration': {'agency': None, 'votes':-1, 'idea': None},
+            'innovation': {'agency': None, 'votes':-1, 'idea': None},
+            'site_feedback': {'agency': None, 'votes':-1, 'idea': None}
             }
 
         # best_ideas_by_agency is a dict for each agency (avoiding the
         # issue of ties right now).
         for agency, agency_ideas in best_ideas_by_agency.iteritems():
-            for category in [11571, 11572, 11573, 11928, 11929]:
+            for category  in ['transparency', 'participation', 'collaboration', 'innovation', 'site_feedback']:
                 if top_ideas[category]['votes'] < agency_ideas[category]['votes']:
                     top_ideas[category]['agency'] = agency
                     top_ideas[category]['votes'] = agency_ideas[category]['votes']
@@ -80,14 +119,14 @@ class MainHandler(tornado.web.RequestHandler):
             # Working Together: Governments, Businesses, Non-Profits: 11573
             # New Ways of Doing Business, New Tools: 11928
             # Tell Us How to Improve this Site: 11929
-            11571 : {'votes':0, 'idea': None},
-            11572 : {'votes':0, 'idea': None},
-            11573  : {'votes':0, 'idea': None},
-            11928 : {'votes':0, 'idea': None},
-            11929 : {'votes':0, 'idea': None}
+            'transparency' : {'votes':0, 'idea': None},
+            'participation' : {'votes':0, 'idea': None},
+            'collaboration' : {'votes':0, 'idea': None},
+            'innovation' : {'votes':0, 'idea': None},
+            'site_feedback' : {'votes':0, 'idea': None}
         }
         for idea in ideas:            
-            this_category = idea['categoryID'] 
+            this_category = cat_id[agency][idea['categoryID']]
             if best_ideas[this_category]['votes'] < idea['voteCount']:
                 best_ideas[this_category]['votes'] = idea['voteCount']
                 best_ideas[this_category]['idea'] = idea

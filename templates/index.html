@@ -5,7 +5,8 @@
       media="screen" />
 <head>
 <body>
-<!-- -->
+
+<img src="{{ participation_chart }}">
 
 <h1>Stats by Agency</h1>
 {% for agency, stats in stats_by_agency.iteritems() %}
@@ -24,6 +25,14 @@
 
 {% end %}
 
+<h1>Needs Some Love</h1>
+These agencies dont have a lot of input-- they need some love. 
+
+<h1>Unusual Ideas</h1>
+How do we measure this? Just least frequent minus stop words?
+
+<h1></h1>
 
 </body>
 </html>
+
