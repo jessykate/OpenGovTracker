@@ -15,8 +15,7 @@ class MainHandler(tornado.web.RequestHandler):
         stats_by_agency = {}
         best_ideas_by_agency = {}
         for agency in agencies.keys():
-            stats_by_agency[agency], best_ideas_by_agency[agency] = self.get_ideas(agency)
-        
+            stats_by_agency[agency], best_ideas_by_agency[agency] = self.get_ideas(agency)        
         # get the top ideas in each category across all agencies
         top_ideas = self.top_ideas_by_category(best_ideas_by_agency)
 
@@ -26,8 +25,8 @@ class MainHandler(tornado.web.RequestHandler):
         # determine the top agency by participation = ideas+votes+comments
         #best_participation = self.top_participation(stats_by_agency)
 
-
-        self.render('templates/index.html', top_ideas, stats_by_agency)
+        self.render('templates/index.html', top_ideas=top_ideas, 
+                    stats_by_agency=stats_by_agency)
                    # top_agency, best_participation, stats_by_agency)
 
         
@@ -36,19 +35,21 @@ class MainHandler(tornado.web.RequestHandler):
 
     def top_ideas_by_category(self, best_ideas_by_agency):
         top_ideas = {            
-            'transparency' : {'agency': None, 'votes':0, 'idea': None},
-            'collaboration' : {'agency': None, 'votes':0, 'idea': None},
-            'innovation'  : {'agency': None, 'votes':0, 'idea': None},
-            'participation' : {'agency': None, 'votes':0, 'idea': None}
+            11571: {'agency': None, 'votes':-1, 'idea': None},
+            11572: {'agency': None, 'votes':-1, 'idea': None},
+            11573: {'agency': None, 'votes':-1, 'idea': None},
+            11928: {'agency': None, 'votes':-1, 'idea': None},
+            11929: {'agency': None, 'votes':-1, 'idea': None}
             }
 
-        # best_ideas_by_agency is a dict for each agency
+        # best_ideas_by_agency is a dict for each agency (avoiding the
+        # issue of ties right now).
         for agency, agency_ideas in best_ideas_by_agency.iteritems():
-            for category in ['transparency', 'collaboration', 'innovation', 'participation']:
-                if top[category]['votes'] < best_ideas[category]['votes']:
-                    top[category]['agency'] = agency
-                    top[category]['votes'] = best_ideas[category]['votes']
-                    top[category]['idea'] = best_ideas[category]['idea']
+            for category in [11571, 11572, 11573, 11928, 11929]:
+                if top_ideas[category]['votes'] < agency_ideas[category]['votes']:
+                    top_ideas[category]['agency'] = agency
+                    top_ideas[category]['votes'] = agency_ideas[category]['votes']
+                    top_ideas[category]['idea'] = agency_ideas[category]['idea']
         return top_ideas
 
     def get_ideas(self, agency):
@@ -60,29 +61,35 @@ class MainHandler(tornado.web.RequestHandler):
 
         # aggregate stats for this agency
         stats = {}
-        stats['ideas'] = 0
         stats['categories'] = {}
         stats['authors'] = {}
         stats['tags'] = {}
         for idea in ideas:
-            stats['ideas'] +=1
-            stats['votes'] = idea['voteCount']
-            stats['comments'] = idea['commentCount']
-            stats['categories'][idea['categoryID']] += 1
-            stats['authors'][idea['author']] += 1
-            stats['tags'][idea['tags']] += 1
+            stats['ideas'] = stats.get('ideas', 0) +1
+            stats['votes'] = stats.get('votes', 0) + idea['voteCount']
+            stats['comments'] = stats.get('comments', 0) + idea['commentCount']
+            stats['categories'][idea['categoryID']] = stats['categories'].get(idea['categoryID'], 0) + 1
+            stats['authors'][idea['author']] = stats['authors'].get(idea['author'], 0) + 1
+            for tag in idea['tags']:
+                stats['tags'][tag] = stats['tags'].get(tag, 0) + 1
             
         # get the top idea for each category for this agency
+        best_ideas = {
+            # Data Availability, Information Quality, Accountability: 11571
+            # Public Feedback & Involvement, Tools & Strategies: 11572
+            # Working Together: Governments, Businesses, Non-Profits: 11573
+            # New Ways of Doing Business, New Tools: 11928
+            # Tell Us How to Improve this Site: 11929
+            11571 : {'votes':0, 'idea': None},
+            11572 : {'votes':0, 'idea': None},
+            11573  : {'votes':0, 'idea': None},
+            11928 : {'votes':0, 'idea': None},
+            11929 : {'votes':0, 'idea': None}
+        }
         for idea in ideas:            
-            best_ideas = {
-            'transparency' : {'votes':0, 'idea': None},
-            'collaboration' : {'votes':0, 'idea': None},
-            'innovation'  : {'votes':0, 'idea': None},
-            'participation' : {'votes':0, 'idea': None}
-            }
             this_category = idea['categoryID'] 
-            if best_ideas[this_category]['votes'] < idea['votes']:
-                best_ideas[this_category]['votes'] = idea['votes']
+            if best_ideas[this_category]['votes'] < idea['voteCount']:
+                best_ideas[this_category]['votes'] = idea['voteCount']
                 best_ideas[this_category]['idea'] = idea
 
         return (stats, best_ideas)
