@@ -7,37 +7,41 @@ body {
 	color: #404040;
 	padding-bottom: 30px;
 	margin: 0;
+	background: #e8ecdc;
+    
 }
+
 
 #header {
     padding:50px 100px;   
     height:300px; 
-    background: #e8ecdc;
     margin: 0 auto; 
     width:1000px;
 }
 
 #title {
-    position: absolute;
-    left:75px;
-    top: 25px;
+    margin-left:-30px;
+    margin-top: -325px;
     font-size: 150%;
     font-weight: bold; 
+    position: relative;
 }
 
+
+
 #stat_box{
-    position: absolute;
-    left: 175px;
-    top: 110px;
+    margin-left: 50px;
+    margin-top: 30px;
     height: 80px;
     font-size: 150%;
     width: 900px;
+    position: relative;
 }
 
 #stat {
-    width: 180px;
+    width: 200px;
     height: 80px;
-    margin: 0px 15px;
+    margin: 0px 10px;
     float: left;
     
 }
@@ -149,6 +153,8 @@ span.fn {
 	height: 375px;
 	float: left;
     margin: 20px 100px;
+    margin: 0 auto; 
+    width:1000px;
 }
 
 #section_title {
@@ -208,7 +214,7 @@ span.fn {
     float: left;
 }
 
-#category_num_title{
+#category_num_title {
     width: 40px;
     text-align: center;
     margin: 5px 10px;
@@ -219,6 +225,8 @@ span.fn {
 	background-color: #DBE0CB;
 	padding: 20px 100px;
 	float: left;
+	margin: 0 auto; 
+    width:1000px;
 }
 
 #endpoints {
@@ -226,6 +234,8 @@ span.fn {
 	width: 1000px;
 	float: left;
 	margin: auto;
+	margin: 0 auto; 
+    width:1000px;
     
 }
 
@@ -247,7 +257,8 @@ span.fn {
 #footer {
 	color: #ccc;
 	border-top: 1px dotted #999;
-	width: 985px;
+	margin: 0 auto; 
+    width:1000px;
 }
 
 #footer ul {
