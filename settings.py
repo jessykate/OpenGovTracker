@@ -1,3 +1,3 @@
 settings = {
-    "stats_cache": "stats_cache.json",
+    "stats_cache": "/tmp/stats_cache.json",
 }
