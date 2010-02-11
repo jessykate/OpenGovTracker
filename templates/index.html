@@ -1,38 +1,76 @@
 <html>
-<head>
-<title>Federal Agency Ideascale Dashboard</title>
-<link rel="stylesheet" href="/static/style.css" type="text/css"
-      media="screen" />
-<head>
-<body>
+  <head>
+    <title>Federal Agency Ideascale Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" />
+  </head>
 
-<img src="{{ participation_chart }}">
-
-<h1>Stats by Agency</h1>
-{% for agency, stats in stats_by_agency.iteritems() %}
-<h2>{{ agency }}</h2>
-{% for stat, data in stats.iteritems() %}
-<h3>Total {{ stat }} </h3>
-<p>{{ data }}</h3>
-<br />
-{% end %}
-{% end %}
-
-<h1>Top Ideas Across All Agencies</h1>
-{% for category, idea_info in top_ideas.iteritems() %}
-<h3>Category: {{ category }}</h3>
-<p>{{ idea_info }}</p>
-
-{% end %}
-
-<h1>Needs Some Love</h1>
-These agencies dont have a lot of input-- they need some love. 
-
-<h1>Unusual Ideas</h1>
-How do we measure this? Just least frequent minus stop words?
-
-<h1></h1>
-
-</body>
+  <body>
+    <div id="header">
+      <div id="title">
+        OpenGov Tracker
+      </div>
+      <div id="stat_box">
+        <div id="stat">
+          <div id="stat_description">
+            Ideas
+          </div>
+          <div id="big_num">
+            398
+          </div>
+        </div>
+        <div id="stat">
+          <div id="stat_description">
+            Votes
+          </div>
+          <div id="big_num">
+            8739
+          </div>
+        </div>
+        <div id="stat">
+          <div id="stat_description">
+            Comments
+          </div>
+          <div id="big_num">
+            178
+          </div>
+        </div>
+        <div id="stat">
+          <div id="stat_description">
+            Days to Go
+          </div>
+          <div id="big_num">
+            35
+          </div>
+        </div>
+      </div>
+      <div id="title_chart">
+        <img src="{{ participation_chart }}">
+      </div>
+    </div>
+  
+    <div id="categories">
+      <h1>Top Ideas Across All Agencies</h1>
+      {% for category, idea_info in top_ideas.iteritems() %}
+      <h2>{{ category }}</h2>
+      <p>{{ idea_info }}</p>
+      {% end %}
+    </div>
+  
+    <div id="agency">
+      <h1>Stats by Agency</h1>
+      {% for agency, stats in stats_by_agency.iteritems() %}
+      <h2>{{ agency }}</h2>
+      {% for stat, data in stats.iteritems() %}
+      <h3>Total {{ stat }} </h3>
+      <p>{{ data }}</h3>
+      <br />
+      {% end %}
+      {% end %}
+    </div>
+   
+    <div id="footer">
+     
+    </div>
+   
+  </body>
 </html>
-

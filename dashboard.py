@@ -4,10 +4,12 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import urllib, urllib2
+import os
+
 try:
     import json
 except:
-    import simplejson
+    import simplejson as json
 
 from agencies import agencies, cat_id
 
@@ -133,9 +135,13 @@ class MainHandler(tornado.web.RequestHandler):
 
         return (stats, best_ideas)
 
+settings = {
+    "static_path": os.path.join(os.path.dirname(__file__), "static")
+    }
+
 application = tornado.web.Application([
         (r'/', MainHandler),
-        ])
+        ], **settings)
 
 if __name__ == '__main__':
     http_server = tornado.httpserver.HTTPServer(application)

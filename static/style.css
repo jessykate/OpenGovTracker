@@ -6,21 +6,48 @@ body {
 	border: 0;
 	color: #404040;
 	padding-bottom: 30px;
-	background: #fff url(images/body_bg.png) center top no-repeat;
+	background: #f5f6f7;
 	margin: 0;
 }
 
-#header{
-    padding:0px 0px 50px 100px;   
-    height:94px; 
+#header {
+    padding:50px 100px;   
+    height:350px; 
+    background: #e8ecdc;
 }
 
-#opennasa_header{
-    width: 213px;
-    height: 75px;
+#title {
     position: absolute;
-    left:400px;
-    top: 0px;  
+    left:90px;
+    top: 40px;
+    font-size: 300%;
+    font-weight: bold; 
+}
+
+#stat_box{
+    position: absolute;
+    left: 110px;
+    top: 100px;
+    height: 80px;
+    font-size: 150%;
+    width: 1000px;
+}
+
+#stat {
+    width: 150px;
+    height: 80px;
+    margin: 0px 35px;
+    float: left;
+}
+
+#stat_description {
+    font-size:16px;
+    font-weight:bold;
+}
+
+#big_num {
+    font-size: 400%;
+    font-weight: bold;
 }
 
 h1 {
@@ -74,21 +101,6 @@ h6 {
     margin-top: 0px;
 }
 
-.submit{
-    font-size:35px;
-    color:#404040;
-    text-align:center;
-}
-
-#wrapper {
-    background-image: url(images/directory.png);
-    background-position: 722px 60px;
-    background-repeat: no-repeat;
-    width: 1000px;
-	margin: 0 auto;
-	
-}
-
 ul#nav {
 	list-style: none;
 	background: #000;
@@ -118,39 +130,6 @@ ul#nav li a:hover {
 	color: #fff;
 }
 
-#search_home{
-    width: 985px;
-    min-height: 400px;    
-    margin-bottom: 30px;
-}
-
-#content {
-	width: 600px;
-	min-height: 400px;
-	margin-right: 2px;
-	float: left;
-	padding: 15px;
-}
-
-#sidebar {
-	width: 340px;
-	float: left;
-	margin-left: 8px;
-	margin-top: 20px;
-}
-
-#sidebar_text{
-    margin: -30px 0px 0px 4px;
-    float: left;
-}
-
-#map {
-	margin: 0px 5px;
-	width: 325px;
-	float: left;
-}
-
-
 span.fn {
 	font-size: 36px;
 	font-weight: bold;
@@ -158,104 +137,19 @@ span.fn {
 	display: block;
 }
 
-.org {
-	float: left;
-	display: block;
-	width: 400px;
-	font-size: 20px;
-}
-
-.email {
-	display: block;
-	float: left;
-}	
-	
-img.photo {
-	float: left;
-	margin-right: 20px;
-	margin-bottom: 20px;
-	background:#CCCCCC none repeat scroll 0 0;
-    padding:5px;
-}
-
-.tel {
-	display: block;
-	clear: both;
-	float: left;
-	margin-top: 5px;
-}
-
-.address {
-	float: left;
-	margin-right: 50px;
-}
-#person address {
-	font-style: normal;
-}
-
-.otherInfo {
-	float: left;
-}
-
-.contact {
-	float: left;
-	margin-top: 10px;
-	width: 300px;
-}
-
-
 #footer {
 	clear: both;
 }
 
-#container {
-	// background: url(images/wrapper_bg.png) top left repeat-y;
+#agency {
 	background-color: white;
 	width: 985px;
 	float: left;
 }
 
-#stat {
-    font-size: 150%;
-    margin:30px;
-}
-
-#big_num {
-    font-size: 500%;
-    font-weight: bold;
-}
-
-#results_query {
-    font-size: 300%;
-    font-weight: bold;
-    font-style: italic;
-    padding-left: 10px;
-}
-
-#stat_description {
-    border-bottom:1px solid #888888;
-    font-size:12px;
-    font-weight:bold;
-}
-
-#simple_message {
-    margin: 20px;
-}
 
 .otherInfo ul {
 	padding: 0;
-}
-
-input.share { 
-    color:#404040; 
-    font: bold xx-large 'trebuchet ms',helvetica,sans-serif; 
-}
-
-#static_page {
-    background: url(images/wrapper_bg.png) top left repeat-y;
-    float: left;
-    width: 985px;
-    padding: 20px;
 }
 
 #footer {
