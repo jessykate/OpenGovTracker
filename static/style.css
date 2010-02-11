@@ -25,7 +25,7 @@ body {
     font-weight: bold; 
 }
 
-#stat_box{
+#stat_box {
     position: absolute;
     left: 175px;
     top: 110px;
@@ -34,20 +34,19 @@ body {
     width: 900px;
 }
 
-#stat {
+.stat {
     width: 180px;
     height: 80px;
     margin: 0px 15px;
-    float: left;
-    
+    float: left;    
 }
 
-#stat_description {
+.stat_description {
     font-size:16px;
     text-align:center;
 }
 
-#big_num {
+.big_num {
     font-size: 400%;
     font-weight: bold;
     text-align:center;
@@ -151,20 +150,20 @@ span.fn {
     margin: 20px 100px;
 }
 
-#section_title {
+.section_title {
     margin-top: -30px; 
     margin-left: -25px;
     font-weight: bold; 
 }
 
-#category {
+.category {
     width: 200px;
     height: 300px;
     float: left;
     margin: 25px;
 }
 
-#category_title {
+.category_title {
     font-size: 200%;
     width: 200px;
     height: 30px;
@@ -172,34 +171,33 @@ span.fn {
     font-weight: bold;
 }
 
-#category_idea_title {
+.category_idea_title {
     font-size: 150%;
     width: 200px;
-    height: 20px;
     margin: 5px;
 }
 
-#category_author {
+.category_author {
     font-weight: bold;
     width: 200px;
     margin: 5px;
     height: 15px;
 }
 
-#category_idea_text {
+.category_idea_text {
     width: 200px;
     height: 130px;
     margin: 5px;  
 }
 
-#category_agency {
+.category_agency {
     width: 55px;
     height: 55px;
     margin: 5px 20px 0px 0px;
     float: left;
 }
 
-#category_num {
+.category_num {
     font-size: 250%;
     width: 40px;
     text-align: center;
@@ -208,14 +206,14 @@ span.fn {
     float: left;
 }
 
-#category_num_title{
+.category_num_title{
     width: 40px;
     text-align: center;
     margin: 5px 10px;
     float: left;
 }
 
-#agency {
+.agency {
 	background-color: #DBE0CB;
 	padding: 20px 100px;
 	float: left;

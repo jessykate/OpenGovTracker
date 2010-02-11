@@ -10,35 +10,35 @@
            <h1>OpenGov Tracker</h1>
       </div>
       <div id="stat_box">
-        <div id="stat">
-          <div id="big_num">
+        <div class="stat">
+          <div class="big_num">
             {{ total_ideas }}
           </div>
-          <div id="stat_description">
+          <div class="stat_description">
             Ideas
           </div>
         </div>
-        <div id="stat">
-          <div id="big_num">
+        <div class="stat">
+          <div class="big_num">
             {{ total_votes }}
           </div>
-          <div id="stat_description">
+          <div class="stat_description">
             Votes
           </div>
         </div>
-        <div id="stat">
-          <div id="big_num">
+        <div class="stat">
+          <div class="big_num">
             {{ total_comments }}
           </div>
-          <div id="stat_description">
+          <div class="stat_description">
             Comments
           </div>
         </div>
-        <div id="stat">
-          <div id="big_num">
+        <div class="stat">
+          <div class="big_num">
             {{ days_to_go }}
           </div>
-          <div id="stat_description">
+          <div class="stat_description">
             Days to Go
           </div>
         </div>
@@ -49,42 +49,40 @@
     </div>
     
     <div id="categories">
-      <div id="section_title">
-        <h1>Top Ideas</h1>
+      <div class="section_title">
+        <h1>Top Ideas Across Government</h1>
       </div>
       {% for category, idea_info in top_ideas_by_category.iteritems() %}
-      <div id="category"> <!-- onclick="location.href='__ idea_link __';" style="cursor:pointer;" -->
-        <div id="category_title">
-          {{ category }}
+      <div class="category"> <!-- onclick="location.href='__ idea_link __';" style="cursor:pointer;" -->
+        <div class="category_title">
+          {{ category.title() }}
         </div>
-        <div id="category_idea_title">
-          Open Source all software!
-          <!-- __ idea_title __ -->
+        <div class="category_idea_title">
+	  {{ idea_info['idea']['title'] }}
         </div>
-        <div id="category_author">
-          John Q. Public
-          <!-- __ idea_author __ -->
+        <div class="category_author">
+	  {{ idea_info['idea']['author'].title() }}
         </div>
-        <div id="category_idea_text">
+        <div class="category_idea_text">
           All software being developed by NASA should be default openly developed and available for use.  This  allows for greater reuse of the software by other NASA programs, other Agencies and stimulates the economy.  NASA already has the NASA Open Source Agreement (NOSA) and is currently trying to get the Contributor's License Agreement workflow in place.
           <!-- __ idea_info __ -->
         </div>
-        <div id="category_agency">
+        <div class="category_agency">
           <img src="/static/images/logo/nasa.jpg" align="left" width="55" height="50">
           <!-- <img src="__ agency.logo(50) __"> -->
         </div>
-        <div id="category_num">
+        <div class="category_num">
           65
           <!-- __ idea_votes __ -->
         </div>
-        <div id="category_num">
+        <div class="category_num">
           14
           <!-- __ idea_comments __ -->
         </div>
-        <div id="category_num_title">
+        <div class="category_num_title">
           Votes
         </div>
-        <div id="category_num_title">
+        <div class="category_num_title">
           Comments
         </div>
       </div>
@@ -93,7 +91,7 @@
     
     <div id="endpoints">
       <div id="doing_great">
-        <div id="section_title">
+        <div class="section_title">
           <h1>Doing Great</h1>
         </div>    
         <p>These are the agencies with the most activity. Great job!</p>
@@ -109,7 +107,7 @@
       </div>
 
       <div id="needs_love">
-        <div id="section_title">
+        <div class="section_title">
           <h1>Needs Some Love</h1>
         </div>
         <p>These agencies dont have a lot of input. They need some love. Please
