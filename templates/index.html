@@ -88,20 +88,9 @@
     <br />
 
 
-
-    <h1>Other Stats by Agency</h1>
-    {% for agency, stats in stats_by_agency.iteritems() %}
-    <h2>{{ agency }}</h2>
-    {% for stat, data in stats.iteritems() %}
-    <h3>Total {{ stat }} </h3>
-    <p>{{ data }}</h3>
-    <br />
-    {% end %}
-    {% end %}
-
-   
-    <div id="footer">
-     
+    {% include "agencies_table.html" %}
+    
+    <div id="footer">     
     </div>
    
   </body>
