@@ -55,7 +55,7 @@ h1 {
 	background: #0F222C;
 	padding: 30px 0 10px 20px;
 	color: #fff;
-	width: 245px;
+	width: 300px;
 	margin: 0;
 }
 
@@ -141,10 +141,44 @@ span.fn {
 	clear: both;
 }
 
+#categories {
+	width: 1000px;
+	height: 300px;
+	float: left;
+    margin: auto;
+}
+
+#category {
+    width: 200px;
+    margin: 25px;
+    float: left;
+}
+
+#category_title {
+    font-size: 200%;
+    
+    
+}
+
+#category_text {
+    
+    
+    
+}
+
+#category_nums {
+    font-size: 200%;
+    
+    
+}
+
+
+
 #agency {
 	background-color: white;
-	width: 985px;
+	width: 1000px;
 	float: left;
+	margin: auto;
 }
 
 
