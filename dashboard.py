@@ -20,6 +20,86 @@ class MainHandler(tornado.web.RequestHandler):
         # get the top ideas in each category across all agencies
         top_ideas = self.top_ideas_by_category(best_ideas_by_agency)
 
+        # now we do some pivots and projections
+        participation_chart = self.construct_participation_chart(stats_by_agency)
+        #tag_cloud = construct_tag_clouds(stats_by_agency)
+        
+
+        # determine the top agency by number of ideas
+        #top_agency = self.top_agency(stats_by_agency)
+
+        # determine the top agency by participation = ideas+votes+comments
+        #best_participation = self.top_participation(stats_by_agency)
+
+        self.render('templates/index.html', top_ideas=top_ideas, participation_chart=participation_chart,
+                    stats_by_agency=stats_by_agency, most_votes = self.most_votes(stats_by_agency), 
+                    most_ideas = self.most_ideas(stats_by_agency), most_comments = self.most_comments(stats_by_agency),
+                    least_ideas = self.least_ideas(stats_by_agency), least_votes = self.least_votes(stats_by_agency), 
+                    least_comments = self.least_comments(stats_by_agency), 
+                    )
+                   # top_agency, best_participation, stats_by_agency)
+
+
+    def construct_tag_clouds(self, stats_by_agency):
+        for agency,  in stats_by_agency.keys():
+            pass
+
+    def most_votes(self, stats_by_agency):
+        most_votes = -1
+        agency = None
+        for this_agency, data in stats_by_agency.iteritems():
+            if data['votes'] > most_votes:
+                most_votes = data['votes']
+                agency = this_agency
+        return {'agency': agency, 'count':most_votes}
+
+    def least_votes(self, stats_by_agency):
+        least_votes = 1000000
+        agency = None
+        for this_agency, data in stats_by_agency.iteritems():
+            if data['votes'] < least_votes:
+                least_votes = data['votes']
+                agency = this_agency
+        return {'agency': agency, 'count':least_votes}
+
+    def most_ideas(self, stats_by_agency):
+        most_ideas = -1
+        agency = None
+        for this_agency, data in stats_by_agency.iteritems():
+            if data['ideas'] > most_ideas:
+                most_ideas = data['ideas']
+                agency = this_agency
+        return {'agency': agency, 'count':most_ideas}
+
+    def least_ideas(self, stats_by_agency):
+        least_ideas = 1000000
+        agency = None
+        for this_agency, data in stats_by_agency.iteritems():
+            if data['ideas'] < least_ideas:
+                least_ideas = data['ideas']
+                agency = this_agency
+        return {'agency': agency, 'count':least_ideas}
+
+    def most_comments(self, stats_by_agency):
+        most_comments = -1
+        agency = None
+        for this_agency, data in stats_by_agency.iteritems():
+            if data['comments'] > most_comments:
+                most_comments = data['comments']
+                agency = this_agency
+        return {'agency': agency, 'count':most_comments}
+
+    def least_comments(self, stats_by_agency):
+        least_comments = 1000000
+        agency = None
+        for this_agency, data in stats_by_agency.iteritems():
+            if data['comments'] < least_comments:
+                least_comments = data['comments']
+                agency = this_agency
+        return {'agency': agency, 'count':least_comments}
+
+
+    def construct_participation_chart(self, stats_by_agency):
         # get the agency names out into a list so we can be sure the
         # list ordering for votes, comments and ideas will be
         # consistent.
@@ -54,21 +134,10 @@ class MainHandler(tornado.web.RequestHandler):
 
         # construct the participation stacked bar chart url. note that
         # we scale the height as appropriate for the largest values. 
-        participation_chart = "http://chart.apis.google.com/chart?cht=bvs&chs=800x300&chds=0,"+str(max_value)+"&chbh=a&chco=4D89D9,C6D9FD,DD99FD&chd=t:"+','.join(ideas_by_agency)+"|"+','.join(votes_by_agency)+"|"+','.join(comments_by_agency)+"&chxt=x&chxl=0:|"+'|'.join(agency_names)+"&chtt=Participation+Meter&chts=40&chdl=Ideas|Votes|Comments"
+        participation_chart = "http://chart.apis.google.com/chart?cht=bvs&chs=1000x300&chds=0,"+str(max_value)+"&chbh=a&chco=4D89D9,C6D9FD,DD99FD&chd=t:"+','.join(ideas_by_agency)+"|"+','.join(votes_by_agency)+"|"+','.join(comments_by_agency)+"&chxt=x&chxl=0:|"+'|'.join(agency_names)+"&chts=40&chdl=Ideas|Votes|Comments"
         
-        print participation_chart
-    
-        # determine the top agency by number of ideas
-        #top_agency = self.top_agency(stats_by_agency)
-
-        # determine the top agency by participation = ideas+votes+comments
-        #best_participation = self.top_participation(stats_by_agency)
-
-        self.render('templates/index.html', top_ideas=top_ideas, participation_chart=participation_chart,
-                    stats_by_agency=stats_by_agency)
-                   # top_agency, best_participation, stats_by_agency)
-
-        
+        return participation_chart
+            
     def top_agency(self, stats_by_agency):
         pass
 
