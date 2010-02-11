@@ -8,20 +8,19 @@ body {
 	padding-bottom: 30px;
 	margin: 0;
 	background: #e8ecdc;
-    
+	margin: 0 auto; 
+    width:1000px; 
 }
 
 
 #header {
-    padding:50px 100px;   
-    height:300px; 
-    margin: 0 auto; 
-    width:1000px;
+    height:350px; 
+    margin-top: 70px;
 }
 
 #title {
     margin-left:-30px;
-    margin-top: -325px;
+    margin-top: -370px;
     font-size: 150%;
     font-weight: bold; 
     position: relative;
@@ -137,7 +136,6 @@ ul#nav li a:hover {
 span.fn {
 	font-size: 36px;
 	font-weight: bold;
-	float: left;
 	display: block;
 }
 
@@ -146,12 +144,7 @@ span.fn {
 }
 
 #categories {
-	width: 1000px;
-	height: 375px;
-	float: left;
-    margin: 20px 100px;
-    margin: 0 auto; 
-    width:1000px;
+	height: 500px;
 }
 
 .section_title {
@@ -164,7 +157,7 @@ span.fn {
     width: 200px;
     height: 300px;
     float: left;
-    margin: 25px;
+    margin: 10px 50px 0px 0px;
 }
 
 .category_title {
@@ -217,22 +210,10 @@ span.fn {
     float: left;
 }
 
-.agency {
-    background-color: #DBE0CB;
-    padding: 20px 100px;
-    float: left;
-    margin: 0 auto; 
-    width:1000px;
-}
 
 #endpoints {
-    background-color: gray;
     width: 1000px;
-    float: left;
-    margin: auto;
-    margin: 0 auto; 
-    width:1000px;
-    
+    height: 300px;
 }
 
 #doing_great {
@@ -245,15 +226,15 @@ span.fn {
     float: left;
 }
 
-.otherInfo ul {
-    padding: 0;
+#agency {
+    background-color: #DBE0CB;
+    float: left;
 }
+
 
 #footer {
     color: #ccc;
     border-top: 1px dotted #999;
-    margin: 0 auto; 
-    width:1000px;
 }
 
 #footer ul {
