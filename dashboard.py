@@ -13,6 +13,12 @@ except:
 from agencies import agencies, cat_id
 from settings import settings
 
+def truncate(input_string, length):
+    words = input_string.split()
+    if len(words) > length:
+        return ' '.join(words[:length])+'...'
+    else: return input_string
+
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         stats_cache = "stats_cache.json"
@@ -36,7 +42,7 @@ class MainHandler(tornado.web.RequestHandler):
         kwargs['total_comments'] = sum([agency_data['comments'] for agency_data in stats_by_agency.values()])
         kwargs['total_votes'] = sum([agency_data['votes'] for agency_data in stats_by_agency.values()])
         
-        self.render('templates/index.html', **kwargs)
+        self.render('templates/index.html', truncate=truncate, **kwargs)
     
 
     def get_stats_from_file(self):
@@ -130,7 +136,8 @@ class MainHandler(tornado.web.RequestHandler):
         # specify formatting for the x-axis labels
         display_names = []
         for name in agency_names:
-            if len(name) <= 5 and name != 'labor' and name != 'state':
+            if (len(name) <= 5 and name != 'labor' and name != 'state' 
+                and name!='comm' and name !='treas'):
                 display_names.append(name.upper())
             else:
                 display_names.append(name.title())
@@ -145,8 +152,9 @@ class MainHandler(tornado.web.RequestHandler):
 
         # construct the participation stacked bar chart url. note that
         # we scale the height as appropriate for the largest values. 
+        # e8ecdc
       
-        participation_chart = "http://chart.apis.google.com/chart?cht=bvs&chs=1000x300&chds=0,"+str(max_value)+"&chbh=a,7&chco=996666,CC9999,FFCCCC&chd=t:"+','.join(ideas_by_agency)+"|"+','.join(votes_by_agency)+"|"+','.join(comments_by_agency)+"&chxt=x&chxl=0:|"+'|'.join(display_names)+"&chts=40&chdl=Ideas|Votes|Comments"
+        participation_chart = "http://chart.apis.google.com/chart?cht=bvs&chs=1000x300&chds=0,"+str(max_value)+"&chbh=a,7&chco=996666,CC9999,FFCCCC&chd=t:"+','.join(ideas_by_agency)+"|"+','.join(votes_by_agency)+"|"+','.join(comments_by_agency)+"&chxt=x&chxl=0:|"+'|'.join(display_names)+"&chts=40&chdl=Ideas|Votes|Comments&chf=bg,s,e8ecdc"
         
         return participation_chart
             
