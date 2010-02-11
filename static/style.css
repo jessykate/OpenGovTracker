@@ -1,0 +1,224 @@
+/* @override http://10.0.1.28/nasaprofiles/style.css */
+
+body {
+	font-family: arial, sans-serif;
+	font-size: 12px;
+	border: 0;
+	color: #404040;
+	padding-bottom: 30px;
+	background: #f5f6f7;
+	margin: 0;
+}
+
+#header {
+    padding:50px 100px;   
+    height:350px; 
+    background: #e8ecdc;
+}
+
+#title {
+    position: absolute;
+    left:90px;
+    top: 40px;
+    font-size: 300%;
+    font-weight: bold; 
+}
+
+#stat_box{
+    position: absolute;
+    left: 110px;
+    top: 100px;
+    height: 80px;
+    font-size: 150%;
+    width: 1000px;
+}
+
+#stat {
+    width: 150px;
+    height: 80px;
+    margin: 0px 35px;
+    float: left;
+}
+
+#stat_description {
+    font-size:16px;
+    font-weight:bold;
+}
+
+#big_num {
+    font-size: 400%;
+    font-weight: bold;
+}
+
+h1 {
+    font-family: century gothic;
+	background: #0F222C;
+	padding: 30px 0 10px 20px;
+	color: #fff;
+	width: 300px;
+	margin: 0;
+}
+
+h2 {
+	font-family: arial, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.h2 {
+	font-family: arial, sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.h2_web {
+	font-family: arial, sans-serif;
+    font-size: 16px;
+    color:#1CACC4;
+}
+
+h3 {
+	font-family: arial, sans-serif;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+h5 {
+    font-family: century;
+    font-size: 42px;
+    font-style: bold;
+    color: #404040;
+    margin-top: 40px; 
+    margin-bottom: 0px;   
+}
+
+h6 {
+    font-family: century;
+    font-size: 20px;
+    font-style: italic;
+    color: #404040;   
+    margin-bottom: 70px; 
+    margin-top: 0px;
+}
+
+ul#nav {
+	list-style: none;
+	background: #000;
+	display: block;
+	float: left;
+	height: 35px;
+	padding: 0;
+	width: 100%;
+	margin: 15px 0;
+}
+
+ul#nav li {
+	float: left;
+}
+
+ul#nav li a {
+	color: #C0CDCF;
+	display: block;
+	padding: 10px 30px;
+	border-right: 1px solid #555;
+	text-transform: uppercase;
+	font-size: 14px;
+	text-decoration: none;
+}
+
+ul#nav li a:hover {
+	color: #fff;
+}
+
+span.fn {
+	font-size: 36px;
+	font-weight: bold;
+	float: left;
+	display: block;
+}
+
+#footer {
+	clear: both;
+}
+
+#categories {
+	width: 1000px;
+	height: 300px;
+	float: left;
+    margin: auto;
+}
+
+#category {
+    width: 200px;
+    margin: 25px;
+    float: left;
+}
+
+#category_title {
+    font-size: 200%;
+    
+    
+}
+
+#category_text {
+    
+    
+    
+}
+
+#category_nums {
+    font-size: 200%;
+    
+    
+}
+
+
+
+#agency {
+	background-color: white;
+	width: 1000px;
+	float: left;
+	margin: auto;
+}
+
+
+.otherInfo ul {
+	padding: 0;
+}
+
+#footer {
+	color: #ccc;
+	border-top: 1px dotted #999;
+	width: 985px;
+}
+
+#footer ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	font-size: 120%;
+}
+
+#footer li {
+	float: left;
+	margin-right: 10px;
+}
+
+#footer li a {
+	color: #;
+}
+
+a {
+	color: #1cacc4;
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a img {
+	border: none;
+}
+
+
