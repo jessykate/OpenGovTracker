@@ -12,26 +12,26 @@
       <div id="stat_box">
         <div id="stat">
           <div id="stat_description">
-            Ideas
+            Total Ideas
           </div>
           <div id="big_num">
-            576
+            {{ total_ideas }}
           </div>
         </div>
         <div id="stat">
           <div id="stat_description">
-            Votes
+	    Total Votes
           </div>
           <div id="big_num">
-            18523
+            {{ total_votes }}
           </div>
         </div>
         <div id="stat">
           <div id="stat_description">
-            Comments
+	    Total Comments
           </div>
           <div id="big_num">
-            218
+            {{ total_comments }}
           </div>
         </div>
         <div id="stat">
@@ -39,7 +39,7 @@
             Days to Go
           </div>
           <div id="big_num">
-            35
+            {{ days_to_go }}
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
   
     <div id="categories">
       <h1>Top Ideas</h1>
-      {% for category, idea_info in top_ideas.iteritems() %}
+      {% for category, idea_info in top_ideas_by_category.iteritems() %}
       <div id="category">
         <div id="category_title">
           {{ category }}

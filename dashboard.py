@@ -4,7 +4,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import urllib, urllib2
-import os
+import os, datetime
 try:
     import json
 except:
@@ -16,26 +16,28 @@ from settings import settings
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         stats_cache = "stats_cache.json"
-        stats_by_agency, best_ideas_by_agency = self.get_stats_from_file()
+        stats_by_agency, top_ideas_by_agency = self.get_stats_from_file()
 
-        # get the top ideas in each category across all agencies
-        top_ideas = self.top_ideas_by_category(best_ideas_by_agency)
-
-        # now we do some pivots and projections
-        participation_chart = self.construct_participation_chart(stats_by_agency)
-        #tag_cloud = construct_tag_clouds(stats_by_agency)
+        kwargs = {}
+        # get the top ideas in each category across all agencies        
+        kwargs['stats_by_agency'] = stats_by_agency
+        kwargs['top_ideas_by_agency'] = top_ideas_by_agency
+        kwargs['top_ideas_by_category'] = self.top_ideas_by_category(top_ideas_by_agency)
+        kwargs['participation_chart'] = self.construct_participation_chart(stats_by_agency)
+        end_date = datetime.datetime(year=2010, month=3, day=19)
+        kwargs['days_to_go'] = (end_date - datetime.datetime.now()).days
+        kwargs['most_votes'] = self.most_votes(stats_by_agency)
+        kwargs['most_ideas'] = self.most_ideas(stats_by_agency) 
+        kwargs['most_comments'] = self.most_comments(stats_by_agency)
+        kwargs['least_ideas'] = self.least_ideas(stats_by_agency)
+        kwargs['least_votes'] = self.least_votes(stats_by_agency) 
+        kwargs['least_comments'] = self.least_comments(stats_by_agency)
+        kwargs['total_ideas'] = sum([agency_data['ideas'] for agency_data in stats_by_agency.values()])
+        kwargs['total_comments'] = sum([agency_data['comments'] for agency_data in stats_by_agency.values()])
+        kwargs['total_votes'] = sum([agency_data['votes'] for agency_data in stats_by_agency.values()])
         
-        self.render('templates/index.html', top_ideas=top_ideas, 
-                    participation_chart=participation_chart,
-                    stats_by_agency=stats_by_agency, 
-                    most_votes = self.most_votes(stats_by_agency), 
-                    most_ideas = self.most_ideas(stats_by_agency), 
-                    most_comments = self.most_comments(stats_by_agency),
-                    least_ideas = self.least_ideas(stats_by_agency), 
-                    least_votes = self.least_votes(stats_by_agency), 
-                    least_comments = self.least_comments(stats_by_agency), 
-                    )
-                   # top_agency, best_participation, stats_by_agency)
+        self.render('templates/index.html', **kwargs)
+    
 
     def get_stats_from_file(self):
         cache_file = open(settings['stats_cache'], "r")
@@ -127,6 +129,14 @@ class MainHandler(tornado.web.RequestHandler):
             y.append(stats_by_agency[agency]['comments'])
             z.append(stats_by_agency[agency]['ideas'])
         max_value =  max([sum(tup) for tup in zip(x,y,z)])
+
+        # specify the x-axis labels. this is a hack :)
+        display_names = []
+        for name in agency_names:
+            if len(name) <= 5 and name != 'labor' and name != 'state':
+                display_names.append(name.upper())
+            else:
+                display_names.append(name.title())
             
         # create text markers to annotate each bar with the numeric
         # counts (each marker must be prefixed with a 't'-- *shrug*)
@@ -138,7 +148,9 @@ class MainHandler(tornado.web.RequestHandler):
 
         # construct the participation stacked bar chart url. note that
         # we scale the height as appropriate for the largest values. 
-        participation_chart = "http://chart.apis.google.com/chart?cht=bvs&chs=1000x300&chds=0,"+str(max_value)+"&chbh=a&chco=4D89D9,C6D9FD,DD99FD&chd=t:"+','.join(ideas_by_agency)+"|"+','.join(votes_by_agency)+"|"+','.join(comments_by_agency)+"&chxt=x&chxl=0:|"+'|'.join(agency_names)+"&chts=40&chdl=Ideas|Votes|Comments"
+        # 4D89D9,C6D9FD,DD99FD
+      
+        participation_chart = "http://chart.apis.google.com/chart?cht=bvs&chs=1000x300&chds=0,"+str(max_value)+"&chbh=a,7&chco=996666,CC9999,FFCCCC&chd=t:"+','.join(ideas_by_agency)+"|"+','.join(votes_by_agency)+"|"+','.join(comments_by_agency)+"&chxt=x&chxl=0:|"+'|'.join(display_names)+"&chts=40&chdl=Ideas|Votes|Comments"
         
         return participation_chart
             
