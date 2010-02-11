@@ -1,16 +1,16 @@
-<div id="agency">
-  <div id="section_title">
+<div class="agency">
+  <div class="section_title">
     <h1>Stats by Agency</h1>
   </div>
   <table>
-    <tr><th>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Participants</th><th>Share This</th></tr>
+    <tr><th>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Participants</th><th>Share</th></tr>
     {% for agency, stats in stats_by_agency.iteritems() %}
     <tr>
-      <td>{{agency}}</td>
-      <td>{{stats['ideas']}}</td>
-      <td>{{stats['votes']}}</td>
-      <td>{{stats['comments']}}</td>
-      <td>{{ len(stats['authors']) }}</td>
+      <td>{{ display(agency) }}</td>
+      <td class="table_num">{{ stats['ideas'] }}</td>
+      <td class="table_num">{{ stats['votes'] }}</td>
+      <td class="table_num">{{ stats['comments'] }}</td>
+      <td class="table_num">{{ len(stats['authors']) }}</td>
       <td><a href="">Share This</a></td>
     </tr>
     {% end %}

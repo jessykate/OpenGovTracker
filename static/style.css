@@ -286,3 +286,10 @@ a img {
 }
 
 
+td {
+    width: 100px;
+}
+
+td.table_num {
+    text-align: center;
+}
