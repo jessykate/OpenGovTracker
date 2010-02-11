@@ -67,5 +67,7 @@ while True:
         json.dump(data, cache_file)
         cache_file.close()
     except:
+        # if anything goes wrong this time around, just pass-- try
+        # again in 5 minutes. (should at least add a log here!)
         pass
     time.sleep(300)
