@@ -3,20 +3,13 @@
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
-<<<<<<< HEAD
 import urllib, urllib2
 import os
-
-=======
->>>>>>> jk/master
 try:
     import json
 except:
     import simplejson as json
-<<<<<<< HEAD
 
-=======
->>>>>>> jk/master
 from agencies import agencies, cat_id
 from settings import settings
 
@@ -171,55 +164,6 @@ class MainHandler(tornado.web.RequestHandler):
                     top_ideas[category]['idea'] = agency_ideas[category]['idea']
         return top_ideas
 
-<<<<<<< HEAD
-    def get_ideas(self, agency):
-        key = agencies[agency]
-        api_url = "http://api.ideascale.com/akira/api/ideascale.ideas.getTopIdeas?apiKey="
-        url = urllib2.urlopen(api_url+key)
-        js = json.loads(url.read())
-        ideas = js['response']['ideas']        
-
-        # aggregate stats for this agency
-        stats = {}
-        stats['categories'] = {}
-        stats['authors'] = {}
-        stats['tags'] = {}
-        for idea in ideas:
-            stats['ideas'] = stats.get('ideas', 0) +1
-            stats['votes'] = stats.get('votes', 0) + idea['voteCount']
-            stats['comments'] = stats.get('comments', 0) + idea['commentCount']
-            stats['categories'][idea['categoryID']] = stats['categories'].get(idea['categoryID'], 0) + 1
-            stats['authors'][idea['author']] = stats['authors'].get(idea['author'], 0) + 1
-            for tag in idea['tags']:
-                stats['tags'][tag] = stats['tags'].get(tag, 0) + 1
-            
-        # get the top idea for each category for this agency
-        best_ideas = {
-            # Data Availability, Information Quality, Accountability: 11571
-            # Public Feedback & Involvement, Tools & Strategies: 11572
-            # Working Together: Governments, Businesses, Non-Profits: 11573
-            # New Ways of Doing Business, New Tools: 11928
-            # Tell Us How to Improve this Site: 11929
-            'transparency' : {'votes':0, 'idea': None},
-            'participation' : {'votes':0, 'idea': None},
-            'collaboration' : {'votes':0, 'idea': None},
-            'innovation' : {'votes':0, 'idea': None},
-            'site_feedback' : {'votes':0, 'idea': None}
-        }
-        for idea in ideas:            
-            this_category = cat_id[agency][idea['categoryID']]
-            if best_ideas[this_category]['votes'] < idea['voteCount']:
-                best_ideas[this_category]['votes'] = idea['voteCount']
-                best_ideas[this_category]['idea'] = idea
-
-        return (stats, best_ideas)
-
-settings = {
-    "static_path": os.path.join(os.path.dirname(__file__), "static")
-    }
-
-=======
->>>>>>> jk/master
 application = tornado.web.Application([
         (r'/', MainHandler),
         ], **settings)
