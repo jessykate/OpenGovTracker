@@ -221,14 +221,25 @@ span.fn {
 	float: left;
 }
 
-#needs_love {
+#endpoints {
     background-color: gray;
 	width: 1000px;
 	float: left;
 	margin: auto;
     
+}
+
+#doing_great {
+	width: 500px;
+	float: left;    
     
 }
+
+#needs_love {
+	width: 500px;
+	float: left;
+}
+
 .otherInfo ul {
 	padding: 0;
 }
