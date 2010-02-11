@@ -3,22 +3,28 @@
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
+<<<<<<< HEAD
 import urllib, urllib2
 import os
 
+=======
+>>>>>>> jk/master
 try:
     import json
 except:
     import simplejson as json
+<<<<<<< HEAD
 
+=======
+>>>>>>> jk/master
 from agencies import agencies, cat_id
+from settings import settings
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        stats_by_agency = {}
-        best_ideas_by_agency = {}
-        for agency in agencies.keys():
-            stats_by_agency[agency], best_ideas_by_agency[agency] = self.get_ideas(agency)        
+        stats_cache = "stats_cache.json"
+        stats_by_agency, best_ideas_by_agency = self.get_stats_from_file()
+
         # get the top ideas in each category across all agencies
         top_ideas = self.top_ideas_by_category(best_ideas_by_agency)
 
@@ -26,21 +32,24 @@ class MainHandler(tornado.web.RequestHandler):
         participation_chart = self.construct_participation_chart(stats_by_agency)
         #tag_cloud = construct_tag_clouds(stats_by_agency)
         
-
-        # determine the top agency by number of ideas
-        #top_agency = self.top_agency(stats_by_agency)
-
-        # determine the top agency by participation = ideas+votes+comments
-        #best_participation = self.top_participation(stats_by_agency)
-
-        self.render('templates/index.html', top_ideas=top_ideas, participation_chart=participation_chart,
-                    stats_by_agency=stats_by_agency, most_votes = self.most_votes(stats_by_agency), 
-                    most_ideas = self.most_ideas(stats_by_agency), most_comments = self.most_comments(stats_by_agency),
-                    least_ideas = self.least_ideas(stats_by_agency), least_votes = self.least_votes(stats_by_agency), 
+        self.render('templates/index.html', top_ideas=top_ideas, 
+                    participation_chart=participation_chart,
+                    stats_by_agency=stats_by_agency, 
+                    most_votes = self.most_votes(stats_by_agency), 
+                    most_ideas = self.most_ideas(stats_by_agency), 
+                    most_comments = self.most_comments(stats_by_agency),
+                    least_ideas = self.least_ideas(stats_by_agency), 
+                    least_votes = self.least_votes(stats_by_agency), 
                     least_comments = self.least_comments(stats_by_agency), 
                     )
                    # top_agency, best_participation, stats_by_agency)
 
+    def get_stats_from_file(self):
+        cache_file = open(settings['stats_cache'], "r")
+        data = json.load(cache_file)
+        stats_by_agency = data["stats_by_agency"]
+        best_ideas_by_agency = data["best_ideas_by_agency"]
+        return stats_by_agency, best_ideas_by_agency
 
     def construct_tag_clouds(self, stats_by_agency):
         for agency,  in stats_by_agency.keys():
@@ -162,6 +171,7 @@ class MainHandler(tornado.web.RequestHandler):
                     top_ideas[category]['idea'] = agency_ideas[category]['idea']
         return top_ideas
 
+<<<<<<< HEAD
     def get_ideas(self, agency):
         key = agencies[agency]
         api_url = "http://api.ideascale.com/akira/api/ideascale.ideas.getTopIdeas?apiKey="
@@ -208,6 +218,8 @@ settings = {
     "static_path": os.path.join(os.path.dirname(__file__), "static")
     }
 
+=======
+>>>>>>> jk/master
 application = tornado.web.Application([
         (r'/', MainHandler),
         ], **settings)

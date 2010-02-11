@@ -49,10 +49,15 @@
     </div>
   
     <div id="categories">
-      <h1>Top Ideas Across All Agencies</h1>
+      <h1>Top Ideas</h1>
       {% for category, idea_info in top_ideas.iteritems() %}
-      <h2>{{ category }}</h2>
-      <p>{{ idea_info }}</p>
+      <div id="category">
+        <div id="category_title">
+          {{ category }}
+        </div>
+        <div id="category_idea">
+          <p>{{ idea_info }}</p>
+        </div>
       {% end %}
     </div>
   
