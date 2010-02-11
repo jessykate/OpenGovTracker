@@ -63,20 +63,17 @@
 	  {{ idea_info['idea']['author'].title() }}
         </div>
         <div class="category_idea_text">
-          All software being developed by NASA should be default openly developed and available for use.  This  allows for greater reuse of the software by other NASA programs, other Agencies and stimulates the economy.  NASA already has the NASA Open Source Agreement (NOSA) and is currently trying to get the Contributor's License Agreement workflow in place.
-          <!-- __ idea_info __ -->
+	  {{ truncate(idea_info['idea']['text'], 35) }}
         </div>
         <div class="category_agency">
           <img src="/static/images/logo/nasa.jpg" align="left" width="55" height="50">
           <!-- <img src="__ agency.logo(50) __"> -->
         </div>
         <div class="category_num">
-          65
-          <!-- __ idea_votes __ -->
+	  {{ idea_info['votes'] }}
         </div>
         <div class="category_num">
-          14
-          <!-- __ idea_comments __ -->
+	  {{ idea_info['comments'] }}
         </div>
         <div class="category_num_title">
           Votes
