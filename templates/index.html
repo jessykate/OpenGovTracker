@@ -49,7 +49,7 @@
     </div>
   
     <div id="categories">
-      <h1>Top Ideas</h1>
+      <h1>Most Popular Ideas Across all Agencies</h1>
       {% for category, idea_info in top_ideas_by_category.iteritems() %}
       <div id="category">
         <div id="category_title">
@@ -59,26 +59,24 @@
           <p>{{ idea_info }}</p>
         </div>
       {% end %}
-    </div>
-  
-    <div id="agency">
-      <h1>Stats by Agency</h1>
-      {% for agency, stats in stats_by_agency.iteritems() %}
-      <h2>{{ agency }}</h2>
-      {% for stat, data in stats.iteritems() %}
-      <h3>Total {{ stat }} </h3>
-      <p>{{ data }}</h3>
-      <br />
-      {% end %}
-      {% end %}
-      
-    </div>
-   
-  
+    </div>    
+
+    <h1>Doing Great</h1>
+    <p>These are the agencies with the most activity. Great job!</p>
+    <h3>Most Ideas Total</h3>
+    {{ most_ideas['agency'] }} : {{ most_ideas['count'] }} 
+    <br />
+    <h3>Most Votes Total</h3>
+    {{ most_votes['agency'] }} : {{ most_votes['count'] }} 
+    <br />
+    <h3>Most Comments Total</h3>
+    {{ most_comments['agency'] }} : {{ most_comments['count'] }} 
+    <br />
+
 
     <h1>Needs Some Love</h1>
-    <p>These agencies dont have a lot of input. They need some love. Please
-    help!</p>
+    <p>These agencies dont have a lot of input. They need some
+    love. Please help!</p>
     <h3>Least Ideas Total</h3>
     {{ least_ideas['agency'] }} : {{ least_ideas['count'] }} 
     <br />
