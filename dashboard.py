@@ -163,13 +163,12 @@ class MainHandler(tornado.web.RequestHandler):
             'participation': {'agency': None, 'votes':-1, 'idea': None},
             'collaboration': {'agency': None, 'votes':-1, 'idea': None},
             'innovation': {'agency': None, 'votes':-1, 'idea': None},
-            'site_feedback': {'agency': None, 'votes':-1, 'idea': None}
             }
 
         # best_ideas_by_agency is a dict for each agency (avoiding the
         # issue of ties right now).
         for agency, agency_ideas in best_ideas_by_agency.iteritems():
-            for category  in ['transparency', 'participation', 'collaboration', 'innovation', 'site_feedback']:
+            for category  in ['transparency', 'participation', 'collaboration', 'innovation']:
                 if top_ideas[category]['votes'] < agency_ideas[category]['votes']:
                     top_ideas[category]['agency'] = agency
                     top_ideas[category]['votes'] = agency_ideas[category]['votes']
