@@ -46,10 +46,6 @@ class MainHandler(tornado.web.RequestHandler):
         best_ideas_by_agency = data["best_ideas_by_agency"]
         return stats_by_agency, best_ideas_by_agency
 
-    def construct_tag_clouds(self, stats_by_agency):
-        for agency,  in stats_by_agency.keys():
-            pass
-
     def most_votes(self, stats_by_agency):
         most_votes = -1
         agency = None
@@ -106,6 +102,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 
     def construct_participation_chart(self, stats_by_agency):
+
         # get the agency names out into a list so we can be sure the
         # list ordering for votes, comments and ideas will be
         # consistent.
@@ -130,7 +127,7 @@ class MainHandler(tornado.web.RequestHandler):
             z.append(stats_by_agency[agency]['ideas'])
         max_value =  max([sum(tup) for tup in zip(x,y,z)])
 
-        # specify the x-axis labels. this is a hack :)
+        # specify formatting for the x-axis labels
         display_names = []
         for name in agency_names:
             if len(name) <= 5 and name != 'labor' and name != 'state':
@@ -148,15 +145,11 @@ class MainHandler(tornado.web.RequestHandler):
 
         # construct the participation stacked bar chart url. note that
         # we scale the height as appropriate for the largest values. 
-        # 4D89D9,C6D9FD,DD99FD
       
         participation_chart = "http://chart.apis.google.com/chart?cht=bvs&chs=1000x300&chds=0,"+str(max_value)+"&chbh=a,7&chco=996666,CC9999,FFCCCC&chd=t:"+','.join(ideas_by_agency)+"|"+','.join(votes_by_agency)+"|"+','.join(comments_by_agency)+"&chxt=x&chxl=0:|"+'|'.join(display_names)+"&chts=40&chdl=Ideas|Votes|Comments"
         
         return participation_chart
             
-    def top_agency(self, stats_by_agency):
-        pass
-
     def top_ideas_by_category(self, best_ideas_by_agency):
         top_ideas = {            
             'transparency': {'agency': None, 'votes':-1, 'idea': None},
