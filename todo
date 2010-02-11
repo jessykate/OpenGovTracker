@@ -1,3 +1,3 @@
-* pre-cache results /parallelize API calls (needed badly)
 * get out number of authors per agency
-* 
+* tag cloud?
+* save state? (could just save cache files). 
