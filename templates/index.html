@@ -6,41 +6,45 @@
   
   <body>
     <div id="header">
-      <img src="{{ participation_chart }}">
-      <div id="title">
-           <h1>OpenGov Tracker</h1>
-      </div>
-      <div id="stat_box">
-        <div class="stat">
-          <div class="big_num">
-            {{ total_ideas }}
-          </div>
-          <div class="stat_description">
-            Ideas
-          </div>
+      <div class="container">
+        <div id="participation_chart">
+          <img src="{{ participation_chart }}">
         </div>
-        <div class="stat">
-          <div class="big_num">
-            {{ total_votes }}
-          </div>
-          <div class="stat_description">
-            Votes
-          </div>
+        <div id="title">
+             <h1>OpenGov Tracker</h1>
         </div>
-        <div class="stat">
-          <div class="big_num">
-            {{ total_comments }}
+        <div id="stat_box">
+          <div class="stat">
+            <div class="big_num">
+              {{ total_ideas }}
+            </div>
+            <div class="stat_description">
+              Ideas
+            </div>
           </div>
-          <div class="stat_description">
-            Comments
+          <div class="stat">
+            <div class="big_num">
+              {{ total_votes }}
+            </div>
+            <div class="stat_description">
+              Votes
+            </div>
           </div>
-        </div>
-        <div class="stat">
-          <div class="big_num">
-            {{ days_to_go }}
+          <div class="stat">
+            <div class="big_num">
+              {{ total_comments }}
+            </div>
+            <div class="stat_description">
+              Comments
+            </div>
           </div>
-          <div class="stat_description">
-            Days to Go
+          <div class="stat">
+            <div class="big_num">
+              {{ days_to_go }}
+            </div>
+            <div class="stat_description">
+              Days to Go
+            </div>
           </div>
         </div>
       </div>
@@ -48,87 +52,117 @@
     </div>
     
     <div id="categories">
-      <div class="section_title">
-        <h1>Top Ideas Across Government</h1>
-      </div>
-      {% for category, idea_info in top_ideas_by_category.iteritems() %}
-      <div class="category"> <!-- onclick="location.href='__ idea_link __';" style="cursor:pointer;" -->
-        <div class="category_title">
-          {{ category.title() }}
-        </div>
-        <div class="category_idea_title">
-	  <a href="{{ idea_info['idea']['url'] }}" title="Click to visit this idea"> 
-	    {{ idea_info['idea']['title'] }} 
+      <div class="container">
+	<div class="section_title">
+          <h1>Top Ideas Across Government</h1>
+	</div>
+	{% for category, idea_info in top_ideas_by_category.iteritems() %}
+	<div class="category"> <!-- onclick="location.href='__ idea_link __';" style="cursor:pointer;" -->
+          <div class="category_title">
+            {{ category.title() }}
+          </div>
+          <div class="category_idea_title">
+	    <a href="{{ idea_info['idea']['url'] }}" title="Click to visit this idea"> 
+	      {{ idea_info['idea']['title'] }} 
 	    </a>
-        </div>
-        <div class="category_author">
-	  <a href="{{ idea_info['idea']['authorInfo']['url'] }}">	     
-	    {{ idea_info['idea']['author'].title() }}
-	  </a>
-        </div>
-        <div class="category_idea_text">
-	  {{ truncate(idea_info['idea']['text'], 35) }}
-        </div>
-        <div class="category_agency">
-          <img src="{{ get_logo(idea_info['agency']) }}" align="left" 
-	       width="50" height="50" title="{{ display(idea_info['agency']) }}">
-        </div>
-        <div class="category_num">
-	  {{ idea_info['votes'] }}
-        </div>
-        <div class="category_num">
-	  {{ idea_info['comments'] }}
-        </div>
-        <div class="category_num_title">
-          Votes
-        </div>
-        <div class="category_num_title">
-          Comments
-        </div>
+          </div>
+          <div class="category_author">
+	    <a href="{{ idea_info['idea']['authorInfo']['url'] }}">	     
+	      {{ idea_info['idea']['author'].title() }}
+	    </a>
+          </div>
+          <div class="category_idea_text">
+	    {{ truncate(idea_info['idea']['text'], 35) }}
+          </div>
+          <div class="category_agency">
+            <img src="{{ get_logo(idea_info['agency']) }}" align="left" 
+		 width="50" height="50" title="{{ display(idea_info['agency']) }}">
+          </div>
+          <div class="category_num">
+	    {{ idea_info['votes'] }}
+          </div>
+          <div class="category_num">
+	    {{ idea_info['comments'] }}
+          </div>
+          <div class="category_num_title">
+            Votes
+          </div>
+          <div class="category_num_title">
+            Comments
+          </div>
+	</div>
+	{% end %}
       </div>
-      {% end %}
     </div>
     
     <div id="endpoints">
-      <div id="doing_great">
-        <div class="section_title">
-          <h1>Doing Great</h1>
-        </div>    
-        <p>These are the agencies with the most activity. Great job!</p>
-        <h3>Most Ideas Total</h3>
-        {{ most_ideas['agency'] }} : {{ most_ideas['count'] }} 
-        <br />
-        <h3>Most Votes Total</h3>
-        {{ most_votes['agency'] }} : {{ most_votes['count'] }} 
-        <br />
-        <h3>Most Comments Total</h3>
-        {{ most_comments['agency'] }} : {{ most_comments['count'] }} 
-        <br />
-      </div>
-
-      <div id="needs_love">
-        <div class="section_title">
-          <h1>Needs Some Love</h1>
+      <div class="container">      
+        <div id="doing_great">
+          <div class="section_title">
+            <h1>Doing Great</h1>
+          </div>    
+          <p>These are the agencies with the most activity. Great job!</p>
+          <h3>Most Ideas Total</h3>
+          {{ most_ideas['agency'] }} : {{ most_ideas['count'] }} 
+          <br />
+          <h3>Most Votes Total</h3>
+          {{ most_votes['agency'] }} : {{ most_votes['count'] }} 
+          <br />
+          <h3>Most Comments Total</h3>
+          {{ most_comments['agency'] }} : {{ most_comments['count'] }} 
+          <br />
         </div>
-        <p>These agencies dont have a lot of input. They need some love. Please
-        help!</p>
-        <h3>Least Ideas Total</h3>
-        {{ least_ideas['agency'] }} : {{ least_ideas['count'] }} 
-        <br />
-        <h3>Least Votes Total</h3>
-        {{ least_votes['agency'] }} : {{ least_votes['count'] }} 
-        <br />
-        <h3>Least Comments Total</h3>
-        {{ least_comments['agency'] }} : {{ least_comments['count'] }} 
-        <br />
+
+        <div id="needs_love">
+          <div class="section_title">
+            <h1>Needs Some Love</h1>
+          </div>
+          <p>These agencies dont have a lot of input. They need some love. Please
+          help!</p>
+          <h3>Least Ideas Total</h3>
+          {{ least_ideas['agency'] }} : {{ least_ideas['count'] }} 
+          <br />
+          <h3>Least Votes Total</h3>
+          {{ least_votes['agency'] }} : {{ least_votes['count'] }} 
+          <br />
+          <h3>Least Comments Total</h3>
+          {{ least_comments['agency'] }} : {{ least_comments['count'] }} 
+          <br />
+        </div>
       </div>
-      
     </div>
    
     {% include "agencies_table.html" %}    
 
     <div id="footer">  
-    </div>
+      <div class="container">
+      </div>
+    </div> 
+    
+    <script type="text/javascript">
+    var uservoiceOptions = {
+      /* required */
+      key: 'opengovtracker',
+      host: 'opengovtracker.uservoice.com', 
+      forum: '40747',
+      showTab: true,  
+      /* optional */
+      alignment: 'right',
+      background_color:'#404040', 
+      text_color: 'white',
+      hover_color: '#996666',
+      lang: 'en'
+    };
+
+    function _loadUserVoice() {
+      var s = document.createElement('script');
+      s.setAttribute('type', 'text/javascript');
+      s.setAttribute('src', ("https:" == document.location.protocol ? "https://" : "http://") + "cdn.uservoice.com/javascripts/widgets/tab.js");
+      document.getElementsByTagName('head')[0].appendChild(s);
+    }
+    _loadSuper = window.onload;
+    window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
+    </script>
 
   </body>
 </html>
