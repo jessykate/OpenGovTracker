@@ -13,6 +13,62 @@ except:
 from agencies import agencies, cat_id
 from settings import settings
 
+def display_name(agency):
+    _display_names = {
+        "usaid": "USAID",
+        "comm":"Commerce",
+        "dod": "DoD",
+        "ed": "Education",
+        "energy": "Energy",
+        "nasa":"NASA",   
+        'dot': "Transportation",
+        "int": "Interior",
+        "va": "Veterans Affairs",
+        "treas": "Treasury",
+        "gsa": "GSA",
+        "opm": "OPM",
+        "labor": "Labor",
+        "jus": "Justic",
+        "ssa": "SSA",
+        "state": "State",
+        "nsf": "NSF",
+        "hud": "HUD",
+        "epa": "EPA",
+        "sba": "SBA",
+        "dhs": "DHS",
+        "nrc": "NRC",
+        "ostp": "OSTP",
+        }
+    return _display_names[agency]
+
+def get_logo(agency):
+    logo = {
+        "usaid": "static/images/logo/usaid.jpg",
+        "comm":"static/images/logo/doc.gif",
+        "dod": "static/images/logo/dod.gif",
+        "ed": "static/images/logo/doed.gif",
+        "energy": "static/images/logo/doe.jpg",
+        "nasa":"static/images/logo/nasa.jpg",   
+        'dot': "static/images/logo/dot.png",
+        "int": "static/images/logo/doi.jpg",
+        "va": "static/images/logo/va.jpg",
+        "treas": "static/images/logo/treasury.png",
+        "gsa": "static/images/logo/gsa.jpg",
+        "opm": "static/images/logo/opm.jpg",
+        "labor": "static/images/logo/dol.jpg",
+        "jus": "static/images/logo/doj.png",
+        "ssa": "static/images/logo/ssa.gif",
+        "state": "static/images/logo/state.jpg",
+        "nsf": "static/images/logo/nsf.gif",
+        "hud": "static/images/logo/hud.jpg",
+        "epa": "static/images/logo/epa.png",
+        "sba": "static/images/logo/sba.gif",
+        "dhs": "static/images/logo/dhs.jpg",
+        "nrc": "static/images/logo/nrc.jpg",
+        "ostp": "static/images/logo/ostp.png",
+        }
+    return logo[agency]
+
 def truncate(input_string, length):
     words = input_string.split()
     if len(words) > length:
@@ -42,7 +98,8 @@ class MainHandler(tornado.web.RequestHandler):
         kwargs['total_comments'] = sum([agency_data['comments'] for agency_data in stats_by_agency.values()])
         kwargs['total_votes'] = sum([agency_data['votes'] for agency_data in stats_by_agency.values()])
         
-        self.render('templates/index.html', truncate=truncate, **kwargs)
+        self.render('templates/index.html', truncate=truncate, display=display_name, 
+                    get_logo=get_logo, **kwargs)
     
 
     def get_stats_from_file(self):
@@ -137,7 +194,7 @@ class MainHandler(tornado.web.RequestHandler):
         display_names = []
         for name in agency_names:
             if (len(name) <= 5 and name != 'labor' and name != 'state' 
-                and name!='comm' and name !='treas'):
+                and name!='comm' and name !='treas' and name!='jus'):
                 display_names.append(name.upper())
             else:
                 display_names.append(name.title())
@@ -160,10 +217,10 @@ class MainHandler(tornado.web.RequestHandler):
             
     def top_ideas_by_category(self, best_ideas_by_agency):
         top_ideas = {            
-            'transparency': {'agency': None, 'votes':-1, 'idea': None},
-            'participation': {'agency': None, 'votes':-1, 'idea': None},
-            'collaboration': {'agency': None, 'votes':-1, 'idea': None},
-            'innovation': {'agency': None, 'votes':-1, 'idea': None},
+            'transparency': {'agency': None,  'comments':0, 'votes':-1, 'idea': None},
+            'participation': {'agency': None,  'comments':0, 'votes':-1, 'idea': None},
+            'collaboration': {'agency': None,  'comments':0, 'votes':-1, 'idea': None},
+            'innovation': {'agency': None,  'comments':0, 'votes':-1, 'idea': None},
             }
 
         # best_ideas_by_agency is a dict for each agency (avoiding the
@@ -173,8 +230,11 @@ class MainHandler(tornado.web.RequestHandler):
                 if top_ideas[category]['votes'] < agency_ideas[category]['votes']:
                     top_ideas[category]['agency'] = agency
                     top_ideas[category]['votes'] = agency_ideas[category]['votes']
+                    top_ideas[category]['comments'] = agency_ideas[category]['comments']
                     top_ideas[category]['idea'] = agency_ideas[category]['idea']
-        return top_ideas
+
+        return top_ideas    
+
 
 application = tornado.web.Application([
         (r'/', MainHandler),

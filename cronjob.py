@@ -42,16 +42,17 @@ def get_ideas(agency):
 
     # get the top idea for each category for this agency
     best_ideas = {
-        'transparency' : {'votes':0, 'idea': None},
-        'participation' : {'votes':0, 'idea': None},
-        'collaboration' : {'votes':0, 'idea': None},
-        'innovation' : {'votes':0, 'idea': None},
-        'site_feedback' : {'votes':0, 'idea': None}
+        'transparency' : {'votes':-1, 'comments':0, 'idea': None},
+        'participation' : {'votes':-1,  'comments':0, 'idea': None},
+        'collaboration' : {'votes':-1,  'comments':0, 'idea': None},
+        'innovation' : {'votes':-1,  'comments':0, 'idea': None},
+        'site_feedback' : {'votes':-1,  'comments':0, 'idea': None}
     }
     for idea in ideas:            
         this_category = cat_id[agency][idea['categoryID']]
         if best_ideas[this_category]['votes'] < idea['voteCount']:
             best_ideas[this_category]['votes'] = idea['voteCount']
+            best_ideas[this_category]['comments'] = idea['commentCount']
             best_ideas[this_category]['idea'] = idea
 
     # get rid of site_feedback, we dont really care to track that.

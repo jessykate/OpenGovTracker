@@ -53,35 +53,36 @@
     
     <div id="categories">
       <div class="container">
-        <div class="section_title">
+	<div class="section_title">
           <h1>Top Ideas Across Government</h1>
-        </div>
-        {% for category, idea_info in top_ideas_by_category.iteritems() %}
-        <div class="category"> <!-- onclick="location.href='__ idea_link __';" style="cursor:pointer;" -->
+	</div>
+	{% for category, idea_info in top_ideas_by_category.iteritems() %}
+	<div class="category"> <!-- onclick="location.href='__ idea_link __';" style="cursor:pointer;" -->
           <div class="category_title">
             {{ category.title() }}
           </div>
           <div class="category_idea_title">
-  	        {{ idea_info['idea']['title'] }}
+	    <a href="{{ idea_info['idea']['url'] }}" title="Click to visit this idea"> 
+	      {{ idea_info['idea']['title'] }} 
+	    </a>
           </div>
           <div class="category_author">
-  	        {{ idea_info['idea']['author'].title() }}
+	    <a href="{{ idea_info['idea']['authorInfo']['url'] }}">	     
+	      {{ idea_info['idea']['author'].title() }}
+	    </a>
           </div>
           <div class="category_idea_text">
-            All software being developed by NASA should be default openly developed and available for use.  This  allows for greater reuse of the software by other NASA programs, other Agencies and stimulates the economy.  NASA already has the NASA Open Source Agreement (NOSA) and is currently trying to get the Contributor's License Agreement workflow in place.
-            <!-- __ idea_info __ -->
+	    {{ truncate(idea_info['idea']['text'], 35) }}
           </div>
           <div class="category_agency">
-            <img src="/static/images/logo/nasa.jpg" align="left" width="55" height="50">
-            <!-- <img src="__ agency.logo(50) __"> -->
+            <img src="{{ get_logo(idea_info['agency']) }}" align="left" 
+		 width="50" height="50" title="{{ display(idea_info['agency']) }}">
           </div>
           <div class="category_num">
-            65
-            <!-- __ idea_votes __ -->
+	    {{ idea_info['votes'] }}
           </div>
           <div class="category_num">
-            14
-            <!-- __ idea_comments __ -->
+	    {{ idea_info['comments'] }}
           </div>
           <div class="category_num_title">
             Votes
@@ -89,8 +90,8 @@
           <div class="category_num_title">
             Comments
           </div>
-        </div>
-        {% end %}
+	</div>
+	{% end %}
       </div>
     </div>
     
