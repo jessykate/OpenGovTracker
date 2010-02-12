@@ -75,6 +75,40 @@ def truncate(input_string, length):
         return ' '.join(words[:length])+'...'
     else: return input_string
 
+def encode_tweet(agency, stats, days_to_go):
+    gov_shortener = {
+        "usaid": "",
+        "comm":"",
+        "dod": "",
+        "ed": "",
+        "energy": "",
+        "nasa":"",   
+        'dot': "",
+        "int": "",
+        "va": "",
+        "treas": "",
+        "gsa": "",
+        "opm": "",
+        "labor": "",
+        "jus": "",
+        "ssa": "",
+        "state": "",
+        "nsf": "",
+        "hud": "",
+        "epa": "",
+        "sba": "",
+        "dhs": "",
+        "nrc": "",
+        "ostp": "",        
+        }
+
+    num_ideas = stats['ideas']
+    base_url="http://twitter.com/home?"
+    query = {"status":"%s's Open Government discussion has %d ideas and ranked XX out of YY. %d days left! Add your idea here: %s #opengov #gov20" 
+             % (display_name(agency), num_ideas, days_to_go, gov_shortener[agency])}
+    return base_url+urllib.urlencode(query)
+
+
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         stats_cache = "stats_cache.json"
@@ -99,7 +133,7 @@ class MainHandler(tornado.web.RequestHandler):
         kwargs['total_votes'] = sum([agency_data['votes'] for agency_data in stats_by_agency.values()])
         
         self.render('templates/index.html', truncate=truncate, display=display_name, 
-                    get_logo=get_logo, **kwargs)
+                    get_logo=get_logo, encode_tweet=encode_tweet, **kwargs)
     
 
     def get_stats_from_file(self):
