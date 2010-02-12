@@ -254,11 +254,12 @@ span.fn {
 }
 
 a {
-    color: #1cacc4;
+    color: #996666;
     text-decoration: none;
 }
 
 a:hover {
+    color: #cc9999;
     text-decoration: none;
 }
 
@@ -266,4 +267,11 @@ a img {
     border: none;
 }
 
+.agency_table {
+    width: 1000px;
+}
+
+td.table_num {
+    text-align: center;   
+}
 

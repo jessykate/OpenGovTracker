@@ -2,16 +2,24 @@
   <div class="section_title">
     <h1>Stats by Agency</h1>
   </div>
-  <table>
-    <tr><th>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Participants</th><th>Share</th></tr>
+  <table class="agency_table">
+    <tr><th colspan=2>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Participants</th><th>Share</th></tr>
     {% for agency, stats in stats_by_agency.iteritems() %}
     <tr>
+      <td> <img src="{{ get_logo(agency) }}" width="30" height="30"></td>
       <td>{{ display(agency) }}</td>
       <td class="table_num">{{ stats['ideas'] }}</td>
       <td class="table_num">{{ stats['votes'] }}</td>
       <td class="table_num">{{ stats['comments'] }}</td>
       <td class="table_num">{{ len(stats['authors']) }}</td>
-      <td><a href="">Share This</a></td>
+      <td class="table_num">
+<a href="http://twitter.com/home?status={{ display(agency)}}'s Open
+	 Government discussion has {{stats['ideas']}} ideas and ranked
+	 x out of y. {{ days_to_go }} days left! Add your idea here:
+	 http://go.usa.gov/Kke12x #opengov #gov20"
+
+   title="Share a link to this Agency's Status">Tweet This</a>
+      </td>
     </tr>
     {% end %}
   </table>
