@@ -12,7 +12,6 @@ body {
 .container {
     margin: 0 auto; 
     width:1000px;
-    
 }
 
 #header {
@@ -218,7 +217,7 @@ span.fn {
 
 
 #endpoints {
-    height: 300px;
+    height: 325px;
     background: #e8ecdc;
 }
 
@@ -286,3 +285,21 @@ td.table_num {
     text-align: center;   
 }
 
+.endpoints_img {
+    float: left;
+    width: 25px;
+    height: 25px;
+    padding-right: 10px;
+}
+
+.endpoints_content {
+    font-size: 120%;
+}
+
+p.doing_great {
+    font-weight: bold;
+}
+
+dummy {
+    width: 100px;
+}

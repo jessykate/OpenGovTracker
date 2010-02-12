@@ -103,31 +103,45 @@
           </div>    
           <p>These are the agencies with the most activity. Great job!</p>
           <h3>Most Ideas Total</h3>
-          {{ most_ideas['agency'] }} : {{ most_ideas['count'] }} 
-          <br />
+	  <div class="endpoints_content">
+	  <img src="{{ get_logo(most_ideas['agency']) }}" class="endpoints_img">
+          {{ display(most_ideas['agency']) }} : {{ most_ideas['count'] }}
+          </div>
+
           <h3>Most Votes Total</h3>
-          {{ most_votes['agency'] }} : {{ most_votes['count'] }} 
-          <br />
+	  <div class="endpoints_content">
+	  <img src="{{ get_logo(most_votes['agency']) }}" class="endpoints_img">
+          {{ display(most_votes['agency']) }} : {{ most_votes['count'] }} 
+	  </div>
+          
           <h3>Most Comments Total</h3>
-          {{ most_comments['agency'] }} : {{ most_comments['count'] }} 
-          <br />
+	  <div class="endpoints_content">
+	  <img src="{{ get_logo(most_comments['agency']) }}" class="endpoints_img">
+          {{ display(most_comments['agency']) }} : {{ most_comments['count'] }} 
+          </div>
         </div>
 
         <div id="needs_love">
           <div class="section_title">
             <h1>Needs Some Love</h1>
           </div>
-          <p>These agencies dont have a lot of input. They need some love. Please
+          <p>These agencies don't have a lot of input. They need some love. Please
           help!</p>
           <h3>Least Ideas Total</h3>
-          {{ least_ideas['agency'] }} : {{ least_ideas['count'] }} 
-          <br />
+	  <div class="endpoints_content">
+	  <img src="{{ get_logo(least_ideas['agency']) }}" class="endpoints_img">
+          {{ display(least_ideas['agency']) }} : {{ least_ideas['count'] }} 
+          </div>
           <h3>Least Votes Total</h3>
-          {{ least_votes['agency'] }} : {{ least_votes['count'] }} 
-          <br />
+	  <div class="endpoints_content">
+	  <img src="{{ get_logo(least_votes['agency']) }}" class="endpoints_img">
+          {{ display(least_votes['agency']) }} : {{ least_votes['count'] }} 
+          </div>
           <h3>Least Comments Total</h3>
-          {{ least_comments['agency'] }} : {{ least_comments['count'] }} 
-          <br />
+	  <div class="endpoints_content">
+	  <img src="{{ get_logo(least_comments['agency']) }}" class="endpoints_img">
+          {{ display(least_comments['agency']) }} : {{ least_comments['count'] }} 
+          </div>
         </div>
       </div>
     </div>
