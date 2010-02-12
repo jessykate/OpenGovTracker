@@ -14,8 +14,10 @@
 	<td class="table_num">{{ stats['comments'] }}</td>
 	<td class="table_num">{{ len(stats['authors']) }}</td>
 	<td class="table_num">
-	  <a href="http://twitter.com/home?status={{ display(agency)}}'s Open Government discussion has {{stats['ideas']}} ideas and ranked x out of y. {{ days_to_go }} days left! Add your idea here: http://go.usa.gov/Kke12x #opengov #gov20"	     
-	     title="Share a link to this Agency's Status">Tweet This</a>
+	  <a href="{{  encode_tweet(agency, stats, days_to_go) }}" 
+	     title="Share a link to this Agency's Status"> 
+	    Tweet This 
+	  </a>
 	</td>
       </tr>
       {% end %}
