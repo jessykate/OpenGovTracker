@@ -1,18 +1,22 @@
 <div id="agency">
-  <div class="section_title">
-    <h1>Stats by Agency</h1>
+  <div class="container">
+    <div class="section_title">
+      <h1>Stats by Agency</h1>
+    </div>
+    <div id="agency_table">
+      <table>
+        <tr><th>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Participants</th><th>Share This</th></tr>
+        {% for agency, stats in stats_by_agency.iteritems() %}
+        <tr>
+          <td>{{agency}}</td>
+          <td>{{stats['ideas']}}</td>
+          <td>{{stats['votes']}}</td>
+          <td>{{stats['comments']}}</td>
+          <td>{{ len(stats['authors']) }}</td>
+          <td><a href="">Share This</a></td>
+        </tr>
+        {% end %}
+      </table>
+    </div>
   </div>
-  <table>
-    <tr><th>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Participants</th><th>Share This</th></tr>
-    {% for agency, stats in stats_by_agency.iteritems() %}
-    <tr>
-      <td>{{agency}}</td>
-      <td>{{stats['ideas']}}</td>
-      <td>{{stats['votes']}}</td>
-      <td>{{stats['comments']}}</td>
-      <td>{{ len(stats['authors']) }}</td>
-      <td><a href="">Share This</a></td>
-    </tr>
-    {% end %}
-  </table>
 </div> 
