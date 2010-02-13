@@ -1,5 +1,7 @@
-# store info necessary to retrieve and parse info about each agency.
+# various information about each agency.
 
+
+# API keys for each agency's ideascale site
 agencies = {
     "usaid": "b9b85bb0-5588-4ac3-8a5c-0271851e2130",
     "comm":"d4d38eba-0c12-4bd4-a4e2-e20494a86b22",
@@ -26,7 +28,8 @@ agencies = {
     "ostp": "3aa69b00-0fdb-445d-81cc-93097a4b07ae",
 }
 
-# yes the freaking categories are DIFFERENT FOR EVERY SINGLE AGENCY. $*%@*!#*$%&
+# category id for each category for each agency (yes the freaking
+# categories are DIFFERENT FOR EVERY SINGLE AGENCY. $*%@*!#*$%&).
 cat_id = {
     'usaid': {11832: 'transparency' , 11833: 'participation', 11834:'collaboration', 11835: 'innovation', 11836: 'site_feedback'}, 
     'comm': {11860: 'transparency', 11861: 'participation', 11862: 'collaboration', 11863: 'innovation', 11864: 'site_feedback'}, 
@@ -53,11 +56,61 @@ cat_id = {
     'ostp': {12295: 'transparency', 12296: 'participation', 12297: 'collaboration', 12299: 'innovation', 122300: 'site_feedback'}, 
 }
 
-#cat_id = {
-#    'usaid': {'transparency': 11832 , 'participation' 11833: , 'collaboration': 11834, 'innovation': 11835, 'site_feedback':11836}, 
-#    'commerce': {'transparency': 11860, 'participation': 11861, 'collaboration': 11862, 'innovation': 11863, 'site_feedback': 11864 }, 
-#    'defense' {'transparency': 11865, 'participation': 11866, 'collaboration': 11867, 'innovation': 1186, 'site_feedback': 11869 }, 
-#    'education': {'transparency': 11870, 'participation': 11871, 'collaboration': 11872, 'innovation': 11873, 'site_feedback': 11874 }, 
-#    'energy': {'transparency': 11808, 'participation': 11809, 'collaboration': 11810, 'innovation': 11811, 'site_feedback': 11812 }, 
-#    'nasa': {'transparency': 11571, 'participation': 11572, 'collaboration': 11573, 'innovation': 11928, 'site_feedback': 11929 }, 
-#}
+
+def display_name(agency):
+    ''' Return a pretty print display name for each agency'''
+    _display_names = {
+        "usaid": "USAID",
+        "comm":"Commerce",
+        "dod": "DoD",
+        "ed": "Education",
+        "energy": "Energy",
+        "nasa":"NASA",   
+        'dot': "Transportation",
+        "int": "Interior",
+        "va": "Veterans Affairs",
+        "treas": "Treasury",
+        "gsa": "GSA",
+        "opm": "OPM",
+        "labor": "Labor",
+        "jus": "Justic",
+        "ssa": "SSA",
+        "state": "State",
+        "nsf": "NSF",
+        "hud": "HUD",
+        "epa": "EPA",
+        "sba": "SBA",
+        "dhs": "DHS",
+        "nrc": "NRC",
+        "ostp": "OSTP",
+        }
+    return _display_names[agency]
+
+def get_logo(agency):
+    ''' retrieve the path to the logo image for each agency'''
+    logo = {
+        "usaid": "static/images/logo/usaid.jpg",
+        "comm":"static/images/logo/doc.gif",
+        "dod": "static/images/logo/dod.gif",
+        "ed": "static/images/logo/doed.gif",
+        "energy": "static/images/logo/doe.jpg",
+        "nasa":"static/images/logo/nasa.jpg",   
+        'dot': "static/images/logo/dot.png",
+        "int": "static/images/logo/doi.jpg",
+        "va": "static/images/logo/va.jpg",
+        "treas": "static/images/logo/treasury.png",
+        "gsa": "static/images/logo/gsa.jpg",
+        "opm": "static/images/logo/opm.jpg",
+        "labor": "static/images/logo/dol.jpg",
+        "jus": "static/images/logo/doj.png",
+        "ssa": "static/images/logo/ssa.gif",
+        "state": "static/images/logo/state.jpg",
+        "nsf": "static/images/logo/nsf.gif",
+        "hud": "static/images/logo/hud.jpg",
+        "epa": "static/images/logo/epa.png",
+        "sba": "static/images/logo/sba.gif",
+        "dhs": "static/images/logo/dhs.jpg",
+        "nrc": "static/images/logo/nrc.jpg",
+        "ostp": "static/images/logo/ostp.png",
+        }
+    return logo[agency]

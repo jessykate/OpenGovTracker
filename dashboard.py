@@ -10,103 +10,9 @@ try:
 except:
     import simplejson as json
 
-from agencies import agencies, cat_id
+from agencies import agencies, cat_id, display_name, get_logo
 from settings import settings
 
-def display_name(agency):
-    _display_names = {
-        "usaid": "USAID",
-        "comm":"Commerce",
-        "dod": "DoD",
-        "ed": "Education",
-        "energy": "Energy",
-        "nasa":"NASA",   
-        'dot': "Transportation",
-        "int": "Interior",
-        "va": "Veterans Affairs",
-        "treas": "Treasury",
-        "gsa": "GSA",
-        "opm": "OPM",
-        "labor": "Labor",
-        "jus": "Justic",
-        "ssa": "SSA",
-        "state": "State",
-        "nsf": "NSF",
-        "hud": "HUD",
-        "epa": "EPA",
-        "sba": "SBA",
-        "dhs": "DHS",
-        "nrc": "NRC",
-        "ostp": "OSTP",
-        }
-    return _display_names[agency]
-
-def get_logo(agency):
-    logo = {
-        "usaid": "static/images/logo/usaid.jpg",
-        "comm":"static/images/logo/doc.gif",
-        "dod": "static/images/logo/dod.gif",
-        "ed": "static/images/logo/doed.gif",
-        "energy": "static/images/logo/doe.jpg",
-        "nasa":"static/images/logo/nasa.jpg",   
-        'dot': "static/images/logo/dot.png",
-        "int": "static/images/logo/doi.jpg",
-        "va": "static/images/logo/va.jpg",
-        "treas": "static/images/logo/treasury.png",
-        "gsa": "static/images/logo/gsa.jpg",
-        "opm": "static/images/logo/opm.jpg",
-        "labor": "static/images/logo/dol.jpg",
-        "jus": "static/images/logo/doj.png",
-        "ssa": "static/images/logo/ssa.gif",
-        "state": "static/images/logo/state.jpg",
-        "nsf": "static/images/logo/nsf.gif",
-        "hud": "static/images/logo/hud.jpg",
-        "epa": "static/images/logo/epa.png",
-        "sba": "static/images/logo/sba.gif",
-        "dhs": "static/images/logo/dhs.jpg",
-        "nrc": "static/images/logo/nrc.jpg",
-        "ostp": "static/images/logo/ostp.png",
-        }
-    return logo[agency]
-
-def truncate(input_string, length):
-    words = input_string.split()
-    if len(words) > length:
-        return ' '.join(words[:length])+'...'
-    else: return input_string
-
-def encode_tweet(agency, stats, days_to_go):
-    gov_shortener = {
-        "usaid": "",
-        "comm":"",
-        "dod": "",
-        "ed": "",
-        "energy": "",
-        "nasa":"",   
-        'dot': "",
-        "int": "",
-        "va": "",
-        "treas": "",
-        "gsa": "",
-        "opm": "",
-        "labor": "",
-        "jus": "",
-        "ssa": "",
-        "state": "",
-        "nsf": "",
-        "hud": "",
-        "epa": "",
-        "sba": "",
-        "dhs": "",
-        "nrc": "",
-        "ostp": "",        
-        }
-
-    num_ideas = stats['ideas']
-    base_url="http://twitter.com/home?"
-    query = {"status":"%s's Open Government discussion has %d ideas and ranked XX out of YY. %d days left! Add your idea here: %s #opengov #gov20" 
-             % (display_name(agency), num_ideas, days_to_go, gov_shortener[agency])}
-    return base_url+urllib.urlencode(query)
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -268,6 +174,46 @@ class MainHandler(tornado.web.RequestHandler):
                     top_ideas[category]['idea'] = agency_ideas[category]['idea']
 
         return top_ideas    
+
+def truncate(input_string, length):
+    words = input_string.split()
+    if len(words) > length:
+        return ' '.join(words[:length])+'...'
+    else: return input_string
+
+def encode_tweet(agency, stats, days_to_go):
+    gov_shortener = {
+        "usaid": "",
+        "comm":"",
+        "dod": "",
+        "ed": "",
+        "energy": "",
+        "nasa":"",   
+        'dot': "",
+        "int": "",
+        "va": "",
+        "treas": "",
+        "gsa": "",
+        "opm": "",
+        "labor": "",
+        "jus": "",
+        "ssa": "",
+        "state": "",
+        "nsf": "",
+        "hud": "",
+        "epa": "",
+        "sba": "",
+        "dhs": "",
+        "nrc": "",
+        "ostp": "",        
+        }
+
+    num_ideas = stats['ideas']
+    base_url="http://twitter.com/home?"
+    query = {"status":"%s's Open Government discussion has %d ideas and ranked XX out of YY. %d days left! Add your idea here: %s #opengov #gov20" 
+             % (display_name(agency), num_ideas, days_to_go, gov_shortener[agency])}
+    return base_url+urllib.urlencode(query)
+
 
 
 application = tornado.web.Application([
