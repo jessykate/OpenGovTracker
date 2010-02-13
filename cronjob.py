@@ -8,7 +8,7 @@
 
 from agencies import agencies, cat_id
 from settings import settings
-import urllib, urllib2, time
+import urllib, urllib2, time, os
 try:
     import json
 except:
