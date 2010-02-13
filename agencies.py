@@ -1,4 +1,4 @@
-# various information about each agency.
+'''various information about each agency.'''
 
 
 # API keys for each agency's ideascale site
@@ -55,7 +55,6 @@ cat_id = {
     'nrc': {11583: 'transparency', 11584: 'participation', 11585: 'collaboration', 11935: 'innovation', 11936: 'site_feedback'}, 
     'ostp': {12295: 'transparency', 12296: 'participation', 12297: 'collaboration', 12299: 'innovation', 122300: 'site_feedback'}, 
 }
-
 
 def display_name(agency):
     ''' Return a pretty print display name for each agency'''
@@ -114,3 +113,30 @@ def get_logo(agency):
         "ostp": "static/images/logo/ostp.png",
         }
     return logo[agency]
+
+
+open_pages = {
+    "usaid": "http://www.usaid.gov/open/",
+    "comm":"http://www.commerce.gov/open/",
+    "dod": "http://www.defense.gov/open",
+    "ed": "http://www.ed.gov/open/",
+    "energy": "http://www.energy.gov/open",
+    "nasa":"http://www.nasa.gov/open/",   
+    'dot': "http://www.dot.gov/open/",
+    "int": "http://www.doi.gov/open/",
+    "va": "http://www.va.gov/open/",
+    "treas": "http://www.treasury.gov/open/",
+    "gsa": "http://www.gsa.gov/open/",
+    "opm": "http://www.opm.gov/open/",
+    "labor": "http://www.dol.gov/open/",
+    "jus": "http://www.justice.gov/open/",
+    "ssa": "http://www.ssa.gov/open/",
+    "state": "http://www.state.gov/open",
+    "nsf": "http://www.nsf.gov/open/",
+    "hud": "http://www.hud.gov/open/",
+    "epa": "http://www.epa.gov/open/",
+    "sba": "http://www.sba.gov/open/",
+    "dhs": "http://www.dhs.gov/open/",
+    "nrc": "http://www.nrc.gov/open/",
+    "ostp": "http://www.whitehouse.gov/administration/eop/ostp/open/",
+}
