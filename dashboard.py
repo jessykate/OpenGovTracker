@@ -133,7 +133,7 @@ class MainHandler(tornado.web.RequestHandler):
         display_names = []
         for name in agency_names:
             if (len(name) <= 5 and name != 'labor' and name != 'state' 
-                and name!='comm' and name !='treas' and name!='jus'):
+                and name!='comm' and name !='treas'):
                 display_names.append(name.upper())
             else:
                 display_names.append(name.title())
@@ -195,7 +195,7 @@ def encode_tweet(agency, stats, days_to_go):
         "gsa": "http://bit.ly/93MOcu",
         "opm": "http://bit.ly/9DoYra",
         "labor": "http://bit.ly/9V5Hrb",
-        "jus": "http://bit.ly/behSUt",
+        "doj": "http://bit.ly/behSUt",
         "ssa": "http://bit.ly/bxoytd",
         "state": "http://bit.ly/cwD4ht",
         "nsf": "http://bit.ly/cWfOgM",
@@ -209,7 +209,7 @@ def encode_tweet(agency, stats, days_to_go):
 
     num_ideas = stats['ideas']
     base_url="http://twitter.com/home?"
-    query = {"status":"%s's OpenGov discussion has %d ideas and ranked XX out of YY. %d days left! Add your idea here: %s #opengov #gov20" 
+    query = {"status":"%s's OpenGov discussion has %d ideas and ranks XX out of YY. %d days left! Add yours: %s #opengov #gov20" 
              % (display_name(agency), num_ideas, days_to_go, gov_shortener[agency])}
     return base_url+urllib.urlencode(query)
 
