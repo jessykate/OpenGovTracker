@@ -15,17 +15,37 @@ body {
 }
 
 #header {
-    height:425px; 
+    height:475px; 
     background: #e8ecdc;
 	
 }
 
-#title {
-    margin-top: -370px;
-    font-size: 150%;
-    font-weight: bold; 
-    position: relative;
+#header_spacer {
+    height: 50px;
 }
+#title_header {
+    margin-top: -420px;    
+    position: relative;
+    width: 1000px;
+}
+
+#title {
+    font-size: 125%;
+    font-weight: bold; 
+    float: left;
+}
+
+
+#title_description {
+    float: left;
+    width: 665px;
+    margin: -5px 0px 0px 15px;
+}
+
+h2#title_description {
+    font-size: 18px;
+}
+
 
 #participation_chart {
     padding-top: 70px;
@@ -34,7 +54,7 @@ body {
 
 #stat_box{
     margin-left: 50px;
-    margin-top: 30px;
+    margin-top: 160px;
     height: 80px;
     font-size: 150%;
     width: 900px;
@@ -71,7 +91,7 @@ h1 {
 h2 {
 	font-family: arial, sans-serif;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 19px;
 }
 
 .h2 {
@@ -87,6 +107,12 @@ h2 {
 }
 
 h3 {
+	font-family: arial, sans-serif;
+    font-style: italic;
+    font-size: 14px;
+}
+
+h4 {
 	font-family: arial, sans-serif;
     font-weight: bold;
     font-size: 16px;
@@ -177,6 +203,7 @@ span.fn {
     font-size: 150%;
     width: 200px;
     margin: 5px;
+    min-height: 60px;
 }
 
 .category_author {
@@ -188,8 +215,8 @@ span.fn {
 
 .category_idea_text {
     width: 200px;
-    height: 130px;
-    margin: 5px;  
+    height: 100px;
+    margin: 5px 5px 10px 5px;  
 }
 
 .category_agency {
