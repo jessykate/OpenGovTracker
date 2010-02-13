@@ -78,7 +78,7 @@ while True:
     try:
         for agency in agencies.keys():
             stats_by_agency[agency], best_ideas_by_agency[agency] = get_ideas(agency)    
-            cache_file = open(settings["stats_cache"], "w")
+        cache_file = open(settings["stats_cache"], "w")
         data = {"stats_by_agency":stats_by_agency, "best_ideas_by_agency": best_ideas_by_agency}
         json.dump(data, cache_file)
         cache_file.close()
