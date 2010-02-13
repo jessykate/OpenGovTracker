@@ -171,9 +171,6 @@ span.fn {
 	display: block;
 }
 
-#footer {
-	clear: both;
-}
 
 #categories {
 	height: 500px;
@@ -270,7 +267,8 @@ span.fn {
 #footer {
     color: #ccc;
     border-top: 1px dotted #999;
-    height: 100px;
+    padding-bottom: 5px;
+    //height: 100px;
     background-color: #404040;   
 }
 
@@ -327,6 +325,7 @@ p.doing_great {
     font-weight: bold;
 }
 
-dummy {
-    width: 100px;
+#footer_credits {
+    text-align: right;    
 }
+
