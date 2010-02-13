@@ -10,7 +10,7 @@ try:
 except:
     import simplejson as json
 
-from agencies import agencies, cat_id
+from agencies import agencies, cat_id, open_pages
 from settings import settings
 
 def display_name(agency):
@@ -77,34 +77,34 @@ def truncate(input_string, length):
 
 def encode_tweet(agency, stats, days_to_go):
     gov_shortener = {
-        "usaid": "",
-        "comm":"",
-        "dod": "",
-        "ed": "",
-        "energy": "",
-        "nasa":"",   
-        'dot': "",
-        "int": "",
-        "va": "",
-        "treas": "",
-        "gsa": "",
-        "opm": "",
-        "labor": "",
-        "jus": "",
-        "ssa": "",
-        "state": "",
-        "nsf": "",
-        "hud": "",
-        "epa": "",
-        "sba": "",
-        "dhs": "",
-        "nrc": "",
-        "ostp": "",        
+        "usaid": "http://bit.ly/9Nq9aw",
+        "comm":"http://bit.ly/bdtMSQ",
+        "dod": "http://bit.ly/bYZk5k",
+        "ed": "http://bit.ly/cy1wKo",
+        "energy": "http://bit.ly/cpRf7a",
+        "nasa":"http://bit.ly/da3uc6",   
+        'dot': "http://bit.ly/bvGA49",
+        "int": "http://bit.ly/dgFxh1",
+        "va": "http://bit.ly/btDUvm",
+        "treas": "http://bit.ly/92qYA5",
+        "gsa": "http://bit.ly/93MOcu",
+        "opm": "http://bit.ly/9DoYra",
+        "labor": "http://bit.ly/9V5Hrb",
+        "jus": "http://bit.ly/behSUt",
+        "ssa": "http://bit.ly/bxoytd",
+        "state": "http://bit.ly/cwD4ht",
+        "nsf": "http://bit.ly/cWfOgM",
+        "hud": "http://bit.ly/d2axLy",
+        "epa": "http://bit.ly/bCxSmJ",
+        "sba": "http://bit.ly/dc7J65",
+        "dhs": "http://bit.ly/9bX6UO",
+        "nrc": "http://bit.ly/aQx2wv",
+        "ostp": "http://bit.ly/d4Yv8F",  
         }
 
     num_ideas = stats['ideas']
     base_url="http://twitter.com/home?"
-    query = {"status":"%s's Open Government discussion has %d ideas and ranked XX out of YY. %d days left! Add your idea here: %s #opengov #gov20" 
+    query = {"status":"%s's OpenGov discussion has %d ideas and ranked XX out of YY. %d days left! Add your idea here: %s #opengov #gov20" 
              % (display_name(agency), num_ideas, days_to_go, gov_shortener[agency])}
     return base_url+urllib.urlencode(query)
 
@@ -133,7 +133,7 @@ class MainHandler(tornado.web.RequestHandler):
         kwargs['total_votes'] = sum([agency_data['votes'] for agency_data in stats_by_agency.values()])
         
         self.render('templates/index.html', truncate=truncate, display=display_name, 
-                    get_logo=get_logo, encode_tweet=encode_tweet, **kwargs)
+                    get_logo=get_logo, encode_tweet=encode_tweet, open_pages=open_pages, **kwargs)
     
 
     def get_stats_from_file(self):
