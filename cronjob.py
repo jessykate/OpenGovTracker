@@ -15,11 +15,23 @@ except:
     import simplejson as json
 
 def get_ideas(agency):
+    '''retrieve the ideas for each agency from ideascale using that
+    agency's api key. unfortunately, ideascale currently limits the
+    number of ideas returned by the API call to 50. since several
+    agencies have more than 50 ideas submitted, we've bought some time
+    by separating the api calls into categories. but if any category
+    goes above 50, we're toast :/'''
+    
     key = agencies[agency]
-    api_url = "http://api.ideascale.com/akira/api/ideascale.ideas.getTopIdeas?apiKey="
-    url = urllib2.urlopen(api_url+key)
-    js = json.loads(url.read())
-    ideas = js['response']['ideas']        
+    api_base_url = "http://api.ideascale.com/akira/api/ideascale.ideas.getRecentIdeas"
+
+    ideas = []
+    for category in cat_id[agency].keys():
+        arguments = "?categoryID=%s&apiKey=%s" % (category, key) 
+        api_call = api_base_url+arguments
+        url = urllib2.urlopen(api_call)
+        js = json.loads(url.read())
+        ideas.extend(js['response']['ideas'])
 
     # aggregate stats for this agency
     stats = {}
@@ -66,7 +78,7 @@ while True:
     try:
         for agency in agencies.keys():
             stats_by_agency[agency], best_ideas_by_agency[agency] = get_ideas(agency)    
-        cache_file = open(settings["stats_cache"], "w")
+            cache_file = open(settings["stats_cache"], "w")
         data = {"stats_by_agency":stats_by_agency, "best_ideas_by_agency": best_ideas_by_agency}
         json.dump(data, cache_file)
         cache_file.close()
@@ -75,5 +87,4 @@ while True:
         # again in 5 minutes. (should at least add a log here!)
         print '\nError in cronjob.py for IdeaScale Dashboard: %s' % e
         print 'Will try again in 5 minutes'
-        pass
     time.sleep(300)
