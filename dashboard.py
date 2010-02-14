@@ -209,7 +209,7 @@ def encode_tweet(agency, stats, days_to_go):
 
     num_ideas = stats['ideas']
     base_url="http://twitter.com/home?"
-    query = {"status":"%s's OpenGov discussion has %d ideas and ranks XX out of YY. %d days left! Add yours: %s #opengov #gov20" 
+    query = {"status": "Unprecedented US #opengov discussions happening now: %s has %d ideas. %d days left! Add yours: %s #gov20" 
              % (display_name(agency), num_ideas, days_to_go, gov_shortener[agency])}
     return base_url+urllib.urlencode(query)
 
