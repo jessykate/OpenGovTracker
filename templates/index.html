@@ -114,19 +114,19 @@
           <h3>Most Ideas Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(most_ideas['agency']) }}" class="endpoints_img">
-          {{ display(most_ideas['agency']) }} : {{ most_ideas['count'] }}
+          <a href="{{ gov_shortener[most_ideas['agency']] }}">{{ display(most_ideas['agency']) }}</a> : {{ most_ideas['count'] }}
           </div>
 
           <h3>Most Votes Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(most_votes['agency']) }}" class="endpoints_img">
-          {{ display(most_votes['agency']) }} : {{ most_votes['count'] }} 
+          <a href="{{ gov_shortener[most_votes['agency']] }}">{{ display(most_votes['agency']) }}</a> : {{ most_votes['count'] }} 
 	  </div>
           
           <h3>Most Comments Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(most_comments['agency']) }}" class="endpoints_img">
-          {{ display(most_comments['agency']) }} : {{ most_comments['count'] }} 
+          <a href="{{ gov_shortener[most_comments['agency']] }}">{{ display(most_comments['agency']) }}</a> : {{ most_comments['count'] }} 
           </div>
         </div>
 
@@ -139,17 +139,17 @@
           <h3>Least Ideas Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(least_ideas['agency']) }}" class="endpoints_img">
-          {{ display(least_ideas['agency']) }} : {{ least_ideas['count'] }} 
+          <a href="{{ gov_shortener[least_ideas['agency']] }}">{{ display(least_ideas['agency']) }}</a> : {{ least_ideas['count'] }} 
           </div>
           <h3>Least Votes Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(least_votes['agency']) }}" class="endpoints_img">
-          {{ display(least_votes['agency']) }} : {{ least_votes['count'] }} 
+          <a href="{{ gov_shortener[least_votes['agency']] }}">{{ display(least_votes['agency']) }}</a> : {{ least_votes['count'] }} 
           </div>
           <h3>Least Comments Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(least_comments['agency']) }}" class="endpoints_img">
-          {{ display(least_comments['agency']) }} : {{ least_comments['count'] }} 
+          <a href="{{ gov_shortener[least_comments['agency']] }}">{{ display(least_comments['agency']) }}</a> : {{ least_comments['count'] }} 
           </div>
         </div>
       </div>
