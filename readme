@@ -12,3 +12,17 @@ activities.
 This is a stateless (for now) dashboard showing stats and comparisons
 regarding activity on each agency's brainstorming site, using the
 basic API made available by IdeaScale (thanks!).
+
+Dependencies:
+* tornado (http://www.tornadoweb.org/)
+* json or simplejson
+
+To Run:
+* run cronjob.py
+* run dashboard.py
+
+cronjob.py will create a directory called cache/ in the application
+directory, and populate a file called stats_cache.json which stores
+stat for all the agencies, and updates every 5 minutes. Initial
+population can take a minute or two. dashboard.py, the main
+application, pulls its data from the stats_cache file. 
