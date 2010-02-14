@@ -14,9 +14,12 @@
 	<td class="table_num">{{ stats['comments'] }}</td>
 	<td class="table_num">{{ len(stats['authors']) }}</td>
 	<td class="table_num">
-	  <a href="{{  encode_tweet(agency, stats, days_to_go) }}" 
-	     title="Share a link to this Agency's Status"> 
-	    <img src="static/images/twitter.png" title="Tweet this"> 
+	  <a href="{{  encode_tweet(agency, stats, days_to_go) }}" > 
+	    <img src="static/images/twitter.png" title="Tweet this" class="agency_links"> 
+	  </a>
+	  <a href="{{ gov_shortener[agency] }}" title="Visit this agency's Ideascale Site">
+	    <img src="static/images/redirect.png" width="20"
+		 height="20" class="agency_links">
 	  </a>
 	</td>
       </tr>
