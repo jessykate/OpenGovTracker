@@ -4,7 +4,8 @@
       <h1>Stats by Agency</h1>
     </div>
     <table class="agency_table">
-      <tr><th colspan=2>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Participants</th><th>Get Involved!</th></tr>
+      <tr><th colspan=2>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Idea Authors</th><th>Get
+      Involved!</th></tr>
       {% for agency, stats in stats_by_agency.iteritems() %}
       <tr>
 	<td> <img src="{{ get_logo(agency) }}" width="30" height="30"></td>
