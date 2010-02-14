@@ -10,7 +10,8 @@ try:
 except:
     import simplejson as json
 
-from agencies import agencies, cat_id, display_name, get_logo, open_pages, gov_shortener
+from agencies import agencies, cat_id, display_name, get_logo, open_pages 
+from agencies import gov_shortener, ideascale_link
 from settings import settings
 
 
@@ -39,7 +40,7 @@ class MainHandler(tornado.web.RequestHandler):
         
         self.render('templates/index.html', truncate=truncate, display=display_name, 
                     get_logo=get_logo, encode_tweet=encode_tweet, open_pages=open_pages, 
-                    gov_shortener=gov_shortener, **kwargs)
+                    gov_shortener=gov_shortener, ideascale_link=ideascale_link, **kwargs)
     
 
     def get_stats_from_file(self):

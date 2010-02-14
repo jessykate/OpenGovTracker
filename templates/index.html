@@ -114,19 +114,19 @@
           <h3>Most Ideas Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(most_ideas['agency']) }}" class="endpoints_img">
-          <a href="{{ gov_shortener[most_ideas['agency']] }}">{{ display(most_ideas['agency']) }}</a> : {{ most_ideas['count'] }}
+          <a href="{{ ideascale_link[most_ideas['agency']] }}">{{ display(most_ideas['agency']) }}</a> : {{ most_ideas['count'] }}
           </div>
 
           <h3>Most Votes Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(most_votes['agency']) }}" class="endpoints_img">
-          <a href="{{ gov_shortener[most_votes['agency']] }}">{{ display(most_votes['agency']) }}</a> : {{ most_votes['count'] }} 
+          <a href="{{ ideascale_link[most_votes['agency']] }}">{{ display(most_votes['agency']) }}</a> : {{ most_votes['count'] }} 
 	  </div>
           
           <h3>Most Comments Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(most_comments['agency']) }}" class="endpoints_img">
-          <a href="{{ gov_shortener[most_comments['agency']] }}">{{ display(most_comments['agency']) }}</a> : {{ most_comments['count'] }} 
+          <a href="{{ ideascale_link[most_comments['agency']] }}">{{ display(most_comments['agency']) }}</a> : {{ most_comments['count'] }} 
           </div>
         </div>
 
@@ -139,17 +139,17 @@
           <h3>Least Ideas Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(least_ideas['agency']) }}" class="endpoints_img">
-          <a href="{{ gov_shortener[least_ideas['agency']] }}">{{ display(least_ideas['agency']) }}</a> : {{ least_ideas['count'] }} 
+          <a href="{{ ideascale_link[least_ideas['agency']] }}">{{ display(least_ideas['agency']) }}</a> : {{ least_ideas['count'] }} 
           </div>
           <h3>Least Votes Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(least_votes['agency']) }}" class="endpoints_img">
-          <a href="{{ gov_shortener[least_votes['agency']] }}">{{ display(least_votes['agency']) }}</a> : {{ least_votes['count'] }} 
+          <a href="{{ ideascale_link[least_votes['agency']] }}">{{ display(least_votes['agency']) }}</a> : {{ least_votes['count'] }} 
           </div>
           <h3>Least Comments Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(least_comments['agency']) }}" class="endpoints_img">
-          <a href="{{ gov_shortener[least_comments['agency']] }}">{{ display(least_comments['agency']) }}</a> : {{ least_comments['count'] }} 
+          <a href="{{ ideascale_link[least_comments['agency']] }}">{{ display(least_comments['agency']) }}</a> : {{ least_comments['count'] }} 
           </div>
         </div>
       </div>
@@ -166,7 +166,7 @@
 	<a href="http://www.hhs.gov/open/discussion/">Health and Human
 	Services</a> also have public feedback sites; however they are
 	not using IdeaScale and so unfortunately, are not included
-	here. We encourage you to visit their sites, too! </p></i>
+	here. We encourage you to visit their sites, too! </i></p>
 	<p><i>Totals reflect all ideas including those submitted to
 	the "Site Feedback" category. The "Top Ideas Across
 	Government" section only highlights ideas in the categories of
@@ -177,7 +177,7 @@
 	created
 	by <a href="http://twitter.com/schingler">@schingler</a>
 	and <a href="http://twitter.com/jessykate">@jessykate</a>
-	during Washington, DC's #snowmageddon, 2010</a></div>
+	during Washington, DC's #snowmageddon, 2010</div>
       </div>
     </div> 
     
@@ -207,11 +207,8 @@
     </script>
 
     <script type="text/javascript">
-      var gaJsHost = (("https:" == document.location.protocol) ?
-      "https://ssl." : "http://www.");
-      document.write(unescape("%3Cscript src='" + gaJsHost +
-      "google-analytics.com/ga.js'
-      type='text/javascript'%3E%3C/script%3E"));
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
     </script>
     <script type="text/javascript">
       try {

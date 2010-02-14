@@ -3,9 +3,15 @@
     <div class="section_title">
       <h1>Stats by Agency</h1>
     </div>
-    <table class="agency_table">
-      <tr><th colspan=2>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Idea Authors</th><th>Get
-      Involved!</th></tr>
+    <table id="agency_table">
+      <tr id="header_row">
+	<th colspan=2 id="1">Agency</th> 
+	<th id="2">Ideas</th> 
+	<th id="3">Votes</th>
+	<th id="4">Comments</th>
+	<th id="5">Idea Authors</th>
+	<th>Get Involved!</th>
+      </tr>
       {% for agency, stats in stats_by_agency.iteritems() %}
       <tr>
 	<td> <img src="{{ get_logo(agency) }}" width="30" height="30"></td>
@@ -18,7 +24,7 @@
 	  <a href="{{  encode_tweet(agency, stats, days_to_go) }}" > 
 	    <img src="static/images/twitter.png" title="Tweet this" class="agency_links"> 
 	  </a>
-	  <a href="{{ gov_shortener[agency] }}" title="Visit this agency's Ideascale Site">
+	  <a href="{{ ideascale_link[agency] }}" title="Visit this agency's Ideascale Site">
 	    <img src="static/images/redirect.png" width="20"
 		 height="20" class="agency_links">
 	  </a>
