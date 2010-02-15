@@ -39,8 +39,9 @@ def get_ideas(agency):
     stats['authors'] = {}
     stats['tags'] = {}
     for idea in ideas:
+        print '%s votes: %d' % ( agency, stats.get('votes', 0))
         stats['ideas'] = stats.get('ideas', 0) +1
-        stats['votes'] = stats.get('votes', 0) + idea['voteCount']
+        stats['votes'] = stats.get('votes', 0) + abs(idea['voteCount'])
         stats['comments'] = stats.get('comments', 0) + idea['commentCount']
         category_name = cat_id[agency][idea['categoryID']]
         stats['categories'][category_name] = stats['categories'].get(category_name, 0) + 1
