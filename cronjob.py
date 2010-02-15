@@ -8,7 +8,7 @@
 
 from agencies import agencies, cat_id
 from settings import settings
-import urllib, urllib2, time, os
+import urllib, urllib2, time, os, datetime
 try:
     import json
 except:
@@ -80,6 +80,7 @@ while True:
             stats_by_agency[agency], best_ideas_by_agency[agency] = get_ideas(agency)    
         if not os.path.exists("cache"):
             os.mkdir("cache")
+        print '%s: updating cache file' % datetime.datetime.now().isoformat(' ')        
         cache_file = open(settings["stats_cache"], "w")
         data = {"stats_by_agency":stats_by_agency, "best_ideas_by_agency": best_ideas_by_agency}
         json.dump(data, cache_file)
