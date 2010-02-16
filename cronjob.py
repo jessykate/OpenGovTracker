@@ -8,11 +8,24 @@
 
 from agencies import agencies, cat_id
 from settings import settings
-import urllib, urllib2, time, os, datetime
+import urllib, urllib2, time, os, datetime, subprocess
 try:
     import json
 except:
     import simplejson as json
+
+
+def email_warning(agency, category, num_ideas):
+    message = open('/tmp/message.txt', 'w')
+    message.write("Warning: %s has %d ideas in %d" % (agency, num_ideas, category))
+    message.write(".\n")
+    message.close()
+    sendmail = '''echo -e "Subject:Warning from OpenGovTracker\nFrom:jessy@f00d.org\n"`cat /tmp/message.txt` | sendmail jessy.cowansharp@gmail.com'''
+    subprocess.Popen(args=sendmail, shell=True, executable='bin/bash',
+                     stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    #sendmail = '''echo -e "Subject:Warning from OpenGovTracker\nFrom:jessy@f00d.org\n"`cat /tmp/message.txt` | sendmail rschingler@gmail.com'''
+    #subprocess.Popen(args=sendmail, shell=True, executable='bin/bash',
+    #                 stderr=subprocess.PIPE, stdout=subprocess.PIPE)
 
 def get_ideas(agency):
     '''retrieve the ideas for each agency from ideascale using that
@@ -31,6 +44,11 @@ def get_ideas(agency):
         api_call = api_base_url+arguments
         url = urllib2.urlopen(api_call)
         js = json.loads(url.read())
+        # check if we're getting close to the 50 record limit and warn
+        # by email if so.
+        num_ideas = len(js['response']['ideas'])
+        if num_ideas >= 20:
+            email_warning(agency, category, num_ideas)
         ideas.extend(js['response']['ideas'])
 
     # aggregate stats for this agency
