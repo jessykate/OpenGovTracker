@@ -19,9 +19,9 @@ def email_warning(agency, category, num_ideas):
     sendmail = '''echo -e "Subject:OpenGovTracker Warning: %s has %d ideas in category %d <EOM>\nFrom:jessy@f00d.org\n" | sendmail jessy.cowansharp@gmail.com''' % (agency, num_ideas, category)
     subprocess.Popen(args=sendmail, shell=True, executable='/bin/bash',
                      stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-    #sendmail = '''echo -e "Subject:Warning from OpenGovTracker\nFrom:jessy@f00d.org\n"`cat /tmp/message.txt` | sendmail rschingler@gmail.com'''
-    #subprocess.Popen(args=sendmail, shell=True, executable='bin/bash',
-    #                 stderr=subprocess.PIPE, stdout=subprocess.PIPE)
+    sendmail = '''echo -e "Subject:OpenGovTracker Warning: %s has %d ideas in category %d <EOM>\nFrom:jessy@f00d.org\n" | sendmail rschingler@gmail.com''' % (agency, num_ideas, category)
+    subprocess.Popen(args=sendmail, shell=True, executable='bin/bash',
+                     stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     print '** Warning Message Sent'
 
 def get_ideas(agency):
@@ -44,7 +44,7 @@ def get_ideas(agency):
         # check if we're getting close to the 50 record limit and warn
         # by email if so.
         num_ideas = len(js['response']['ideas'])
-        if num_ideas >= 20:
+        if num_ideas >= 42:
             email_warning(agency, category, num_ideas)
         ideas.extend(js['response']['ideas'])
 
