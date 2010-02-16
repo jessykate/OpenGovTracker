@@ -80,7 +80,19 @@ while True:
             stats_by_agency[agency], best_ideas_by_agency[agency] = get_ideas(agency)    
         if not os.path.exists("cache"):
             os.mkdir("cache")
-        print '%s: updating cache file' % datetime.datetime.now().isoformat(' ')        
+            # "touch" the file to begin
+            open(settings["stats_cache"], "w").write(" ").close()
+        now = datetime.datetime.now().isoformat('_')
+        print '%s: updating cache file' % now
+
+        # archive the current file
+        old_cache = open(settings["stats_cache"], "r")
+        archive = open(settings["stats_cache"]+'.'+now, "w")
+        archive.write(old_cache.read())
+        archive.close()
+        old_cache.close()
+
+        # write the new file
         cache_file = open(settings["stats_cache"], "w")
         data = {"stats_by_agency":stats_by_agency, "best_ideas_by_agency": best_ideas_by_agency}
         json.dump(data, cache_file)
