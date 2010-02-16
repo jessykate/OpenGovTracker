@@ -21,7 +21,7 @@ def email_warning(agency, category, num_ideas):
     message.write(".\n")
     message.close()
     sendmail = '''echo -e "Subject:Warning from OpenGovTracker\nFrom:jessy@f00d.org\n"`cat /tmp/message.txt` | sendmail jessy.cowansharp@gmail.com'''
-    subprocess.Popen(args=sendmail, shell=True, executable='bin/bash',
+    subprocess.Popen(args=sendmail, shell=True, executable='/bin/bash',
                      stderr=subprocess.PIPE, stdout=subprocess.PIPE)
     #sendmail = '''echo -e "Subject:Warning from OpenGovTracker\nFrom:jessy@f00d.org\n"`cat /tmp/message.txt` | sendmail rschingler@gmail.com'''
     #subprocess.Popen(args=sendmail, shell=True, executable='bin/bash',
@@ -93,31 +93,31 @@ def get_ideas(agency):
 while True:
     stats_by_agency = {}
     best_ideas_by_agency = {} 
-    try:
-        for agency in agencies.keys():
-            stats_by_agency[agency], best_ideas_by_agency[agency] = get_ideas(agency)    
-        if not os.path.exists("cache"):
-            os.mkdir("cache")
-            # "touch" the file to begin
-            open(settings["stats_cache"], "w").write(" ").close()
-        now = datetime.datetime.now().isoformat('_')
-        print '%s: updating cache file' % now
+#    try:
+    for agency in agencies.keys():
+        stats_by_agency[agency], best_ideas_by_agency[agency] = get_ideas(agency)    
+    if not os.path.exists("cache"):
+        os.mkdir("cache")
+        # "touch" the file to begin
+        open(settings["stats_cache"], "w").write(" ").close()
+    now = datetime.datetime.now().isoformat('_')
+    print '%s: updating cache file' % now
 
-        # archive the current file
-        old_cache = open(settings["stats_cache"], "r")
-        archive = open(settings["stats_cache"]+'.'+now, "w")
-        archive.write(old_cache.read())
-        archive.close()
-        old_cache.close()
+    # archive the current file
+    old_cache = open(settings["stats_cache"], "r")
+    archive = open(settings["stats_cache"]+'.'+now, "w")
+    archive.write(old_cache.read())
+    archive.close()
+    old_cache.close()
 
-        # write the new file
-        cache_file = open(settings["stats_cache"], "w")
-        data = {"stats_by_agency":stats_by_agency, "best_ideas_by_agency": best_ideas_by_agency}
-        json.dump(data, cache_file)
-        cache_file.close()
-    except Exception, e:
+    # write the new file
+    cache_file = open(settings["stats_cache"], "w")
+    data = {"stats_by_agency":stats_by_agency, "best_ideas_by_agency": best_ideas_by_agency}
+    json.dump(data, cache_file)
+    cache_file.close()
+ #   except Exception, e:
         # if anything goes wrong this time around, just pass-- try
         # again in 5 minutes. (should at least add a log here!)
-        print '\nError in cronjob.py for IdeaScale Dashboard: %s' % e
-        print 'Will try again in 5 minutes'
+ #       print '\nError in cronjob.py for IdeaScale Dashboard: %s' % e
+ #       print 'Will try again in 5 minutes'
     time.sleep(300)
