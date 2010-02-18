@@ -6,7 +6,8 @@
 # available, for example), it will not be restarted. ultimately, could
 # just use memcache.
 
-from agencies import agencies, cat_id
+from agencies import cat_id
+from keys import api_keys
 from settings import settings
 import urllib, urllib2, time, os, datetime, subprocess
 try:
@@ -32,7 +33,7 @@ def get_ideas(agency):
     by separating the api calls into categories. but if any category
     goes above 50, we're toast :/'''
     
-    key = agencies[agency]
+    key = api_keys[agency]
     api_base_url = "http://api.ideascale.com/akira/api/ideascale.ideas.getRecentIdeas"
 
     ideas = []
@@ -91,7 +92,7 @@ while True:
     stats_by_agency = {}
     best_ideas_by_agency = {} 
     try:
-        for agency in agencies.keys():
+        for agency in api_keys.keys(): 
             stats_by_agency[agency], best_ideas_by_agency[agency] = get_ideas(agency)    
         if not os.path.exists("cache"):
             os.mkdir("cache")

@@ -1,35 +1,8 @@
-'''various information about each agency.'''
+'''various information about each agency. keys are stored separately
+in keys.py'''
 
-
-# API keys for each agency's ideascale site
-agencies = {
-    "usaid": "b9b85bb0-5588-4ac3-8a5c-0271851e2130",
-    "comm":"d4d38eba-0c12-4bd4-a4e2-e20494a86b22",
-    "dod": "3582db25-510d-48fe-85d2-479d6406535e",
-    "ed": "76330bcb-fcf3-421c-bd87-bf593e3ebce3",
-    "energy": "2574a2ec-c7f7-4477-9a30-3fb268794682",
-    "nasa":"519f0a2f-4ac7-4ae2-ac11-8a11d0d9657e",   
-    'dot': "280cb7ec-7ca9-4f01-9bc2-713d12342649",
-    "int": "f80b132a-34f8-4ffd-81c3-7e70bf9f594b",
-    "va": "f63a2606-99a3-4ce5-a080-68ed5f107ff0",
-    "treas": "d3dd6bd1-d7a5-4835-b6ce-4043ce3c1320",
-    "gsa": "2adaed68-d4b5-41f1-a9eb-2b7f130dd1db",
-    "opm": "40cbf454-b08e-4269-b5e6-c2cb236bea4c",
-    "labor": "9ff0f8f6-edb3-403f-8f96-495213c9a4f2",
-    "doj": "fe53f6d0-de45-44f9-a4ea-8b96cde8e700",
-    "ssa": "d4705ead-06f8-43fa-ae86-b826f541d6b5",
-    "state": "f60a95c1-5a31-4c09-9ac0-c8f1dcb0980f",
-    "nsf": "940e088e-a98e-4a57-934e-b73902fdb1a1",
-    "hud": "1ffcaa2b-3f87-4b39-92b8-05375d728ca6",
-    "epa": "91b203d8-69eb-43a5-a8fe-6f52d738ff0c",
-    "sba": "722d6090-8246-4d98-9ef7-73531ce1dc31",
-    "dhs": "ead2e53e-33f4-446a-98df-ab1d6a06e6f9",
-    "nrc": "1fca50af-3b29-4d0d-aad4-023a661db7f4",
-    "ostp": "3aa69b00-0fdb-445d-81cc-93097a4b07ae",
-}
-
-# category id for each category for each agency (yes the freaking
-# categories are DIFFERENT FOR EVERY SINGLE AGENCY. $*%@*!#*$%&).
+# category id for each category for each agency (yes the category IDs
+# are DIFFERENT FOR EVERY SINGLE AGENCY. $*%@*!#*$%&).
 cat_id = {
     'usaid': {11832: 'transparency' , 11833: 'participation', 11834:'collaboration', 11835: 'innovation', 11836: 'site_feedback'}, 
     'comm': {11860: 'transparency', 11861: 'participation', 11862: 'collaboration', 11863: 'innovation', 11864: 'site_feedback'}, 
