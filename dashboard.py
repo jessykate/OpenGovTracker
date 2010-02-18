@@ -10,7 +10,7 @@ try:
 except:
     import simplejson as json
 
-from agencies import agencies, cat_id, display_name, get_logo, open_pages 
+from agencies import display_name, get_logo, open_pages 
 from agencies import gov_shortener, ideascale_link
 from settings import settings
 
