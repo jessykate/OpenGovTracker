@@ -40,6 +40,7 @@ def get_ideas(agency):
     for category in cat_id[agency].keys():
         arguments = "?categoryID=%s&apiKey=%s" % (category, key) 
         api_call = api_base_url+arguments
+
         url = urllib2.urlopen(api_call)
         js = json.loads(url.read())
         # check if we're getting close to the 50 record limit and warn
@@ -64,7 +65,7 @@ def get_ideas(agency):
         for tag in idea['tags']:
             stats['tags'][tag] = stats['tags'].get(tag, 0) + 1
 
-    # get rid of site_feedback, we dont really care to track that.
+    # get rid of site_feedback, we don't track that.
     if 'site_feedback' in stats['categories']:
         del stats['categories']['site_feedback']
 
@@ -83,36 +84,57 @@ def get_ideas(agency):
             best_ideas[this_category]['comments'] = idea['commentCount']
             best_ideas[this_category]['idea'] = idea
 
-    # get rid of site_feedback, we dont really care to track that.
+    # get rid of site_feedback, we don't track that.
     del best_ideas['site_feedback']
-    
-    return (stats, best_ideas)
+
+    # return the aggregate stats, the top ideas, and the full raw idea
+    # set.
+    return (stats, best_ideas, ideas)
 
 while True:
     stats_by_agency = {}
     best_ideas_by_agency = {} 
+    all_ideas = {}
     try:
         for agency in api_keys.keys(): 
-            stats_by_agency[agency], best_ideas_by_agency[agency] = get_ideas(agency)    
+            stats_by_agency[agency], best_ideas_by_agency[agency], all_ideas[agency] = get_ideas(agency)    
         if not os.path.exists("cache"):
             os.mkdir("cache")
-            # "touch" the file to begin
-            open(settings["stats_cache"], "w").write(" ").close()
+        # "touch" the files to begin
+        if not os.path.exists(os.path.join("cache", settings["stats_cache"])):
+            fp = open(settings["stats_cache"], "w").write(" ")
+            fp.close()
+        if not os.path.exists(os.path.join("cache", settings["ideas_cache"])):
+            fp = open(settings["ideas_cache"], "w").write(" ")
+            fp.close()
+
         now = datetime.datetime.now().isoformat('_')
-        print '%s: updating cache file' % now
+        print '%s: updating cache files' % now
 
-        # archive the current file
-        old_cache = open(settings["stats_cache"], "r")
+        # archive the current stats file
+        old_stats_cache = open(settings["stats_cache"], "r")
         archive = open(settings["stats_cache"]+'.'+now, "w")
-        archive.write(old_cache.read())
+        archive.write(old_stats_cache.read())
         archive.close()
-        old_cache.close()
+        old_stats_cache.close()
 
-        # write the new file
+        # archive the current ideas file
+        old_ideas_cache = open(settings["ideas_cache"], "r")
+        archive = open(settings["ideas_cache"]+'.'+now, "w")
+        archive.write(old_ideas_cache.read())
+        archive.close()
+        old_ideas_cache.close()
+
+        # write the new files
         cache_file = open(settings["stats_cache"], "w")
-        data = {"stats_by_agency":stats_by_agency, "best_ideas_by_agency": best_ideas_by_agency}
-        json.dump(data, cache_file)
+        ideas_file = open(settings["ideas_cache"], "w")
+        stats_data = {"stats_by_agency":stats_by_agency, "best_ideas_by_agency": best_ideas_by_agency} 
+        ideas_data = {"all_ideas":all_ideas}
+        json.dump(stats_data, cache_file)
+        json.dump(ideas_data, ideas_file)
         cache_file.close()
+        ideas_file.close()
+
     except Exception, e:
         # if anything goes wrong this time around, just pass-- try
         # again in 5 minutes. (should at least add a log here!)
