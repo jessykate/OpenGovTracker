@@ -13,12 +13,13 @@ except:
 from agencies import display_name, get_logo, open_pages 
 from agencies import gov_shortener, ideascale_link
 from settings import settings
-
+import pymongo
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         stats_cache = "stats_cache.json"
-        stats_by_agency, top_ideas_by_agency = self.get_stats_from_file()
+        #stats_by_agency, top_ideas_by_agency = self.get_stats_from_file()
+        stats_by_agency, top_ideas_by_agency, all_ideas = self.db_retrieve()
 
         kwargs = {}
         # get the top ideas in each category across all agencies        
@@ -42,6 +43,38 @@ class MainHandler(tornado.web.RequestHandler):
                     get_logo=get_logo, encode_tweet=encode_tweet, open_pages=open_pages, 
                     gov_shortener=gov_shortener, ideascale_link=ideascale_link, **kwargs)
     
+    def db_retrieve(self):
+        ''' retrieve most recent ideas and stats from the database'''
+        db = pymongo.Connection().opengovtracker
+        newest_collection = db.collection_names()[-1]
+        most_recent = db[newest_collection]
+        all_ideas = most_recent.find({'idea': {"$exists": True}})
+
+        cursor = most_recent.find({'stats_by_agency': {"$exists": True}})
+        stats = cursor[0]['stats_by_agency']
+
+        # for authors and tags, periods have been encoded as four
+        # percent signs: %%%%. de-encode them, turning any occurences
+        # back to periods.
+        for agency, agency_stats in stats.iteritems():
+            stats_authors = {}
+            for author, count in agency_stats['authors'].iteritems():
+                if author.find("%%%%") >= 0:
+                    author.replace("%%%%", ".")
+                stats_authors[author] = count
+            stats[agency]['authors'] = stats_authors
+
+            stats_tags = {}
+            for tag, count in agency_stats['tags'].iteritems():
+                if tag.find("%%%%") >= 0:
+                    tag.replace("%%%%", ".")
+                stats_tags[tag] = count
+            stats[agency]['tags'] = stats_tags            
+
+        cursor = most_recent.find({'best_ideas_by_agency': {"$exists": True}})
+        best = cursor[0]['best_ideas_by_agency']        
+
+        return stats, best, all_ideas
 
     def get_stats_from_file(self):
         cache_file = open(settings['stats_cache'], "r")
