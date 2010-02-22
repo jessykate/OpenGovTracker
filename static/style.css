@@ -310,6 +310,14 @@ td.table_num {
     text-align: center;   
 }
 
+td {
+    vertical-align: middle;
+}
+
+.table_logo {
+    float: left;
+}
+
 .endpoints_img {
     float: left;
     width: 25px;
