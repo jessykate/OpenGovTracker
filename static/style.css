@@ -316,6 +316,9 @@ td {
 
 .table_logo {
     float: left;
+    padding-right: 10px;
+    width: 30px;
+    height: 30px;
 }
 
 .endpoints_img {
