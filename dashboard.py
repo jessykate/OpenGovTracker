@@ -46,11 +46,13 @@ class MainHandler(tornado.web.RequestHandler):
     def db_retrieve(self):
         ''' retrieve most recent ideas and stats from the database'''
         db = pymongo.Connection().opengovtracker
-        newest_collection = db.collection_names()[-1]
-        most_recent = db[newest_collection]
-        all_ideas = most_recent.find({'idea': {"$exists": True}})
+        # use the *second* newest one, since the actual newest one
+        # might be getting written to right now.
+        collection = db.collection_names()[-2]
+        recent = db[collection]
+        all_ideas = recent.find({'idea': {"$exists": True}})
 
-        cursor = most_recent.find({'stats_by_agency': {"$exists": True}})
+        cursor = recent.find({'stats_by_agency': {"$exists": True}})
         stats = cursor[0]['stats_by_agency']
 
         # for authors and tags, periods have been encoded as four
@@ -71,7 +73,7 @@ class MainHandler(tornado.web.RequestHandler):
                 stats_tags[tag] = count
             stats[agency]['tags'] = stats_tags            
 
-        cursor = most_recent.find({'best_ideas_by_agency': {"$exists": True}})
+        cursor = recent.find({'best_ideas_by_agency': {"$exists": True}})
         best = cursor[0]['best_ideas_by_agency']        
 
         return stats, best, all_ideas
