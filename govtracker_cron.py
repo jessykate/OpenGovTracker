@@ -133,12 +133,14 @@ def update_all():
 
     # store the stats and top ideas for each agency
     try:
+        print 'inserting stats_by_agency'
         table.insert({'stats_by_agency':stats_by_agency}, safe=True)
     except pymongo.errors.InvalidName, e:
         print e
         print "error in stats_by_agency"
         sys.exit()
     try:
+        print 'inserting best_ideas_by_agency'
         table.insert({'best_ideas_by_agency': best_ideas_by_agency}, safe=True)
     except pymongo.errors.InvalidName, e:
         print e
