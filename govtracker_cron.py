@@ -91,26 +91,25 @@ def update_all():
     stats_by_agency = {}
     best_ideas_by_agency = {} 
     all_ideas = {}
-#    try:
-    for agency in api_keys.keys():             
-        print 'getting stats for %s' % agency        
-        agency_ideas = get_ideas(agency)
-        all_ideas[agency] = agency_ideas
-        stats_by_agency[agency] = get_stats_by_agency(agency, agency_ideas)
-        best_ideas_by_agency[agency] = get_best_ideas_by_agency(agency, agency_ideas)
+    try:
+        for agency in api_keys.keys():             
+            print 'getting stats for %s' % agency        
+            agency_ideas = get_ideas(agency)
+            all_ideas[agency] = agency_ideas
+            stats_by_agency[agency] = get_stats_by_agency(agency, agency_ideas)
+            best_ideas_by_agency[agency] = get_best_ideas_by_agency(agency, agency_ideas)
 
-#    except Exception, e:
+    except Exception, e:
         # if anything goes wrong, just pass-- try again next round.
-#        print '\nError in cronjob.py for IdeaScale Dashboard: %s' % e
-#        print ' Will try again in 30 minutes'
-#        sys.exit()
+        print '\nError in cronjob.py for IdeaScale Dashboard: %s' % e
+        print ' Will try again in 30 minutes'
+        sys.exit()
 
-        # for each update, create a new mongo collection with the
-    # datetime as the collection name. add each idea as a
-    # document, and then add the best_ideas_by_agency and
-    # stats_by_agency as their own documents. each ideas's
-    # ideascale id is used as it's id in the collection so ideas
-    # can be searched across timeslices.
+    # for each update, create a new mongo collection with the datetime
+    # as the collection name. add each idea as a document, and then
+    # add the best_ideas_by_agency and stats_by_agency as their own
+    # documents. each ideas's ideascale id is used as it's id in the
+    # collection so ideas can be searched across timeslices.
     now = datetime.datetime.now()
     conn = pymongo.Connection()
     table = conn.opengovtracker[now.strftime('%Y-%m-%d %H:%M:%S EST')]        
