@@ -5,7 +5,6 @@ the application itself.
 
 add a line like this to your /etc/crontab file (Vixie Cron)
 00,30 * * * * username /path/to/govtracker_cron.py
-
 '''
 
 from agencies import cat_id
@@ -41,7 +40,6 @@ def get_stats_by_agency(agency, ideas):
     stats['categories'] = {}
     stats['authors'] = {}
     stats['tags'] = {}
-    print 'num ideas = %d' % len(ideas)
     for idea in ideas:
         stats['ideas'] = stats.get('ideas', 0) +1
         stats['votes'] = stats.get('votes', 0) + abs(idea['voteCount'])
@@ -91,19 +89,11 @@ def update_all():
     stats_by_agency = {}
     best_ideas_by_agency = {} 
     all_ideas = {}
-    try:
-        for agency in api_keys.keys():             
-            print 'getting stats for %s' % agency        
-            agency_ideas = get_ideas(agency)
-            all_ideas[agency] = agency_ideas
-            stats_by_agency[agency] = get_stats_by_agency(agency, agency_ideas)
-            best_ideas_by_agency[agency] = get_best_ideas_by_agency(agency, agency_ideas)
-
-    except Exception, e:
-        # if anything goes wrong, just pass-- try again next round.
-        print '\nError in cronjob.py for IdeaScale Dashboard: %s' % e
-        print ' Will try again in 30 minutes'
-        sys.exit()
+    for agency in api_keys.keys():             
+        agency_ideas = get_ideas(agency)
+        all_ideas[agency] = agency_ideas
+        stats_by_agency[agency] = get_stats_by_agency(agency, agency_ideas)
+        best_ideas_by_agency[agency] = get_best_ideas_by_agency(agency, agency_ideas)
 
     # for each update, create a new mongo collection with the datetime
     # as the collection name. add each idea as a document, and then
@@ -113,6 +103,7 @@ def update_all():
     now = datetime.datetime.now()
     conn = pymongo.Connection()
     table = conn.opengovtracker[now.strftime('%Y-%m-%d %H:%M:%S EST')]        
+    num = 1
     for agency, ideas in all_ideas.iteritems():
         for idea in ideas:            
             # use IdeaScale's id for the primary key used by
@@ -122,29 +113,11 @@ def update_all():
                          'agency' : agency,
                          'idea': idea,
                          }
-            try:
-                print 'inserting idea %s' % idea['title']
-                table.insert(idea_json, safe=True) 
-            except pymongo.errors.InvalidName, e:
-                print e
-                print idea
-                sys.exit()
-
-    # store the stats and top ideas for each agency
-    try:
-        print 'inserting stats_by_agency'
-        table.insert({'stats_by_agency':stats_by_agency}, safe=True)
-    except pymongo.errors.InvalidName, e:
-        print e
-        print "error in stats_by_agency"
-        sys.exit()
-    try:
-        print 'inserting best_ideas_by_agency'
-        table.insert({'best_ideas_by_agency': best_ideas_by_agency}, safe=True)
-    except pymongo.errors.InvalidName, e:
-        print e
-        print "error in best_ideas_by_agency"
-        sys.exit()
+            table.insert(idea_json, safe=True) 
+            num = num+1
+            
+    table.insert({'stats_by_agency':stats_by_agency}, safe=True)
+    table.insert({'best_ideas_by_agency': best_ideas_by_agency}, safe=True)
 
     conn.disconnect()
 
