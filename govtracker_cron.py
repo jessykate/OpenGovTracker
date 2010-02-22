@@ -1,43 +1,26 @@
 #!/usr/bin/python
 
-# an extremely poor man's cron job to update stats for all agencies in
-# a separate process to the application itself. should really be added
-# to actual cron. if for any reason this job crashes (url not
-# available, for example), it will not be restarted. ultimately, could
-# just use memcache.
+''' cron job to update stats for all agencies in a separate process to
+the application itself.
 
-# testing changes:
-# API keys
-# try /except block
+add a line like this to your /etc/crontab file (Vixie Cron)
+00,30 * * * * username /path/to/govtracker_cron.py
 
+'''
 
 from agencies import cat_id
 from keys import api_keys
 from settings import settings
-import pymongo
+import pymongo, sys
 import urllib, urllib2, time, os, datetime, subprocess
 try:
     import json
 except:
     import simplejson as json
 
-
-def email_warning(agency, category, num_ideas):
-    sendmail = '''echo -e "Subject:OpenGovTracker Warning: %s has %d ideas in category %d <EOM>\nFrom:jessy@f00d.org\n" | sendmail jessy.cowansharp@gmail.com''' % (agency, num_ideas, category)
-    subprocess.Popen(args=sendmail, shell=True, executable='/bin/bash',
-                     stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-    sendmail = '''echo -e "Subject:OpenGovTracker Warning: %s has %d ideas in category %d <EOM>\nFrom:jessy@f00d.org\n" | sendmail rschingler@gmail.com''' % (agency, num_ideas, category)
-    subprocess.Popen(args=sendmail, shell=True, executable='bin/bash',
-                     stderr=subprocess.PIPE, stdout=subprocess.PIPE)
-    print '** Warning Message Sent'
-
 def get_ideas(agency):
     '''retrieve the ideas for each agency from ideascale using that
-    agency's api key. unfortunately, ideascale currently limits the
-    number of ideas returned by the API call to 50. since several
-    agencies have more than 50 ideas submitted, we've bought some time
-    by separating the api calls into categories. but if any category
-    goes above 50, we're toast :/'''
+    agency's api key.'''
     
     key = api_keys[agency]
     api_base_url = "http://api.ideascale.com/akira/api/ideascale.ideas.getRecentIdeas"
@@ -51,8 +34,9 @@ def get_ideas(agency):
         ideas.extend(js['response']['ideas'])
     return ideas
 
-def get_stats_by_agency(ideas):
-    # aggregate stats for this agency
+def get_stats_by_agency(agency, ideas):
+    '''aggregate stats for this agency'''
+
     stats = {}
     stats['categories'] = {}
     stats['authors'] = {}
@@ -82,8 +66,9 @@ def get_stats_by_agency(ideas):
 
     return stats
 
-def get_best_ideas_by_agency(ideas):
-    # get the top idea for each category for this agency
+def get_best_ideas_by_agency(agency, ideas):
+    '''get the top idea for each category for this agency.'''
+
     best_ideas = {
         'transparency' : {'votes':-1, 'comments':0, 'idea': None},
         'participation' : {'votes':-1,  'comments':0, 'idea': None},
@@ -100,22 +85,27 @@ def get_best_ideas_by_agency(ideas):
 
     # don't bother tracking stats on site feedback
     del best_ideas['site_feedback']
-
     return best_ideas
 
-
-while True:
+def update_all():
     stats_by_agency = {}
     best_ideas_by_agency = {} 
     all_ideas = {}
 #    try:
     for agency in api_keys.keys():             
         print 'getting stats for %s' % agency        
-        all_ideas[agency] = get_ideas(agency)
-        stats_by_agency[agency] = get_stats_by_agency(all_ideas[agency])
-        best_ideas_by_agency[agency] = get_best_ideas_by_agency(all_ideas[agency])
+        agency_ideas = get_ideas(agency)
+        all_ideas[agency] = agency_ideas
+        stats_by_agency[agency] = get_stats_by_agency(agency, agency_ideas)
+        best_ideas_by_agency[agency] = get_best_ideas_by_agency(agency, agency_ideas)
 
-    # for each update, create a new mongo collection with the
+#    except Exception, e:
+        # if anything goes wrong, just pass-- try again next round.
+#        print '\nError in cronjob.py for IdeaScale Dashboard: %s' % e
+#        print ' Will try again in 30 minutes'
+#        sys.exit()
+
+        # for each update, create a new mongo collection with the
     # datetime as the collection name. add each idea as a
     # document, and then add the best_ideas_by_agency and
     # stats_by_agency as their own documents. each ideas's
@@ -157,10 +147,5 @@ while True:
 
     conn.disconnect()
 
-#    except Exception, e:
-        # if anything goes wrong this time around, just pass-- try
-        # again in 5 minutes. (should at least add a log here!)
-#        print '\nError in cronjob.py for IdeaScale Dashboard: %s' % e
-#        print 'Will try again in 5 minutes'
-
-    time.sleep(300)
+if __name__ == '__main__':
+    update_all()
