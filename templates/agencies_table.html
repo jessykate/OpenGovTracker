@@ -18,6 +18,7 @@
 	{% for agency, stats in stats_by_agency.iteritems() %}
 	<tr>
 	  <td> 
+	    <span style="display:none">{{ display(agency) }}</span>
 	    <img src="{{ get_logo(agency) }}" class="table_logo">
 	    <a href="{{ open_pages[agency] }}" title="Visit {{ display(agency) }}'s /open Page">{{ display(agency) }}</a> 
 	  </td>
