@@ -19,7 +19,7 @@ class MainHandler(tornado.web.RequestHandler):
     def get(self):
         stats_cache = "stats_cache.json"
         #stats_by_agency, top_ideas_by_agency = self.get_stats_from_file()
-        stats_by_agency, top_ideas_by_agency, all_ideas = self.db_retrieve()
+        timestamp, stats_by_agency, top_ideas_by_agency, all_ideas = self.db_retrieve()
 
         kwargs = {}
         # get the top ideas in each category across all agencies        
@@ -38,6 +38,7 @@ class MainHandler(tornado.web.RequestHandler):
         kwargs['total_ideas'] = sum([agency_data['ideas'] for agency_data in stats_by_agency.values()])
         kwargs['total_comments'] = sum([agency_data['comments'] for agency_data in stats_by_agency.values()])
         kwargs['total_votes'] = sum([agency_data['votes'] for agency_data in stats_by_agency.values()])
+        kwargs['last_updated'] = timestamp
         
         self.render('templates/index.html', truncate=truncate, display=display_name, 
                     get_logo=get_logo, encode_tweet=encode_tweet, open_pages=open_pages, 
@@ -49,6 +50,7 @@ class MainHandler(tornado.web.RequestHandler):
         # use the *second* newest one, since the actual newest one
         # might be getting written to right now.
         collection = db.collection_names()[-2]
+        
         recent = db[collection]
         all_ideas = recent.find({'idea': {"$exists": True}})
 
@@ -76,7 +78,8 @@ class MainHandler(tornado.web.RequestHandler):
         cursor = recent.find({'best_ideas_by_agency': {"$exists": True}})
         best = cursor[0]['best_ideas_by_agency']        
 
-        return stats, best, all_ideas
+        timestamp = collection
+        return timestamp, stats, best, all_ideas
 
     def get_stats_from_file(self):
         cache_file = open(settings['stats_cache'], "r")
