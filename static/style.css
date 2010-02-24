@@ -260,10 +260,6 @@ span.fn {
     padding-top: 1px;  
 }
 
-#agency_table {
-
-}
-
 #footer {
     color: #ccc;
     border-top: 1px dotted #999;
@@ -304,6 +300,7 @@ a img {
 
 #agency_table {
     width: 1000px;
+    padding-bottom: 70px;
 }
 
 td.table_num {
@@ -343,4 +340,15 @@ p.doing_great {
 .agency_links {
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.agency_report_heading {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 120%;
+}
+
+#agency_options {
+    padding-top: 10px;
+    padding-bottom: 10px;
 }

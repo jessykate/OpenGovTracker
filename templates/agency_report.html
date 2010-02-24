@@ -1,0 +1,26 @@
+<div class="agency">
+  <div class="container">
+    <div class="section_title">
+      <h1>Agency Reports</h1>
+    </div>
+    <div id="agency_options">
+      <a href="#summary_table" class="agency_report_heading">Summary Table</a>
+     {% for agency in stats_by_agency.keys() %}
+      <a href="#{{ agency }}" class="agency_report_heading">{{ display(agency) }}</a>
+      {% end %}
+    </div>
+    <div id="reports">
+      {% for agency, stats in stats_by_agency.iteritems() %}
+      <div>
+	<a name="{{agency}}"></a>
+	{{ stats["tags"] }}
+	{{ stats["ideas"] }}
+	<!-- pie chart of categories-->
+      </div>
+      {% end %}    
+
+      {% include summary_table.html %}
+
+    </div> <!-- end "reports" -->
+  </div>
+</div> 
