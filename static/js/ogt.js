@@ -10,10 +10,10 @@ $(document).ready(function() {
 
 function toggle_visible(agency_link) {
   // get the link to the agency we want to make visible
-  var agency = agency_link.getAttribute("href");
+  var agency_href = agency_link.getAttribute("href");
 
   // strip the leading # in the href value
-  var visible_agency = agency.slice(1,agency.length);
+  var visible_agency = agency_href.slice(1,agency_href.length);
 
   /* get only the child *elements* of the reports section. don't use
    getElementsByTagName() because it will grab all nested div's, too,
@@ -33,12 +33,21 @@ function toggle_visible(agency_link) {
     var agency_name = link.getAttribute("name");
     if (agency_name == visible_agency) {
       reports[i].style.display="";
-      link.style.fontWeight = "bold";
     }
     else {
-      link.style.fontWeight = "none";
       reports[i].style.display="none";
     }
+  }
+
+  // emphasize the title of the active agency
+  var agencies_div = document.getElementById("agency_options");
+  var agency_links = agencies_div.getElementsByTagName("a");
+  for (var i=0; i<agency_links.length; i++) {
+    link_text = agency_links[i].getAttribute("href");
+    if (link_text == agency_href) {
+      agency_links[i].className = "agency_heading_active";
+    }
+    else agency_links[i].className = "agency_heading_inactive";
   }
 };
 

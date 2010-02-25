@@ -342,12 +342,6 @@ p.doing_great {
     margin-right: 10px;
 }
 
-.agency_report_heading {
-    padding-left: 5px;
-    padding-right: 5px;
-    font-size: 120%;
-}
-
 #agency_options {
     padding-top: 10px;
     padding-bottom: 10px;
@@ -417,4 +411,22 @@ p.doing_great {
 .spacer {
     padding-left: 5px;
     padding-right: 5px;
+}
+
+.agency_heading_active {
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 120%;
+    color: #b04444;
+}
+
+a.agency_heading_active:hover {
+    color: #b04444;
+}
+
+.agency_heading_inactive {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 120%;
 }
