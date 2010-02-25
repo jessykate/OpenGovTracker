@@ -13,9 +13,60 @@
       {% for agency, stats in stats_by_agency.iteritems() %}
       <div>
 	<a name="{{agency}}"></a>
-	{{ stats["tags"] }}
-	{{ stats["ideas"] }}
+	<div class="agency_stats">
+
+	  <div class="agency_stat">
+	    <div class="med_num">{{ stats["ideas"]}}</div>
+	    <div class="agency_stat_name">Ideas</div>
+	  </div>
+
+	  <div class="agency_stat">
+	    <div class="med_num">{{ stats["votes"] }}</div>	
+	    <div class="agency_stat_name">Votes</div>
+	  </div>
+
+	  <div class="agency_stat">
+	    <div class="med_num">{{ stats["comments"] }}</div>
+	    <div class="agency_stat_name">Comments</div>
+	  </div>
+
+	  <div class="agency_stat">
+	    <div class="med_num">{{ len(stats["authors"].keys()) }}</div>
+	    <div class="agency_stat_name">Idea Authors</div>
+	  </div>
+
+	</div>
+	<div class="idea_list">
+	  <h2>Have Your Say on These Ideas</h2>
+	  {% for idea in agency_ideas(all_ideas, agency) %}	  
+
+	  {% if idea['category'] == "innovation" %}
+	  <span class="idea_title"><a href="{{ idea['idea']['url'] }}" class="innovation_idea">{{ idea['idea']['title']}}</a></span> 
+	  <span class="spacer"><img src="/static/images/dot.jpg"></span>
+	  {% end %}
+
+	  {% if idea['category'] == "collaboration" %}
+	  <span class="idea_title"><a href="{{ idea['idea']['url'] }}" class="collaboration_idea">{{ idea['idea']['title'] }}</a></span>
+	  <span class="spacer"><img src="/static/images/dot.jpg"></span>
+	  {% end %}
+
+	  {% if idea['category'] == "participation" %}
+	  <span class="idea_title"><a href="{{ idea['idea']['url'] }}" class="participation_idea">{{ idea['idea']['title'] }}</a></span>
+	  <span class="spacer"><img src="/static/images/dot.jpg"></span>
+	  {% end %}
+
+	  {% if idea['category'] == "transparency" %}
+	  <span class="idea_title"><a href="{{ idea['idea']['url'] }}" class="transparency_idea">{{ idea['idea']['title'] }}</a></span>
+	  <span class="spacer"><img src="/static/images/dot.jpg"></span>
+	  {% end %}
+
+	  {% end %}
+	</div>
+
+	<!-- stats["tags"] -->
 	<!-- pie chart of categories-->
+	<!-- ideas over time -->
+
       </div>
       {% end %}    
 

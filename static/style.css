@@ -351,4 +351,70 @@ p.doing_great {
 #agency_options {
     padding-top: 10px;
     padding-bottom: 10px;
+    width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+.agency_stats {
+    width:1000px;
+    margin: auto;
+    height: 80px;
+    text-align: center;
+}
+
+.agency_stat {
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+    width: 200px;
+    float: left;
+}
+
+.med_num {
+    font-size: 300%;
+    font-weight: bold;
+    text-align:center;
+    width: 200px;
+}
+
+.agency_stat_name {
+    text-align: center;
+    width: 200px;
+}
+
+.agency_tags {
+    width: 900px;
+    text-align: center;
+}
+
+.idea_title {
+    line-height: 200%;
+}
+
+.transparency_idea {
+    color: #9999CC;
+}
+
+.collaboration_idea {
+    color: #CC3300;
+}
+
+.participation_idea {
+    color: #993366;
+}
+
+.innovation_idea {
+    color: #996600;
+}
+
+.idea_list {
+    text-align: justify;
+    padding-bottom: 50px;
+}
+
+.spacer {
+    padding-left: 5px;
+    padding-right: 5px;
 }
