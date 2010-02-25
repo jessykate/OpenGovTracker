@@ -24,6 +24,7 @@ class MainHandler(tornado.web.RequestHandler):
         kwargs = {}
         # get the top ideas in each category across all agencies        
         kwargs['stats_by_agency'] = stats_by_agency
+        kwargs['all_ideas'] = all_ideas
         kwargs['top_ideas_by_agency'] = top_ideas_by_agency
         kwargs['top_ideas_by_category'] = self.top_ideas_by_category(top_ideas_by_agency)
         kwargs['participation_chart'] = self.construct_participation_chart(stats_by_agency)
@@ -42,7 +43,8 @@ class MainHandler(tornado.web.RequestHandler):
         
         self.render('templates/index.html', truncate=truncate, display=display_name, 
                     get_logo=get_logo, encode_tweet=encode_tweet, open_pages=open_pages, 
-                    gov_shortener=gov_shortener, ideascale_link=ideascale_link, **kwargs)
+                    gov_shortener=gov_shortener, ideascale_link=ideascale_link, 
+                    agency_ideas=agency_ideas, **kwargs)
     
     def db_retrieve(self):
         ''' retrieve most recent ideas and stats from the database'''
@@ -52,7 +54,8 @@ class MainHandler(tornado.web.RequestHandler):
         collection = db.collection_names()[-2]
         
         recent = db[collection]
-        all_ideas = recent.find({'idea': {"$exists": True}})
+        idea_cursor = recent.find({'idea': {"$exists": True}})
+        all_ideas = [idea for idea in idea_cursor]
 
         cursor = recent.find({'stats_by_agency': {"$exists": True}})
         stats = cursor[0]['stats_by_agency']
@@ -213,6 +216,14 @@ class MainHandler(tornado.web.RequestHandler):
                     top_ideas[category]['idea'] = agency_ideas[category]['idea']
 
         return top_ideas    
+
+
+def agency_ideas(all_ideas, agency):
+    agency_ideas = []
+    for idea in all_ideas: 
+        if idea['agency'] == agency:            
+            agency_ideas.append(idea)
+    return agency_ideas
 
 def truncate(input_string, length):
     words = input_string.split()

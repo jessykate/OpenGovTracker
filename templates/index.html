@@ -4,16 +4,7 @@
     <link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" />
     <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js"></script> 
     <script type="text/javascript" src="/static/js/jquery.tablesorter.min.js"></script>
-    <script>
-      $(document).ready(function() { 
-        $("#agency_table").tablesorter({
-           headers: { 
-            5: { sorter: false }
-           } 
-        }); 
-      }); 
-    </script>
-
+    <script type="text/javascript" src="/static/js/ogt.js"></script> 
   </head>
   
   <body>
@@ -167,7 +158,7 @@
       </div>
     </div>
    
-    {% include "agencies_table.html" %}    
+    {% include "agency_report.html" %}    
 
     <div id="footer">  
       <div class="container">
