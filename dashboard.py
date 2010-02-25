@@ -25,6 +25,7 @@ class MainHandler(tornado.web.RequestHandler):
         # get the top ideas in each category across all agencies        
         kwargs['stats_by_agency'] = stats_by_agency
         kwargs['all_ideas'] = all_ideas
+        kwargs['pie_charts'] = self.pie_charts(stats_by_agency.keys(), all_ideas)
         kwargs['top_ideas_by_agency'] = top_ideas_by_agency
         kwargs['top_ideas_by_category'] = self.top_ideas_by_category(top_ideas_by_agency)
         kwargs['participation_chart'] = self.construct_participation_chart(stats_by_agency)
@@ -145,6 +146,22 @@ class MainHandler(tornado.web.RequestHandler):
                 agency = this_agency
         return {'agency': agency, 'count':least_comments}
 
+
+    def pie_charts(self, agencies, all_ideas):
+        pie_urls = {}
+        for agency in agencies:
+            ideas = agency_ideas(all_ideas, agency)
+            categories = {}
+            for idea in ideas:
+                category = idea['category']
+                categories[category] = categories.get(category,0) + 1
+            # convert the counts to strings for use in the pie chart url
+            for category in categories.keys():
+                categories[category] = str(categories[category])
+
+            pie_url = '''http://chart.apis.google.com/chart?chs=200x80&chd=t:%s&chco=3e81ac&amp;cht=p&amp;chf=bg,s,E3EEF1& chl=%s''' % (','.join(categories.values()), '|'.join(categories.keys()))
+            pie_urls[agency] = pie_url
+        return pie_urls
 
     def construct_participation_chart(self, stats_by_agency):
 

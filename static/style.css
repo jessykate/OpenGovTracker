@@ -359,10 +359,8 @@ p.doing_great {
 
 .agency_stat {
     position: relative;
-    margin-left: 10px;
-    margin-right: 10px;
     text-align: center;
-    width: 200px;
+    width: 150px;
     float: left;
 }
 
@@ -371,6 +369,7 @@ p.doing_great {
     font-weight: bold;
     text-align:center;
     width: 200px;
+    height: 60px;
 }
 
 .agency_stat_name {
@@ -406,6 +405,7 @@ p.doing_great {
 .idea_list {
     text-align: justify;
     padding-bottom: 50px;
+    width: 1000px;
 }
 
 .spacer {
@@ -429,4 +429,61 @@ a.agency_heading_active:hover {
     padding-left: 5px;
     padding-right: 5px;
     font-size: 120%;
+}
+
+.agency_category {
+    width: 200px;
+    height: 300px;
+    float: left;
+    margin: 15px 50px 0px 0px;
+    padding-bottom: 20px;
+}
+
+.agency_category_title {
+    font-size: 170%;
+    width: 200px;
+    height: 30px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.agency_category_idea_title {
+    font-size: 120%;
+    width: 200px;
+    margin: 5px;
+    min-height: 40px;
+}
+
+.agency_category_author {
+    font-weight: bold;
+    width: 200px;
+    margin: 5px;
+    height: 15px;
+}
+
+.agency_category_idea_text {
+    width: 200px;
+    height: 100px;
+    margin: 5px 5px 10px 5px;  
+}
+
+.agency_category_num {
+    font-size: 200%;
+    width: 80px;
+    text-align: center;
+    height: 30px;
+    margin: 5px 10px;
+    float: left;
+}
+
+.agency_category_num_title{
+    width: 80px;
+    text-align: center;
+    margin: 5px 10px;
+    float: left;
+}
+
+.agency_report_logo {
+    width:75px;
+    height: 75px;
 }

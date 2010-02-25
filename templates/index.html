@@ -69,7 +69,8 @@
           <h1>Top Ideas Across Government</h1>
 	</div>
 	{% for category, idea_info in top_ideas_by_category.iteritems() %}
-	<div class="category"> <!-- onclick="location.href='__ idea_link __';" style="cursor:pointer;" -->
+
+	<div class="category">
           <div class="category_title">
             {{ category.title() }}
           </div>
