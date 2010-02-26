@@ -343,9 +343,9 @@ p.doing_great {
 }
 
 #agency_options {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: 900px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 850px;
     margin: auto;
     text-align: center;
 }
@@ -353,7 +353,7 @@ p.doing_great {
 .agency_stats {
     width:1000px;
     margin: auto;
-    height: 80px;
+    height: 100px;
     text-align: center;
 }
 
@@ -368,13 +368,22 @@ p.doing_great {
     font-size: 300%;
     font-weight: bold;
     text-align:center;
-    width: 200px;
+    width: 150px;
     height: 60px;
+    padding-top: 10px;
 }
 
 .agency_stat_name {
     text-align: center;
-    width: 200px;
+    width: 150px;
+    font-size: 130%;
+}
+
+.pie_chart {
+    position: relative;
+    text-align: center;
+    width: 250px;
+    float: left;
 }
 
 .agency_tags {
@@ -391,15 +400,16 @@ p.doing_great {
 }
 
 .collaboration_idea {
-    color: #CC3300;
+//    color: #333366;
+    color: #6666FF;
 }
 
 .participation_idea {
-    color: #993366;
+    color: #666699;
 }
 
 .innovation_idea {
-    color: #996600;
+    color: #6699CC;
 }
 
 .idea_list {
@@ -417,7 +427,7 @@ p.doing_great {
     font-weight: bold;
     padding-left: 5px;
     padding-right: 5px;
-    font-size: 120%;
+    font-size: 130%;
     color: #b04444;
 }
 
@@ -428,12 +438,12 @@ a.agency_heading_active:hover {
 .agency_heading_inactive {
     padding-left: 5px;
     padding-right: 5px;
-    font-size: 120%;
+    font-size: 130%;
 }
 
 .agency_category {
     width: 200px;
-    height: 300px;
+    height: 320px;
     float: left;
     margin: 15px 50px 0px 0px;
     padding-bottom: 20px;
@@ -451,7 +461,8 @@ a.agency_heading_active:hover {
     font-size: 120%;
     width: 200px;
     margin: 5px;
-    min-height: 40px;
+    min-height: 60px;
+    
 }
 
 .agency_category_author {
@@ -463,7 +474,7 @@ a.agency_heading_active:hover {
 
 .agency_category_idea_text {
     width: 200px;
-    height: 100px;
+    height: 120px;
     margin: 5px 5px 10px 5px;  
 }
 
@@ -484,6 +495,8 @@ a.agency_heading_active:hover {
 }
 
 .agency_report_logo {
-    width:75px;
-    height: 75px;
+    width:85px;
+    height: 85px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

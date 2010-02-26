@@ -151,7 +151,10 @@ class MainHandler(tornado.web.RequestHandler):
         pie_urls = {}
         for agency in agencies:
             ideas = agency_ideas(all_ideas, agency)
-            categories = {}
+            # make sure each category exists so that we can have some
+            # sanity in the generated pie chart
+            categories = {'transparency':0, 'participation':0, 'collaboration':0,
+                          'innovation':0, 'site_feedback':0}
             for idea in ideas:
                 category = idea['category']
                 categories[category] = categories.get(category,0) + 1
@@ -159,7 +162,12 @@ class MainHandler(tornado.web.RequestHandler):
             for category in categories.keys():
                 categories[category] = str(categories[category])
 
-            pie_url = '''http://chart.apis.google.com/chart?chs=200x80&chd=t:%s&chco=3e81ac&amp;cht=p&amp;chf=bg,s,E3EEF1& chl=%s''' % (','.join(categories.values()), '|'.join(categories.keys()))
+            values = '%s,%s,%s,%s,%s' % (categories['transparency'], categories['participation'], 
+                                         categories['collaboration'], categories['innovation'], 
+                                         categories['site_feedback'])
+            keys = '%s|%s|%s|%s|%s' % ('transparency', 'participation', 'collaboration', 
+                                       'innovation', 'site_feedback')
+            pie_url = '''http://chart.apis.google.com/chart?chs=240x100&chd=t:%s&chco=9999CC|666699|6666FF|6699CC|CCFFFF&cht=p3&amp;chf=bg,s,E3EEF1&chdl=%s&chf=bg,s,FFFFFF''' % (values, keys)
             pie_urls[agency] = pie_url
         return pie_urls
 
