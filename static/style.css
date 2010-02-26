@@ -62,9 +62,8 @@ h2#title_description {
 }
 
 .stat {
-    width: 200px;
     height: 80px;
-    margin: 0px 10px;
+    margin: 0px 20px;
     float: left;    
 }
 
