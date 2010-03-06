@@ -10,8 +10,8 @@ try:
 except:
     import simplejson as json
 
-from agencies import display_name, get_logo, open_pages 
-from agencies import gov_shortener, ideascale_link
+from lib import display_name, get_logo, open_pages, truncate_words, encode_tweet
+from lib import gov_shortener, ideascale_link, agency_ideas
 from settings import settings
 import pymongo
 
@@ -42,7 +42,7 @@ class MainHandler(tornado.web.RequestHandler):
         kwargs['total_votes'] = sum([agency_data['votes'] for agency_data in stats_by_agency.values()])
         kwargs['last_updated'] = timestamp
         
-        self.render('templates/index.html', truncate=truncate, display=display_name, 
+        self.render('templates/index.html', truncate_words=truncate_words, display=display_name, 
                     get_logo=get_logo, encode_tweet=encode_tweet, open_pages=open_pages, 
                     gov_shortener=gov_shortener, ideascale_link=ideascale_link, 
                     agency_ideas=agency_ideas, **kwargs)
@@ -50,9 +50,10 @@ class MainHandler(tornado.web.RequestHandler):
     def db_retrieve(self):
         ''' retrieve most recent ideas and stats from the database'''
         db = pymongo.Connection().opengovtracker
-        # use the *second* newest one, since the actual newest one
-        # might be getting written to right now.
-        collection = db.collection_names()[-2]
+        # if we have a problem using the newest collection, go back to
+        # using the *second* newest one. (since the actual newest one
+        # might be getting written to right now).
+        collection = db.collection_names()[-1]
         
         recent = db[collection]
         idea_cursor = recent.find({'idea': {"$exists": True}})
@@ -241,27 +242,6 @@ class MainHandler(tornado.web.RequestHandler):
                     top_ideas[category]['idea'] = agency_ideas[category]['idea']
 
         return top_ideas    
-
-
-def agency_ideas(all_ideas, agency):
-    agency_ideas = []
-    for idea in all_ideas: 
-        if idea['agency'] == agency:            
-            agency_ideas.append(idea)
-    return agency_ideas
-
-def truncate(input_string, length):
-    words = input_string.split()
-    if len(words) > length:
-        return ' '.join(words[:length])+'...'
-    else: return input_string
-
-def encode_tweet(agency, stats, days_to_go):
-    num_ideas = stats['ideas']
-    base_url="http://twitter.com/home?"
-    query = {"status": "Unprecedented US #opengov discussions happening now: %s has %d ideas. %d days left! Add yours: %s #gov20" 
-             % (display_name(agency), num_ideas, days_to_go, gov_shortener[agency])}
-    return base_url+urllib.urlencode(query)
 
 
 application = tornado.web.Application([
