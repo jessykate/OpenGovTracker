@@ -177,9 +177,11 @@ def twitter_update():
                 break
             # add it to the master idea list so we don't tweet it again. 
             master_list.append(idea_id)
-        except:
+        except urllib2.HTTPError, e:
             # this can happen if there's a connectivity issue to the
             # API or we go over the posting limit.
+            print 'urllib2 HTTPError: %s' % e
+            print 'Rate limit probably exceeded'
             break
             
     # update the master_list with the added idea_ids.
