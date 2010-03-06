@@ -2,5 +2,5 @@
 *.pyc
 todo
 cache/*
-keys.py
+secrets.py
 simulate.py
