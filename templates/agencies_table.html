@@ -1,26 +1,46 @@
+
 <div class="agency">
   <div class="container">
     <div class="section_title">
       <h1>Stats by Agency</h1>
     </div>
-    <table class="agency_table">
-      <tr><th colspan=2>Agency</th><th>Ideas</th><th>Votes</th><th>Comments</th><th>Participants</th><th>Get Involved!</th></tr>
-      {% for agency, stats in stats_by_agency.iteritems() %}
-      <tr>
-	<td> <img src="{{ get_logo(agency) }}" width="30" height="30"></td>
-	<td><a href="{{ open_pages[agency] }}" title="Visit {{ display(agency) }}'s /open Page">{{ display(agency) }}</a></td>
-	<td class="table_num">{{ stats['ideas'] }}</td>
-	<td class="table_num">{{ stats['votes'] }}</td>
-	<td class="table_num">{{ stats['comments'] }}</td>
-	<td class="table_num">{{ len(stats['authors']) }}</td>
-	<td class="table_num">
-	  <a href="{{  encode_tweet(agency, stats, days_to_go) }}" 
-	     title="Share a link to this Agency's Status"> 
-	    Tweet This 
-	  </a>
-	</td>
-      </tr>
-      {% end %}
+    <div><a name="summary_table"></a>
+    <table id="agency_table">
+      <thead>
+	<tr>
+	  <th><a href="#" title="Click to Sort">Agency</a></th> 
+	  <th><a href="#" title="Click to Sort">Ideas</a></th> 
+	  <th><a href="#" title="Click to Sort">Votes</a></th>
+	  <th><a href="#" title="Click to Sort">Comments</a></th>
+	  <th><a href="#" title="Click to Sort">Idea Authors</a></th>
+	  <th>Get Involved!</th>
+	</tr>
+      </thead>
+      <tbody>
+	{% for agency, stats in stats_by_agency.iteritems() %}
+	<tr>
+	  <td> 
+	    <span style="display:none">{{ display(agency) }}</span>
+	    <img src="{{ get_logo(agency) }}" class="table_logo">
+	    <a href="{{ open_pages[agency] }}" title="Visit {{ display(agency) }}'s /open Page">{{ display(agency) }}</a> 
+	  </td>
+	  <td class="table_num">{{ stats['ideas'] }}</td>
+	  <td class="table_num">{{ stats['votes'] }}</td>
+	  <td class="table_num">{{ stats['comments'] }}</td>
+	  <td class="table_num">{{ len(stats['authors']) }}</td>
+	  <td class="table_num">
+	    <a href="{{  encode_tweet(agency, stats, days_to_go) }}" > 
+	      <img src="static/images/twitter.png" title="Tweet this" class="agency_links"> 
+	    </a>
+	    <a href="{{ ideascale_link[agency] }}" title="Visit this agency's Ideascale Site">
+	      <img src="static/images/redirect.png" width="20"
+		   height="20" class="agency_links">
+	    </a>
+	  </td>
+	</tr>
+	{% end %}
+      </tbody>
     </table>
+    </div>
   </div>
 </div> 

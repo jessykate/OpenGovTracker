@@ -10,113 +10,22 @@ try:
 except:
     import simplejson as json
 
-from agencies import agencies, cat_id, open_pages
+from lib import display_name, get_logo, open_pages, truncate_words, encode_tweet
+from lib import gov_shortener, ideascale_link, agency_ideas
 from settings import settings
-
-def display_name(agency):
-    _display_names = {
-        "usaid": "USAID",
-        "comm":"Commerce",
-        "dod": "DoD",
-        "ed": "Education",
-        "energy": "Energy",
-        "nasa":"NASA",   
-        'dot': "Transportation",
-        "int": "Interior",
-        "va": "Veterans Affairs",
-        "treas": "Treasury",
-        "gsa": "GSA",
-        "opm": "OPM",
-        "labor": "Labor",
-        "jus": "Justic",
-        "ssa": "SSA",
-        "state": "State",
-        "nsf": "NSF",
-        "hud": "HUD",
-        "epa": "EPA",
-        "sba": "SBA",
-        "dhs": "DHS",
-        "nrc": "NRC",
-        "ostp": "OSTP",
-        }
-    return _display_names[agency]
-
-def get_logo(agency):
-    logo = {
-        "usaid": "static/images/logo/usaid.jpg",
-        "comm":"static/images/logo/doc.gif",
-        "dod": "static/images/logo/dod.gif",
-        "ed": "static/images/logo/doed.gif",
-        "energy": "static/images/logo/doe.jpg",
-        "nasa":"static/images/logo/nasa.jpg",   
-        'dot': "static/images/logo/dot.png",
-        "int": "static/images/logo/doi.jpg",
-        "va": "static/images/logo/va.jpg",
-        "treas": "static/images/logo/treasury.png",
-        "gsa": "static/images/logo/gsa.jpg",
-        "opm": "static/images/logo/opm.jpg",
-        "labor": "static/images/logo/dol.jpg",
-        "jus": "static/images/logo/doj.png",
-        "ssa": "static/images/logo/ssa.gif",
-        "state": "static/images/logo/state.jpg",
-        "nsf": "static/images/logo/nsf.gif",
-        "hud": "static/images/logo/hud.jpg",
-        "epa": "static/images/logo/epa.png",
-        "sba": "static/images/logo/sba.gif",
-        "dhs": "static/images/logo/dhs.jpg",
-        "nrc": "static/images/logo/nrc.jpg",
-        "ostp": "static/images/logo/ostp.png",
-        }
-    return logo[agency]
-
-def truncate(input_string, length):
-    words = input_string.split()
-    if len(words) > length:
-        return ' '.join(words[:length])+'...'
-    else: return input_string
-
-def encode_tweet(agency, stats, days_to_go):
-    gov_shortener = {
-        "usaid": "http://bit.ly/9Nq9aw",
-        "comm":"http://bit.ly/bdtMSQ",
-        "dod": "http://bit.ly/bYZk5k",
-        "ed": "http://bit.ly/cy1wKo",
-        "energy": "http://bit.ly/cpRf7a",
-        "nasa":"http://bit.ly/da3uc6",   
-        'dot': "http://bit.ly/bvGA49",
-        "int": "http://bit.ly/dgFxh1",
-        "va": "http://bit.ly/btDUvm",
-        "treas": "http://bit.ly/92qYA5",
-        "gsa": "http://bit.ly/93MOcu",
-        "opm": "http://bit.ly/9DoYra",
-        "labor": "http://bit.ly/9V5Hrb",
-        "jus": "http://bit.ly/behSUt",
-        "ssa": "http://bit.ly/bxoytd",
-        "state": "http://bit.ly/cwD4ht",
-        "nsf": "http://bit.ly/cWfOgM",
-        "hud": "http://bit.ly/d2axLy",
-        "epa": "http://bit.ly/bCxSmJ",
-        "sba": "http://bit.ly/dc7J65",
-        "dhs": "http://bit.ly/9bX6UO",
-        "nrc": "http://bit.ly/aQx2wv",
-        "ostp": "http://bit.ly/d4Yv8F",  
-        }
-
-    num_ideas = stats['ideas']
-    base_url="http://twitter.com/home?"
-    query = {"status":"%s's OpenGov discussion has %d ideas and ranked XX out of YY. %d days left! Add your idea here: %s #opengov #gov20" 
-             % (display_name(agency), num_ideas, days_to_go, gov_shortener[agency])}
-    return base_url+urllib.urlencode(query)
-
+import pymongo
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
         stats_cache = "stats_cache.json"
-        stats_by_agency, top_ideas_by_agency = self.get_stats_from_file()
+        #stats_by_agency, top_ideas_by_agency = self.get_stats_from_file()
+        timestamp, stats_by_agency, top_ideas_by_agency, all_ideas = self.db_retrieve()
 
         kwargs = {}
         # get the top ideas in each category across all agencies        
         kwargs['stats_by_agency'] = stats_by_agency
+        kwargs['all_ideas'] = all_ideas
+        kwargs['pie_charts'] = self.pie_charts(stats_by_agency.keys(), all_ideas)
         kwargs['top_ideas_by_agency'] = top_ideas_by_agency
         kwargs['top_ideas_by_category'] = self.top_ideas_by_category(top_ideas_by_agency)
         kwargs['participation_chart'] = self.construct_participation_chart(stats_by_agency)
@@ -131,10 +40,51 @@ class MainHandler(tornado.web.RequestHandler):
         kwargs['total_ideas'] = sum([agency_data['ideas'] for agency_data in stats_by_agency.values()])
         kwargs['total_comments'] = sum([agency_data['comments'] for agency_data in stats_by_agency.values()])
         kwargs['total_votes'] = sum([agency_data['votes'] for agency_data in stats_by_agency.values()])
+        kwargs['last_updated'] = timestamp
         
-        self.render('templates/index.html', truncate=truncate, display=display_name, 
-                    get_logo=get_logo, encode_tweet=encode_tweet, open_pages=open_pages, **kwargs)
+        self.render('templates/index.html', truncate_words=truncate_words, display=display_name, 
+                    get_logo=get_logo, encode_tweet=encode_tweet, open_pages=open_pages, 
+                    gov_shortener=gov_shortener, ideascale_link=ideascale_link, 
+                    agency_ideas=agency_ideas, **kwargs)
     
+    def db_retrieve(self):
+        ''' retrieve most recent ideas and stats from the database'''
+        db = pymongo.Connection().opengovtracker
+        # if we have a problem using the newest collection, go back to
+        # using the *second* newest one. (since the actual newest one
+        # might be getting written to right now).
+        collection = db.collection_names()[-1]
+        
+        recent = db[collection]
+        idea_cursor = recent.find({'idea': {"$exists": True}})
+        all_ideas = [idea for idea in idea_cursor]
+
+        cursor = recent.find({'stats_by_agency': {"$exists": True}})
+        stats = cursor[0]['stats_by_agency']
+
+        # for authors and tags, periods have been encoded as four
+        # percent signs: %%%%. de-encode them, turning any occurences
+        # back to periods.
+        for agency, agency_stats in stats.iteritems():
+            stats_authors = {}
+            for author, count in agency_stats['authors'].iteritems():
+                if author.find("%%%%") >= 0:
+                    author.replace("%%%%", ".")
+                stats_authors[author] = count
+            stats[agency]['authors'] = stats_authors
+
+            stats_tags = {}
+            for tag, count in agency_stats['tags'].iteritems():
+                if tag.find("%%%%") >= 0:
+                    tag.replace("%%%%", ".")
+                stats_tags[tag] = count
+            stats[agency]['tags'] = stats_tags            
+
+        cursor = recent.find({'best_ideas_by_agency': {"$exists": True}})
+        best = cursor[0]['best_ideas_by_agency']        
+
+        timestamp = collection
+        return timestamp, stats, best, all_ideas
 
     def get_stats_from_file(self):
         cache_file = open(settings['stats_cache'], "r")
@@ -198,6 +148,30 @@ class MainHandler(tornado.web.RequestHandler):
         return {'agency': agency, 'count':least_comments}
 
 
+    def pie_charts(self, agencies, all_ideas):
+        pie_urls = {}
+        for agency in agencies:
+            ideas = agency_ideas(all_ideas, agency)
+            # make sure each category exists so that we can have some
+            # sanity in the generated pie chart
+            categories = {'transparency':0, 'participation':0, 'collaboration':0,
+                          'innovation':0, 'site_feedback':0}
+            for idea in ideas:
+                category = idea['category']
+                categories[category] = categories.get(category,0) + 1
+            # convert the counts to strings for use in the pie chart url
+            for category in categories.keys():
+                categories[category] = str(categories[category])
+
+            values = '%s,%s,%s,%s,%s' % (categories['transparency'], categories['participation'], 
+                                         categories['collaboration'], categories['innovation'], 
+                                         categories['site_feedback'])
+            keys = '%s|%s|%s|%s|%s' % ('transparency', 'participation', 'collaboration', 
+                                       'innovation', 'site_feedback')
+            pie_url = '''http://chart.apis.google.com/chart?chs=240x100&chd=t:%s&chco=9999CC|666699|6666FF|6699CC|CCFFFF&cht=p3&amp;chf=bg,s,E3EEF1&chdl=%s&chf=bg,s,FFFFFF''' % (values, keys)
+            pie_urls[agency] = pie_url
+        return pie_urls
+
     def construct_participation_chart(self, stats_by_agency):
 
         # get the agency names out into a list so we can be sure the
@@ -228,7 +202,7 @@ class MainHandler(tornado.web.RequestHandler):
         display_names = []
         for name in agency_names:
             if (len(name) <= 5 and name != 'labor' and name != 'state' 
-                and name!='comm' and name !='treas' and name!='jus'):
+                and name!='comm' and name !='treas'):
                 display_names.append(name.upper())
             else:
                 display_names.append(name.title())
@@ -276,5 +250,5 @@ application = tornado.web.Application([
 
 if __name__ == '__main__':
     http_server = tornado.httpserver.HTTPServer(application)
-    http_server.listen(8989)
+    http_server.listen(8999)
     tornado.ioloop.IOLoop.instance().start()

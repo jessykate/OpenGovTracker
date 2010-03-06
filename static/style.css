@@ -62,9 +62,8 @@ h2#title_description {
 }
 
 .stat {
-    width: 200px;
     height: 80px;
-    margin: 0px 10px;
+    margin: 0px 20px;
     float: left;    
 }
 
@@ -74,7 +73,7 @@ h2#title_description {
 }
 
 .big_num {
-    font-size: 400%;
+    font-size: 390%;
     font-weight: bold;
     text-align:center;
 }
@@ -171,9 +170,6 @@ span.fn {
 	display: block;
 }
 
-#footer {
-	clear: both;
-}
 
 #categories {
 	height: 500px;
@@ -263,14 +259,11 @@ span.fn {
     padding-top: 1px;  
 }
 
-#agency_table {
-
-}
-
 #footer {
     color: #ccc;
     border-top: 1px dotted #999;
-    height: 100px;
+    padding-bottom: 5px;
+    //height: 100px;
     background-color: #404040;   
 }
 
@@ -304,12 +297,24 @@ a img {
     border: none;
 }
 
-.agency_table {
+#agency_table {
     width: 1000px;
+    padding-bottom: 70px;
 }
 
 td.table_num {
     text-align: center;   
+}
+
+td {
+    vertical-align: middle;
+}
+
+.table_logo {
+    float: left;
+    padding-right: 10px;
+    width: 30px;
+    height: 30px;
 }
 
 .endpoints_img {
@@ -327,6 +332,170 @@ p.doing_great {
     font-weight: bold;
 }
 
-dummy {
-    width: 100px;
+#footer_credits {
+    text-align: right;    
+}
+
+.agency_links {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#agency_options {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 850px;
+    margin: auto;
+    text-align: center;
+}
+
+.agency_stats {
+    width:1000px;
+    margin: auto;
+    height: 100px;
+    text-align: center;
+}
+
+.agency_stat {
+    position: relative;
+    text-align: center;
+    width: 150px;
+    float: left;
+}
+
+.med_num {
+    font-size: 300%;
+    font-weight: bold;
+    text-align:center;
+    width: 150px;
+    height: 60px;
+    padding-top: 10px;
+}
+
+.agency_stat_name {
+    text-align: center;
+    width: 150px;
+    font-size: 130%;
+}
+
+.pie_chart {
+    position: relative;
+    text-align: center;
+    width: 250px;
+    float: left;
+}
+
+.agency_tags {
+    width: 900px;
+    text-align: center;
+}
+
+.idea_title {
+    line-height: 200%;
+}
+
+.transparency_idea {
+    color: #9999CC;
+}
+
+.collaboration_idea {
+//    color: #333366;
+    color: #6666FF;
+}
+
+.participation_idea {
+    color: #666699;
+}
+
+.innovation_idea {
+    color: #6699CC;
+}
+
+.idea_list {
+    text-align: justify;
+    padding-bottom: 50px;
+    width: 1000px;
+}
+
+.spacer {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.agency_heading_active {
+    font-weight: bold;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 130%;
+    color: #b04444;
+}
+
+a.agency_heading_active:hover {
+    color: #b04444;
+}
+
+.agency_heading_inactive {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 130%;
+}
+
+.agency_category {
+    width: 200px;
+    height: 320px;
+    float: left;
+    margin: 15px 50px 0px 0px;
+    padding-bottom: 20px;
+}
+
+.agency_category_title {
+    font-size: 170%;
+    width: 200px;
+    height: 30px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.agency_category_idea_title {
+    font-size: 120%;
+    width: 200px;
+    margin: 5px;
+    min-height: 60px;
+    
+}
+
+.agency_category_author {
+    font-weight: bold;
+    width: 200px;
+    margin: 5px;
+    height: 15px;
+}
+
+.agency_category_idea_text {
+    width: 200px;
+    height: 120px;
+    margin: 5px 5px 10px 5px;  
+}
+
+.agency_category_num {
+    font-size: 200%;
+    width: 80px;
+    text-align: center;
+    height: 30px;
+    margin: 5px 10px;
+    float: left;
+}
+
+.agency_category_num_title{
+    width: 80px;
+    text-align: center;
+    margin: 5px 10px;
+    float: left;
+}
+
+.agency_report_logo {
+    width:85px;
+    height: 85px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

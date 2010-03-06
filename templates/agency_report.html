@@ -1,0 +1,132 @@
+<div class="agency">
+  <div class="container">
+    <div class="section_title">
+      <h1>Agency Reports</h1>
+    </div>
+    <div id="agency_options">
+      <a href="#summary_table" class="agency_heading_active">Summary Table</a>
+     {% for agency in stats_by_agency.keys() %}
+      <a href="#{{ agency }}" class="agency_heading_inactive">{{ display(agency) }}</a>
+      {% end %}
+    </div>
+    <div id="reports">
+      {% for agency, stats in stats_by_agency.iteritems() %}
+      <div>
+	<a name="{{agency}}"></a>
+
+	<div class="agency_stats">
+
+	<div class="agency_stat">
+	  <img src="{{ get_logo(agency) }}" class="agency_report_logo">
+	</div>
+
+	  <div class="agency_stat">
+	    <div class="med_num">{{ stats["ideas"]}}</div>
+	    <div class="agency_stat_name">Ideas</div>
+	  </div>
+
+	  <div class="agency_stat">
+	    <div class="med_num">{{ stats["votes"] }}</div>	
+	    <div class="agency_stat_name">Votes</div>
+	  </div>
+
+	  <div class="agency_stat">
+	    <div class="med_num">{{ stats["comments"] }}</div>
+	    <div class="agency_stat_name">Comments</div>
+	  </div>
+
+	  <div class="agency_stat">
+	    <div class="med_num">{{ len(stats["authors"].keys()) }}</div>
+	    <div class="agency_stat_name">Idea Authors</div>
+	  </div>
+
+	  <div class="agency_stat">
+	    <div class="pie_chart"><img src="{{ pie_charts[agency] }}"></div>
+	  </div>
+	</div>
+	
+	{% for category, idea_info in top_ideas_by_agency[agency].iteritems() %}
+	{% if idea_info['idea'] %}
+
+	<div class="agency_category">
+          <div class="agency_category_title">
+            {{ category.title() }}
+          </div>
+          <div class="agency_category_idea_title">
+	    <a href="{{ idea_info['idea']['url'] }}" title="Click to visit this idea"> 
+	      {{ idea_info['idea']['title'] }} 
+	    </a>
+          </div>
+          <div class="agency_category_author">
+	    <a href="{{ idea_info['idea']['authorInfo']['url'] }}">	     
+	      {{ idea_info['idea']['author'].title() }}
+	    </a>
+          </div>
+          <div class="agency_category_idea_text">
+	    {{ truncate_words(idea_info['idea']['text'], 35) }}
+          </div>
+          <div class="agency_category_num">
+	    {{ idea_info['votes'] }}
+          </div>
+          <div class="agency_category_num">
+	    {{ idea_info['comments'] }}
+          </div>
+          <div class="agency_category_num_title">
+            Votes
+          </div>
+          <div class="agency_category_num_title">
+            Comments
+          </div>
+	</div>
+
+	{% else %} 
+	<div class="agency_category">
+          <div class="agency_category_title">
+            {{ category.title() }}
+          </div>
+
+	  <p>Oh No! No Idea Here. </p>
+	</div>
+
+	{% end %}
+	{% end %}
+
+	<div class="idea_list">
+	  <h2>Check Out These Other Ideas...</h2>
+	  {% for idea in agency_ideas(all_ideas, agency) %}	  
+
+	  {% if idea['category'] == "innovation" %}
+	  <span class="idea_title"><a href="{{ idea['idea']['url'] }}" class="innovation_idea">{{ idea['idea']['title']}}</a></span> 
+	  <span class="spacer"><img src="/static/images/dot.jpg"></span>
+	  {% end %}
+
+	  {% if idea['category'] == "collaboration" %}
+	  <span class="idea_title"><a href="{{ idea['idea']['url'] }}" class="collaboration_idea">{{ idea['idea']['title'] }}</a></span>
+	  <span class="spacer"><img src="/static/images/dot.jpg"></span>
+	  {% end %}
+
+	  {% if idea['category'] == "participation" %}
+	  <span class="idea_title"><a href="{{ idea['idea']['url'] }}" class="participation_idea">{{ idea['idea']['title'] }}</a></span>
+	  <span class="spacer"><img src="/static/images/dot.jpg"></span>
+	  {% end %}
+
+	  {% if idea['category'] == "transparency" %}
+	  <span class="idea_title"><a href="{{ idea['idea']['url'] }}" class="transparency_idea">{{ idea['idea']['title'] }}</a></span>
+	  <span class="spacer"><img src="/static/images/dot.jpg"></span>
+	  {% end %}
+
+	  {% end %}
+	</div>
+
+	<!-- stats["tags"] -->
+	<!-- pie chart of categories-->
+	<!-- ideas over time -->
+
+      </div>
+      {% end %}    
+
+      {% include summary_table.html %}
+
+    </div> <!-- end "reports" -->
+  </div>
+</div> 

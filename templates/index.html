@@ -2,6 +2,9 @@
   <head>
     <title>Federal Agency Ideascale Dashboard</title>
     <link rel="stylesheet" href="/static/style.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="/static/js/jquery-1.4.2.min.js"></script> 
+    <script type="text/javascript" src="/static/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="/static/js/ogt.js"></script> 
   </head>
   
   <body>
@@ -17,9 +20,9 @@
             <h1><br />OpenGov Tracker</h1>
           </div>
           <div id="title_description">
-            <h2>Something exciting is happening; the U.S. government is opening up.</h2>
-            <h3>To satisfy the <a href="http://www.whitehouse.gov/omb/assets/memoranda_2010/m10-06.pdf">Open Government Directive</a> agencies are soliciting your ideas on how to make them more transparent, participatory, collaborative and innovative.</h3>
-            <h2>If you use your voice, it will be here to stay.  Get involved.</h2>
+            <h3>Something exciting is happening: the U.S. government is opening up.</h3>
+            <p>To satisfy the <a href="http://www.whitehouse.gov/omb/assets/memoranda_2010/m10-06.pdf">Open Government Directive</a> agencies are soliciting your ideas on how to make them more transparent, participatory, collaborative and innovative.</p>
+            <h3>If you use your voice, it will be here to stay.  Get involved.</h3>
           </div>
         </div>
         <div id="stat_box">
@@ -66,7 +69,8 @@
           <h1>Top Ideas Across Government</h1>
 	</div>
 	{% for category, idea_info in top_ideas_by_category.iteritems() %}
-	<div class="category"> <!-- onclick="location.href='__ idea_link __';" style="cursor:pointer;" -->
+
+	<div class="category">
           <div class="category_title">
             {{ category.title() }}
           </div>
@@ -81,7 +85,7 @@
 	    </a>
           </div>
           <div class="category_idea_text">
-	    {{ truncate(idea_info['idea']['text'], 35) }}
+	    {{ truncate_words(idea_info['idea']['text'], 35) }}
           </div>
           <div class="category_agency">
             <img src="{{ get_logo(idea_info['agency']) }}" align="left" width="50" height="50">
@@ -114,19 +118,19 @@
           <h3>Most Ideas Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(most_ideas['agency']) }}" class="endpoints_img">
-          {{ display(most_ideas['agency']) }} : {{ most_ideas['count'] }}
+          <a href="{{ ideascale_link[most_ideas['agency']] }}">{{ display(most_ideas['agency']) }}</a> : {{ most_ideas['count'] }}
           </div>
 
           <h3>Most Votes Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(most_votes['agency']) }}" class="endpoints_img">
-          {{ display(most_votes['agency']) }} : {{ most_votes['count'] }} 
+          <a href="{{ ideascale_link[most_votes['agency']] }}">{{ display(most_votes['agency']) }}</a> : {{ most_votes['count'] }} 
 	  </div>
           
           <h3>Most Comments Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(most_comments['agency']) }}" class="endpoints_img">
-          {{ display(most_comments['agency']) }} : {{ most_comments['count'] }} 
+          <a href="{{ ideascale_link[most_comments['agency']] }}">{{ display(most_comments['agency']) }}</a> : {{ most_comments['count'] }} 
           </div>
         </div>
 
@@ -139,29 +143,48 @@
           <h3>Least Ideas Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(least_ideas['agency']) }}" class="endpoints_img">
-          {{ display(least_ideas['agency']) }} : {{ least_ideas['count'] }} 
+          <a href="{{ ideascale_link[least_ideas['agency']] }}">{{ display(least_ideas['agency']) }}</a> : {{ least_ideas['count'] }} 
           </div>
           <h3>Least Votes Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(least_votes['agency']) }}" class="endpoints_img">
-          {{ display(least_votes['agency']) }} : {{ least_votes['count'] }} 
+          <a href="{{ ideascale_link[least_votes['agency']] }}">{{ display(least_votes['agency']) }}</a> : {{ least_votes['count'] }} 
           </div>
           <h3>Least Comments Total</h3>
 	  <div class="endpoints_content">
 	  <img src="{{ get_logo(least_comments['agency']) }}" class="endpoints_img">
-          {{ display(least_comments['agency']) }} : {{ least_comments['count'] }} 
+          <a href="{{ ideascale_link[least_comments['agency']] }}">{{ display(least_comments['agency']) }}</a> : {{ least_comments['count'] }} 
           </div>
         </div>
       </div>
     </div>
    
-    {% include "agencies_table.html" %}    
+    {% include "agency_report.html" %}    
 
     <div id="footer">  
       <div class="container">
+	<p><i>This webpage makes use of
+	the <a href="http://www.ideascale.com/">IdeaScale</a> API to
+	aggregate data for all agencies which are making use of that
+	platform. <a href="http://usda.gov/open/">USDA</a> and
+	<a href="http://www.hhs.gov/open/discussion/">Health and Human
+	Services</a> also have public feedback sites; however they are
+	not using IdeaScale and so unfortunately, are not included
+	here. We encourage you to visit their sites, too! </i></p>
+	<p><i>Totals reflect all ideas including those submitted to
+	the "Site Feedback" category. The "Top Ideas Across
+	Government" section only highlights ideas in the categories of
+	Transparency, Participation, Collaboration, and Innovation--
+	eg., those related to the Open Government Plans
+	themselves. </i></p>
+	<div id="footer_credits"><a href="http://github.com/jessykate/IdeaScale-Dashboard">Site</a>
+	created
+	by <a href="http://twitter.com/schingler">@schingler</a>
+	and <a href="http://twitter.com/jessykate">@jessykate</a>
+	during Washington, DC's #snowmageddon, 2010.</div>
+	<div>Data current as of {{ last_updated }}</div>
       </div>
-    </div> 
-    
+    </div>     
     <script type="text/javascript">
     var uservoiceOptions = {
       /* required */
@@ -171,7 +194,7 @@
       showTab: true,  
       /* optional */
       alignment: 'right',
-      background_color:'#404040', 
+      background_color:'#ff0066', 
       text_color: 'white',
       hover_color: '#996666',
       lang: 'en'
@@ -186,6 +209,16 @@
     _loadSuper = window.onload;
     window.onload = (typeof window.onload != 'function') ? _loadUserVoice : function() { _loadSuper(); _loadUserVoice(); };
     </script>
+
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+      var pageTracker = _gat._getTracker("UA-13008953-1");
+      pageTracker._trackPageview();
+      } catch(err) {}</script>
 
   </body>
 </html>
