@@ -85,7 +85,7 @@
 	    </a>
           </div>
           <div class="category_idea_text">
-	    {{ truncate(idea_info['idea']['text'], 35) }}
+	    {{ truncate_words(idea_info['idea']['text'], 35) }}
           </div>
           <div class="category_agency">
             <img src="{{ get_logo(idea_info['agency']) }}" align="left" 

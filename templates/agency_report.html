@@ -63,7 +63,7 @@
 	    </a>
           </div>
           <div class="agency_category_idea_text">
-	    {{ truncate(idea_info['idea']['text'], 35) }}
+	    {{ truncate_words(idea_info['idea']['text'], 35) }}
           </div>
           <div class="agency_category_num">
 	    {{ idea_info['votes'] }}
