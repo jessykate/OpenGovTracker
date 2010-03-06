@@ -1,5 +1,10 @@
-'''various information about each agency. keys are stored separately
-in keys.py'''
+import urllib, urllib2, base64, json
+
+'''This file has agency-by-agency information and general utility
+functions '''
+
+from secrets import bitly, twitter
+import urllib2, base64
 
 # category id for each category for each agency (yes the category IDs
 # are DIFFERENT FOR EVERY SINGLE AGENCY. $*%@*!#*$%&).
@@ -165,3 +170,59 @@ ideascale_link = {
     "nrc": "http://opennrc.ideascale.com",
     "ostp": "http://openostp.ideascale.com",
     }
+
+
+def agency_ideas(all_ideas, agency):
+    agency_ideas = []
+    for idea in all_ideas: 
+        if idea['agency'] == agency:            
+            agency_ideas.append(idea)
+    return agency_ideas
+
+def truncate_words(input_string, length):
+    ''' truncate the input string to the specified number of words'''
+    words = input_string.split()
+    if len(words) > length:
+        return ' '.join(words[:length])+'...'
+    else: return input_string
+
+def truncate_chars(input_string, length):
+    ''' truncate the input string to the specified number of
+    characters'''
+    if len(input_string) > length:
+        return input_string[:length]+'...'
+    else: return input_string
+
+def encode_tweet(agency, stats, days_to_go):
+    num_ideas = stats['ideas']
+    base_url="http://twitter.com/home?"
+    query = {"status": "Unprecedented US #opengov discussions happening now: %s has %d ideas. %d days left! Add yours: %s #gov20" 
+             % (display_name(agency), num_ideas, days_to_go, gov_shortener[agency])}
+    return base_url+urllib.urlencode(query)
+
+def shorten_url(long_url):
+    bitly_api = "http://api.bit.ly/shorten?version=2.0.1&longUrl=%s&login=%s&apiKey=%s" % \
+        (long_url, bitly['username'], bitly['apikey'])
+    bitly_result = json.loads(urllib2.urlopen(bitly_api).read())
+    if bitly_result['statusCode'] != 'OK':
+        # if there was a problem, make a note of it and then
+        # return. we'll try again next time around.
+        print 'Bitly Error'
+        print bitly_result
+        return False
+    return bitly_result['results'][long_url]['shortUrl']
+
+
+def post_tweet(tweet):
+    request = urllib2.Request('http://twitter.com/statuses/update.json')
+    request.headers['Authorization'] = 'Basic %s' % ( base64.b64encode(twitter['username'] + ':' + twitter['password']))
+    request.data = urllib.urlencode({'status': tweet})
+    response = urllib2.urlopen(request) # The Response
+    resp = response.read()
+    try:
+        json.loads(resp)['created_at']
+        return True
+    except:
+        print 'Posting of tweet failed'
+        print resp
+        return False
