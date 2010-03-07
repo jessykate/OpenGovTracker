@@ -50,6 +50,7 @@ if __name__ == '__main__':
         sep = '\t'
     stats = report(agency)
     rows = zip(stats['timestamps'], stats['ideas'], stats['votes'], stats['comments'])
-    print "%s%s%s%s%s%s%s" % ('Time', sep, 'Ideas', sep,'Votes', sep, 'Comments')
+    report = open(agency+'.csv', 'w')
+    report.write("%s%s%s%s%s%s%s\n" % ('Time', sep, 'Ideas', sep,'Votes', sep, 'Comments'))
     for row in rows:
-        print "%s%s%d%s%d%s%d" % (row[0], sep, row[1], sep, row[2], sep, row[3])
+        report.write("%s%s%d%s%d%s%d\n" % (row[0], sep, row[1], sep, row[2], sep, row[3]))
