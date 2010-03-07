@@ -21,19 +21,18 @@ Dependencies:
 
 To Run:
 * add a line like so in /etc/crontab
-  00,30 * * * * username /path/to/govtracker_cron.py
+  00,30 * * * * username /path/to/cron.py
   which updates the data in the database every 30 minutes.
 * run dashboard.py
 
-govtracker_cron.py populates the mongo database. Each time the data is
-updated, a new mongo collection (which is like a table) is
-created. The name of each collection is a timestamp representing the
-time of the update. Each collection/update stores 1 document for each
-idea, plus a document representing aggregate stats per agency, and a
-document representing top ideas per agency, at the time of that
-update. Thus if there are n total ideas across all agencies, the
-collection will have n+2 documents. Initial population can take a few
-minutes.
+cron.py populates the mongo database. Each time the data is updated, a
+new mongo collection (which is like a table) is created. The name of
+each collection is a timestamp representing the time of the
+update. Each collection/update stores 1 document for each idea, plus a
+document representing aggregate stats per agency, and a document
+representing top ideas per agency, at the time of that update. Thus if
+there are n total ideas across all agencies, the collection will have
+n+2 documents. Initial population can take a few minutes.
 
 each idea object looks roughly like this:
 {
@@ -45,6 +44,26 @@ each idea object looks roughly like this:
 
 mongodb does not allow keys to have periods or dollar signs in
 them. consequently, the cronjob encodes all periods as four percent
-signs, and decodes them before display in the application.
+signs, and should decode them before display in the application (but
+they are not being displayed anywhere at the moment).
 
 dashboard.py, the main application, pulls its data from the database.
+
+todo: add information about twitter, govtrackermeta db, data
+collection.
+
+Differences between opengovtracker.com and Ideascale's summaries:
+
+- idea count differences-- uncertain
+
+- vote count differences-- current theory is that ideascale is showing
+  the total votes, while the API is returning net votes (of up and
+  down). we could attempt to retrieve total votes from the author
+  objects, but the author API call is currently truncated after 10
+  authors are returned (It's possible IdeaScale would be willing to
+  lift that if we asked).
+
+- comment count differences - perhaps comments on ideas that have been
+  moved to off topic are still being counted by the IdeaScale
+  summaries, but not accounted for in the information returned by the
+  API?
