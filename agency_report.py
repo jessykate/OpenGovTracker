@@ -63,7 +63,7 @@ def agency_report(agency, sep):
     # store agency reports in a subdirectory for the date on which
     # they were generated
     today = datetime.datetime.date(datetime.datetime.now()).isoformat()
-    report_dir = 'reports/'+today+'/'
+    report_dir = 'reports/'
     if not os.path.exists(report_dir):
         os.makedirs(report_dir)
 
