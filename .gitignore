@@ -4,3 +4,4 @@ todo
 cache/*
 secrets.py
 simulate.py
+reports/
