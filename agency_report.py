@@ -9,7 +9,9 @@ import pymongo
 
 def report(agency):
     db = pymongo.Connection().opengovtracker
-    collections = db.collection_names()
+    collections = db.collection_names()    
+    # the first few collections were used for testing, so skip them. 
+    collections = collections[12:]
     stats = {'timestamps': [], 'ideas': [], 'comments': [], 'votes': [] }
     for collection in collections:
         current = db[collection]
