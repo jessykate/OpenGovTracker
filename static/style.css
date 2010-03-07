@@ -38,14 +38,13 @@ body {
 
 #title_description {
     float: left;
-    width: 665px;
+    width: 664px;
     margin: -5px 0px 0px 15px;
 }
 
 h2#title_description {
     font-size: 18px;
 }
-
 
 #participation_chart {
     padding-top: 70px;
@@ -80,8 +79,9 @@ h2#title_description {
 
 h1 {
     font-family: century gothic;
+    background-image: url("static/images/OGT.png");
 	background: #404040;
-	padding: 30px 0 10px 20px;
+    padding: 30px 0 10px 20px;
 	color: #fff;
 	width: 300px;
 	margin: 0;
@@ -307,6 +307,10 @@ td.table_num {
 }
 
 td {
+    vertical-align: middle;
+}
+
+td.a {
     vertical-align: middle;
 }
 
