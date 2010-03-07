@@ -122,9 +122,6 @@ def update_all():
 
     db.connection.disconnect()
 
-    # post any new ideas to twitter
-    twitter_update()
-
 def twitter_update():
 
     # check the master list of ideas against the most recent idea
