@@ -1,4 +1,8 @@
-import urllib, urllib2, base64, json
+import urllib, urllib2, base64
+try:
+    import json
+except:
+    import simplejson as json
 
 '''This file has agency-by-agency information and general utility
 functions '''

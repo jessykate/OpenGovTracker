@@ -88,8 +88,8 @@
 	    {{ truncate_words(idea_info['idea']['text'], 35, 210) }}
           </div>
           <div class="category_agency">
-            <img src="{{ get_logo(idea_info['agency']) }}" align="left" 
-		 width="50" height="50" title="{{ display(idea_info['agency']) }}">
+            <img src="{{ get_logo(idea_info['agency']) }}" align="left" width="50" height="50">
+		        <a href="{{ open_pages[idea_info['agency']] }}">{{ display(idea_info['agency']) }}</a>
           </div>
           <div class="category_num">
 	    {{ idea_info['votes'] }}
