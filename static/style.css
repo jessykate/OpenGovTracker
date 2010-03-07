@@ -499,3 +499,11 @@ a.agency_heading_active:hover {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.table_small {
+    font-size: 60%;
+}
+
+.table_link {
+    height: 100%;
+}
