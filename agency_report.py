@@ -28,10 +28,10 @@ def report(agency):
             # to storing it in a subdict. checking for the 'idea' key
             # accounts for this.
             if 'idea' in idea.keys():
-                votes += idea['idea']['voteCount']
+                votes += abs(idea['idea']['voteCount'])
                 comments += idea['idea']['commentCount']
             else:
-                votes += idea['voteCount']
+                votes += abs(idea['voteCount'])
                 comments += idea['commentCount']
                 
         stats['ideas'].append(ideas)
@@ -41,8 +41,13 @@ def report(agency):
 
 if __name__ == '__main__':
     agency = raw_input("Agency? ")
+    report_type = raw_input("Report type (csv or tsv)? ")
+    if report_type == 'csv':
+        sep = ','
+    else: 
+        sep = '\t'
     stats = report(agency)
     rows = zip(stats['timestamps'], stats['ideas'], stats['votes'], stats['comments'])
-    print "%s\t\t%s\t%s\t%s" % ('Time', 'Ideas', 'Votes', 'Comments')
+    print "%s%s%s%s%s%s%s" % ('Time', sep, 'Ideas', sep,'Votes', sep, 'Comments')
     for row in rows:
-        print "%s\t\t%d\t%d\t%d" % (row[0], row[1], row[2], row[3])
+        print "%s%s%d%s%d%s%d" % (row[0], sep, row[1], sep, row[2], sep, row[3])
