@@ -179,12 +179,18 @@ def agency_ideas(all_ideas, agency):
             agency_ideas.append(idea)
     return agency_ideas
 
-def truncate_words(input_string, length):
-    ''' truncate the input string to the specified number of words'''
+def truncate_words(input_string, length, max_chars=None):
+    ''' truncate the input string to the 'length' number of words. If
+    max_chars is provided, additionally ensure that the truncated
+    string is not longer than max_chars.'''
     words = input_string.split()
     if len(words) > length:
-        return ' '.join(words[:length])+'...'
-    else: return input_string
+        shortened = ' '.join(words[:length])+'...'
+    else: 
+        shortened = input_string
+    if max_chars and len(shortened) > max_chars:
+            return truncate_words(shortened, length-1, max_chars)
+    return shortened
 
 def truncate_chars(input_string, length):
     ''' truncate the input string to the specified number of

@@ -76,7 +76,7 @@
           </div>
           <div class="category_idea_title">
 	    <a href="{{ idea_info['idea']['url'] }}" title="Click to visit this idea"> 
-	      {{ idea_info['idea']['title'] }} 
+	      {{ truncate_words(idea_info['idea']['title'], 9, 50) }} 
 	    </a>
           </div>
           <div class="category_author">
@@ -85,7 +85,7 @@
 	    </a>
           </div>
           <div class="category_idea_text">
-	    {{ truncate_words(idea_info['idea']['text'], 35) }}
+	    {{ truncate_words(idea_info['idea']['text'], 35, 210) }}
           </div>
           <div class="category_agency">
             <img src="{{ get_logo(idea_info['agency']) }}" align="left" 
